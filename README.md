@@ -44,48 +44,44 @@ Project additions are Apache-2.0. Files imported from upstream projects retain t
 
 ## Visual demonstrations
 
-All media below is arranged as compact galleries so the platform and experiments can be inspected without opening separate links.
+The gallery uses compact, source-labeled media from the Go2 collection platform and the current simulation workspace.
 
 ### Real Go2 data collection platform
 
-<div align="center"><img src="media/screenshots/collector.png" alt="Go2 collection console with a real RGB frame" width="860"></div>
+<div align="center"><img src="media/screenshots/collector.png" alt="Go2 collection console with a real RGB frame" width="760"></div>
 
-The screenshot is a static collector-console preview with a real RGB frame inserted into the camera panel. The corresponding first-person RGB capture is shown as both an inline GIF and a playable MP4.
+The camera panel is filled with a real RGB frame from a repaired Go2 collection session. The first-person capture sequence is shown directly below.
 
-
+<div align="center"><img src="media/previews/go2_first_person_rgb_capture.gif" alt="first-person RGB capture" width="430"></div>
 <div align="center"><video controls muted loop width="680"><source src="media/real/go2_first_person_rgb_capture.mp4" type="video/mp4"></video></div>
 
 ### Data visualization and review
 
-<div align="center"><img src="media/screenshots/data-action-distribution.png" alt="action distribution" width="420"> <img src="media/screenshots/data-episode-length.png" alt="episode lengths" width="420"></div>
+<div align="center"><img src="media/screenshots/random_samples_10.png" alt="dataset inspection report with random samples" width="860"></div>
 
-<div align="center"><img src="media/screenshots/simulation-review.png" alt="data review interface" width="860"></div>
+This is the dataset inspection report used for visual quality review.
 
-The offline review console is populated with real capture thumbnails for offline inspection.
+### Dual-box instruction following · SmolVLA visual-language PoC
 
-### Current workspace simulation environment
+Four workspace rollouts cover different language targets and target placements. The paired instruction and target identity are shown under each preview.
 
-<div align="center"><img src="media/simulation/dual_box_scene.png" alt="dual-box simulation scene" width="420"> <img src="media/simulation/navila_benchmark_scene.png" alt="NaVILA benchmark scene" width="420"></div>
+<table><tr>
+<td align="center"><img src="media/previews/dual_box_red_a.gif" alt="red target variant A" width="300"><br><sub>“go to red” · red target A</sub></td>
+<td align="center"><img src="media/previews/dual_box_blue_a.gif" alt="blue target variant A" width="300"><br><sub>“go to blue” · blue target A</sub></td>
+<td align="center"><img src="media/previews/dual_box_red_b.gif" alt="red target variant B" width="300"><br><sub>“go to red” · red target B</sub></td>
+<td align="center"><img src="media/previews/dual_box_blue_b.gif" alt="blue target variant B" width="300"><br><sub>“go to blue” · blue target B</sub></td>
+</tr></table>
 
-### Dual-box instruction-following experiment
+The four variants exercise language-conditioned target selection and visual target recognition through the same instruction → image → high-level velocity interface.
 
-The two clips below are paired target variants from the current workspace: A=red, B=blue to red and A=blue, B=red to blue.
-
-<div align="center"><img src="media/previews/dual_box_red_target.gif" alt="red target" width="360"> <img src="media/previews/dual_box_blue_target.gif" alt="blue target" width="360"></div>
-<div align="center"><video controls muted loop width="420"><source src="media/simulation/dual_box_red_target.mp4" type="video/mp4"></video> <video controls muted loop width="420"><source src="media/simulation/dual_box_blue_target.mp4" type="video/mp4"></video></div>
-
-### SmolVLA visual-language PoC
-
-<div align="center"><img src="media/previews/dual_box_policy_rollout.gif" alt="dual-box policy trace" width="420"></div>
-<div align="center"><video controls muted loop width="680"><source src="media/simulation/dual_box_policy_rollout.mp4" type="video/mp4"></video></div>
+<div align="center"><video controls muted loop width="390"><source src="media/simulation/dual_box_red_a.mp4" type="video/mp4"></video> <video controls muted loop width="390"><source src="media/simulation/dual_box_blue_a.mp4" type="video/mp4"></video></div>
 
 ### NaVILA benchmark scene
 
-<div align="center"><img src="media/previews/navila_benchmark_rollout.gif" alt="NaVILA benchmark moving rollout" width="520"></div>
+<div align="center"><img src="media/previews/navila_benchmark_moving_rollout.gif" alt="moving NaVILA benchmark scene rollout" width="520"></div>
+<div align="center"><video controls muted loop width="680"><source src="media/simulation/navila_benchmark_moving_rollout.mp4" type="video/mp4"></video></div>
 
-<div align="center"><video controls muted loop width="680"><source src="media/simulation/navila_benchmark_rollout.mp4" type="video/mp4"></video></div>
-
-The benchmark clip is a workspace-backed moving reference trace in a NaVILA-style scene. It is shown as a qualitative navigation trace, without claiming a benchmark score.
+This is a moving qualitative reference trace in a NaVILA-style scene. It is included for scene and rollout inspection without claiming a benchmark score.
 
 Run the deterministic local PoC with:
 
