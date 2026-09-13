@@ -55,15 +55,9 @@ The camera panel is filled with a real RGB frame from a repaired Go2 collection 
 <div align="center"><img src="media/previews/go2_first_person_rgb_capture.gif" alt="first-person RGB capture" width="430"></div>
 <div align="center"><video controls muted loop width="680"><source src="media/real/go2_first_person_rgb_capture.mp4" type="video/mp4"></video></div>
 
-### Data visualization and review
-
-<div align="center"><img src="media/screenshots/random_samples_10.png" alt="dataset inspection report with random samples" width="860"></div>
-
-This is the dataset inspection report used for visual quality review.
-
 ### Dual-box instruction following · SmolVLA visual-language PoC
 
-Four workspace rollouts cover different language targets and target placements. The paired instruction and target identity are shown under each preview.
+Four workspace rollouts cover both language targets and both target placements. Each preview keeps the instruction, target color, and placement variant visible together.
 
 <table><tr>
 <td align="center"><img src="media/previews/dual_box_red_a.gif" alt="red target variant A" width="300"><br><sub>“go to red” · red target A</sub></td>
@@ -74,14 +68,12 @@ Four workspace rollouts cover different language targets and target placements. 
 
 The four variants exercise language-conditioned target selection and visual target recognition through the same instruction → image → high-level velocity interface.
 
-<div align="center"><video controls muted loop width="390"><source src="media/simulation/dual_box_red_a.mp4" type="video/mp4"></video> <video controls muted loop width="390"><source src="media/simulation/dual_box_blue_a.mp4" type="video/mp4"></video></div>
-
 ### NaVILA benchmark scene
 
 <div align="center"><img src="media/previews/navila_benchmark_moving_rollout.gif" alt="moving NaVILA benchmark scene rollout" width="520"></div>
 <div align="center"><video controls muted loop width="680"><source src="media/simulation/navila_benchmark_moving_rollout.mp4" type="video/mp4"></video></div>
 
-This is a moving qualitative reference trace in a NaVILA-style scene. It is included for scene and rollout inspection without claiming a benchmark score.
+This moving qualitative reference trace is shown in the corrected camera orientation. It is included for scene and rollout inspection without claiming a benchmark score.
 
 Run the deterministic local PoC with:
 

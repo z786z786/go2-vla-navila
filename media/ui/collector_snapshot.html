@@ -1,1 +1,1838 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Go2 Collector</title><style>body{margin:0;background:#10151c;color:#eef2f7;font:16px system-ui}main{width:1180px;margin:34px auto}.top{display:flex;justify-content:space-between;background:#1b2530;padding:22px;border-radius:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.card{background:#1b2530;border:1px solid #344252;border-radius:14px;padding:18px}.camera{height:560px;background:#080b10;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}.camera img{width:100%;height:100%;object-fit:contain}.pill{background:#243b50;color:#95d7ff;padding:8px 12px;border-radius:999px}.muted{color:#9eabb9}</style></head><body><main><div class="top"><div><h1>Go2 Collector</h1><div class="muted">Recorded offline preview · real RGB capture</div></div><span class="pill">SESSION ep_000001</span></div><div class="grid"><section class="card"><h2>Front RGB</h2><div class="camera"><img src="../real/sample_frames/ep_000001.jpg" alt="real Go2 RGB frame"></div><p class="muted">Source: repaired real Go2 session · RGB frame</p></section><section class="card"><h2>Collection status</h2><p><b>Scene</b> corridor_a</p><p><b>Instruction</b> go to the target</p><p><b>Mode</b> teleoperation capture</p><p><b>Review</b> queued for operator audit</p><p class="muted">Controls are disabled in this static showcase.</p></section></div></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Go2 Collector</title>
+  <style>html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, sans-serif;
+  background: #eef2f4;
+  color: #0f1720;
+  overflow: hidden;
+}
+
+body.camera-focus-mode::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 32, 0.42);
+  backdrop-filter: blur(3px);
+  z-index: 20;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.shell {
+  position: relative;
+  height: 100dvh;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 4px;
+  display: grid;
+  gap: 4px;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.columns {
+  min-height: 0;
+  display: block;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #d8e0e6;
+  border-radius: 10px;
+  padding: 7px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  min-height: 0;
+}
+
+.summary-panel {
+  padding: 4px 6px;
+  display: grid;
+  gap: 4px;
+  align-content: start;
+}
+
+.summary-layout {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(460px, 0.95fr);
+  align-items: start;
+}
+
+.summary-status-block,
+.summary-context-block {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.title-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  align-items: start;
+  margin: 0 0 2px;
+}
+
+.summary-note {
+  margin: 0;
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+h1, h2 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.subtle {
+  margin: 0;
+  font-size: 10px;
+  color: #5a6772;
+}
+
+.summary-grid,
+.mini-grid {
+  display: grid;
+  gap: 4px;
+}
+
+.summary-grid {
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+}
+
+.status-strip {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.status-strip .item {
+  min-height: 26px;
+  padding: 2px 5px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f8fafb 0%, #eff4f7 100%);
+  border-color: #d6dfe6;
+}
+
+.status-strip .value {
+  margin-top: 0;
+  font-size: 9px;
+}
+
+.mini-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.process-grid {
+  margin-top: 0;
+}
+
+.item {
+  min-width: 0;
+  padding: 3px 5px;
+  border: 1px solid #e5eaef;
+  border-radius: 6px;
+  background: #f8fafb;
+}
+
+.label {
+  display: block;
+  font-size: 8px;
+  color: #5d6975;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.value {
+  display: block;
+  margin-top: 1px;
+  font-size: 10px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.status-strip .label,
+.compact-monitor-grid .label {
+  font-size: 6px;
+}
+
+.status-strip .value,
+.compact-monitor-grid .value,
+.camera-meta {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.compact-form {
+  display: grid;
+  gap: 4px;
+}
+
+.compact-head {
+  align-items: baseline;
+}
+
+.form-grid {
+  display: grid;
+  gap: 4px 5px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.context-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.dual-row {
+  display: grid;
+  gap: 4px 5px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+.triple-row {
+  display: grid;
+  gap: 4px 5px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
+}
+
+label {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+label span {
+  font-size: 9px;
+  color: #44505b;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  min-width: 0;
+  padding: 4px 7px;
+  border-radius: 8px;
+  border: 1px solid #cdd6dd;
+  background: #fff;
+}
+
+button {
+  cursor: pointer;
+  transition: transform 0.05s ease, filter 0.12s ease, background-color 0.12s ease;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(0.97);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(1px);
+  filter: brightness(0.9);
+}
+
+button.danger {
+  background: #b42318;
+  color: #fff;
+  border-color: #b42318;
+}
+
+button.accent {
+  background: #0f766e;
+  color: #fff;
+  border-color: #0f766e;
+}
+
+button.accent-secondary {
+  background: #dbeafe;
+  color: #12314a;
+  border-color: #93c5fd;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.actions-config {
+  margin: 0 0 6px;
+}
+
+.actions-keys button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.controls-grid button {
+  width: 100%;
+}
+
+.btn-label {
+  min-width: 0;
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #dde6ed;
+  border: 1px solid #c7d2db;
+  color: #26313a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rating-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.rating-card {
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+  padding: 7px 8px;
+  border: 1px solid #d5dde4;
+  border-radius: 10px;
+  background: #f8fafb;
+}
+
+.rating-card:disabled {
+  opacity: 0.55;
+}
+
+.rating-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #dde6ed;
+  border: 1px solid #c7d2db;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.rating-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #12314a;
+}
+
+.rating-desc {
+  font-size: 10px;
+  color: #5a6772;
+}
+
+.rating-good {
+  border-color: #99f6e4;
+  background: #f0fdfa;
+}
+
+.rating-discard {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.camera-meta {
+  font-size: 9px;
+  color: #475569;
+}
+
+.monitor-block {
+  display: grid;
+  gap: 4px;
+  align-self: start;
+}
+
+.compact-monitor-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.monitor-note {
+  min-height: 0;
+  line-height: 1.15;
+}
+
+.monitor-curves,
+.monitor-coverage {
+  display: grid;
+  gap: 6px;
+}
+
+.monitor-curves {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.monitor-coverage {
+  grid-template-columns: 1fr;
+}
+
+.curve-card,
+.coverage-card {
+  padding: 5px 6px;
+  border: 1px solid #d8e0e6;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #f8fafb 0%, #eff4f7 100%);
+}
+
+.coverage-wide {
+  grid-column: span 2;
+}
+
+.curve-head,
+.coverage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.curve-text {
+  margin: 0;
+  min-height: 34px;
+  padding: 5px 6px;
+  border-radius: 8px;
+  background: #0f1720;
+  color: #dbeafe;
+  font-size: 10px;
+  line-height: 1.1;
+  overflow: hidden;
+}
+
+.coverage-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.coverage-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  background: #dbeafe;
+  color: #1e3a5f;
+}
+
+.coverage-tag.warn {
+  background: #fee2e2;
+  color: #7f1d1d;
+}
+
+.coverage-tag.good {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.camera-head-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.ghost-btn {
+  padding: 4px 8px;
+  border-radius: 999px;
+  border-color: #bfd0dc;
+  background: #f8fafb;
+  color: #12314a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+body.camera-focus-mode {
+  overflow: hidden;
+}
+
+body.camera-focus-mode .main-camera-block {
+  position: fixed;
+  z-index: 30;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(94vw, 1400px);
+  height: min(88vh, 980px);
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 24px 60px rgba(15, 23, 32, 0.28);
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+body.camera-focus-mode .camera-frame {
+  padding: 10px;
+}
+
+body.camera-focus-mode .camera-thumb {
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: #020617;
+}
+
+body.camera-focus-mode .ghost-btn {
+  background: #12314a;
+  border-color: #12314a;
+  color: #fff;
+}
+
+.right-panel {
+  display: grid;
+  align-content: stretch;
+  align-items: stretch;
+  gap: 4px;
+  min-height: 0;
+  overflow: hidden;
+  grid-template-columns: minmax(252px, 292px) minmax(0, 1fr) minmax(232px, 272px);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "d435 camera controls"
+    "d435 camera rating"
+    "d435 camera monitor";
+}
+
+body.single-d435-rgb-mode .right-panel {
+  grid-template-columns: minmax(0, 1fr) minmax(232px, 272px);
+  grid-template-areas:
+    "camera controls"
+    "camera rating"
+    "camera monitor";
+}
+
+body.single-d435-rgb-mode .d435-block {
+  grid-area: camera;
+}
+
+body.single-d435-rgb-mode .d435-grid {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+body.single-d435-rgb-mode .d435-card {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+body.single-d435-rgb-mode .d435-frame {
+  min-height: min(58vh, 720px);
+  aspect-ratio: 4 / 3;
+}
+
+.stack-block {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  min-height: 0;
+}
+
+.controls-block {
+  grid-area: controls;
+  align-content: start;
+}
+
+.camera-block {
+  grid-area: camera;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.main-camera-block {
+  min-height: 0;
+}
+
+.d435-block {
+  grid-area: d435;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 6px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.monitor-block {
+  grid-area: monitor;
+  align-content: start;
+  align-self: start;
+  overflow: hidden;
+}
+
+.rating-block {
+  grid-area: rating;
+  align-content: start;
+  align-self: start;
+}
+
+.camera-frame {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: 4px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #101926 0%, #020617 100%);
+  overflow: hidden;
+}
+
+.camera-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #020617;
+}
+
+.main-camera-block .camera-frame {
+  aspect-ratio: 16 / 9;
+  min-height: min(58vh, 720px);
+}
+
+.d435-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.d435-card {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  min-height: 0;
+  padding: 10px;
+  border: 1px solid #d7e2ea;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 248, 251, 0.98) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.d435-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.d435-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.d435-note {
+  margin: 0;
+  min-height: 29px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #334155;
+}
+
+.d435-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid #cfd8df;
+  background: #eef4f7;
+  color: #334155;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.d435-badge.live {
+  background: #dcfce7;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.d435-badge.stale {
+  background: #fef3c7;
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+.d435-badge.waiting {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  color: #0c4a6e;
+}
+
+.d435-badge.offline {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.d435-frame {
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+  padding: 6px;
+  border-color: #d1dce5;
+}
+
+.d435-frame-color {
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0) 34%),
+    linear-gradient(180deg, #111827 0%, #020617 100%);
+}
+
+.d435-frame-depth {
+  background:
+    radial-gradient(circle at top right, rgba(14, 165, 233, 0.16) 0%, rgba(14, 165, 233, 0) 34%),
+    linear-gradient(180deg, #0f172a 0%, #020617 100%);
+}
+
+.camera-overlay {
+  position: absolute;
+  z-index: 2;
+  max-width: min(42%, 360px);
+  padding: 5px 7px;
+  border: 1px solid rgba(203, 213, 225, 0.24);
+  border-radius: 10px;
+  background: rgba(2, 6, 23, 0.56);
+  color: #f8fafc;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+  box-shadow: 0 12px 28px rgba(15, 23, 32, 0.12);
+}
+
+.camera-overlay-tight {
+  max-width: min(34%, 260px);
+}
+
+.camera-overlay-top-left {
+  top: 8px;
+  left: 8px;
+}
+
+.camera-overlay-top-right {
+  top: 8px;
+  right: 8px;
+  text-align: right;
+}
+
+.camera-overlay-bottom-left {
+  bottom: 8px;
+  left: 8px;
+}
+
+.camera-overlay-bottom-right {
+  bottom: 8px;
+  right: 8px;
+  text-align: right;
+}
+
+.camera-overlay-line + .camera-overlay-line {
+  margin-top: 3px;
+}
+
+.camera-overlay .camera-overlay-line:first-child {
+  font-weight: 700;
+}
+
+.camera-overlay-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.section-head h2 {
+  margin-bottom: 0;
+}
+
+.columns > .panel {
+  overflow: hidden;
+  height: 100%;
+}
+
+@media (max-width: 1280px) {
+  .summary-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .status-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mini-grid,
+  .form-grid,
+  .controls-grid,
+  .rating-grid,
+  .monitor-curves {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .context-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .right-panel {
+    grid-template-columns: minmax(228px, 260px) minmax(0, 1fr) minmax(210px, 236px);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "d435 camera controls"
+      "d435 camera rating"
+      "d435 camera monitor";
+  }
+
+  body.single-d435-rgb-mode .right-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 236px);
+    grid-template-areas:
+      "camera controls"
+      "camera rating"
+      "camera monitor";
+  }
+}
+
+@media (max-width: 960px) {
+  body {
+    overflow: auto;
+  }
+
+  .shell {
+    height: auto;
+  }
+
+  .title-row {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid,
+  .mini-grid,
+  .form-grid,
+  .dual-row,
+  .controls-grid,
+  .rating-grid,
+  .compact-monitor-grid,
+  .d435-grid,
+  .monitor-curves,
+  .monitor-coverage {
+    grid-template-columns: 1fr;
+  }
+
+  .triple-row {
+    grid-template-columns: 1fr;
+  }
+
+  .wide {
+    grid-column: span 1;
+  }
+
+  .coverage-wide {
+    grid-column: auto;
+  }
+
+  .right-panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas:
+      "d435"
+      "camera"
+      "controls"
+      "rating"
+      "monitor";
+  }
+
+  .camera-frame {
+    min-height: 240px;
+  }
+
+  .main-camera-block .camera-frame {
+    min-height: 280px;
+  }
+
+  .d435-frame {
+    min-height: 220px;
+  }
+
+  .camera-overlay,
+  .camera-overlay-tight {
+    max-width: calc(50% - 12px);
+  }
+}
+
+@media (max-width: 960px) {
+  body.camera-focus-mode .main-camera-block {
+    top: 8px;
+    width: calc(100vw - 16px);
+    height: calc(100vh - 16px);
+    padding: 10px;
+  }
+
+  .camera-head-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+</style>
+</head>
+<body class="single-d435-rgb-mode">
+  <main class="shell">
+    <section class="panel summary-panel">
+      <div class="summary-layout">
+        <section class="summary-status-block">
+          <div class="title-row">
+            <div>
+              <h1>Go2 Collector</h1>
+              <p class="subtle">task first, image first</p>
+            </div>
+          </div>
+          <div id="summary-grid" class="summary-grid status-strip"></div>
+          <p id="summary-note" class="summary-note subtle"></p>
+        </section>
+        <section class="summary-context-block">
+          <div class="section-head compact-head">
+            <h2>Run Context</h2>
+            <span class="subtle">场景 / 指令 / 速度上限</span>
+          </div>
+          <form id="config-form" class="compact-form">
+            <div class="form-grid context-grid">
+              <label><span>Scene</span><input id="cfg-scene-id" type="text" placeholder="ex: corridor_a" readonly disabled></label>
+              <label><span>Operator</span><input id="cfg-operator-id" type="text" placeholder="ex: op_01" readonly disabled></label>
+              <label class="wide"><span>Instruction</span><input id="cfg-instruction" type="text" placeholder="ex: go to the red door" readonly disabled></label>
+              <label><span>Task Family</span><input id="cfg-task-family" type="text" placeholder="ex: goal_navigation" readonly disabled></label>
+              <label class="wide"><span>Target</span><input id="cfg-target-description" type="text" placeholder="ex: door / person in black" readonly disabled></label>
+              <div class="wide dual-row">
+                <label><span>cmd_vx_max</span><input id="cfg-cmd-vx-max" type="number" step="0.01" placeholder="ex: 0.20" readonly disabled></label>
+                <label><span>cmd_wz_max</span><input id="cfg-cmd-wz-max" type="number" step="0.01" placeholder="ex: 0.80" readonly disabled></label>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <section class="columns">
+      <section class="panel right-panel">
+        <section class="stack-block controls-block">
+          <div class="section-head">
+            <h2>Controls</h2>
+            <span id="controls-hint" class="subtle">keyboard + web buttons</span>
+          </div>
+          <div class="actions actions-keys controls-grid">
+            <button id="start-btn"><span class="btn-label">Start</span><span class="kbd">R</span></button>
+            <button id="stop-btn"><span class="btn-label">Stop</span><span class="kbd">T</span></button>
+            <button id="discard-btn"><span class="btn-label">Discard</span><span class="kbd">ESC</span></button>
+            <button id="estop-btn" class="danger"><span class="btn-label">E-Stop</span><span class="kbd">Space</span></button>
+            <button id="clear-fault-btn"><span class="btn-label">Clear Fault</span><span class="kbd">C</span></button>
+            <button id="quit-btn"><span class="btn-label">Quit</span><span class="kbd">X</span></button>
+          </div>
+        </section>
+
+        <section class="stack-block monitor-block">
+          <div class="section-head">
+            <h2>Live Monitor</h2>
+            <span class="subtle">phase / command / label</span>
+          </div>
+          <div id="monitor-grid" class="summary-grid compact-monitor-grid"></div>
+          <p id="monitor-note" class="summary-note subtle"></p>
+        </section>
+
+        <section class="stack-block camera-block main-camera-block" hidden>
+          <div class="section-head">
+            <h2>Wide Camera</h2>
+            <div class="camera-head-actions">
+              <button id="camera-focus-btn" class="ghost-btn" type="button" aria-pressed="false">Focus View</button>
+              <div id="camera-meta" class="camera-meta">waiting for image...</div>
+            </div>
+          </div>
+          <div class="camera-frame">
+            <img id="camera-thumb" class="camera-thumb" alt="collector thumbnail">
+            <div id="camera-task-overlay" class="camera-overlay camera-overlay-top-left"></div>
+            <div id="camera-status-overlay" class="camera-overlay camera-overlay-top-right camera-overlay-tight"></div>
+            <div id="camera-controls-overlay" class="camera-overlay camera-overlay-bottom-left"></div>
+            <div id="camera-rating-overlay" class="camera-overlay camera-overlay-bottom-right camera-overlay-tight"></div>
+          </div>
+        </section>
+
+        <section class="stack-block d435-block">
+          <div class="section-head">
+            <h2>D435i RGB</h2>
+            <div id="d435-meta" class="camera-meta">等待 D435i</div>
+          </div>
+          <div class="d435-grid">
+            <div class="d435-card">
+              <div class="d435-card-head">
+                <div class="d435-copy">
+                  <div class="subtle">D435i Color</div>
+                  <p id="d435-color-note" class="d435-note">等待首帧</p>
+                </div>
+                <span id="d435-color-state" class="d435-badge waiting">等待中</span>
+              </div>
+              <div class="camera-frame d435-frame d435-frame-color">
+                <img id="d435-color-thumb" class="camera-thumb" alt="d435i color preview">
+              </div>
+            </div>
+            <div class="d435-card depth-card" hidden>
+              <div class="d435-card-head">
+                <div class="d435-copy">
+                  <div class="subtle">D435i Depth</div>
+                  <p id="d435-depth-note" class="d435-note">原始深度预览，等待首帧</p>
+                </div>
+                <span id="d435-depth-state" class="d435-badge waiting">等待中</span>
+              </div>
+              <div class="camera-frame d435-frame d435-frame-depth">
+                <img id="d435-depth-thumb" class="camera-thumb" alt="d435i depth preview">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stack-block rating-block">
+          <div class="section-head">
+            <h2>Data Rating</h2>
+            <span id="rating-hint" class="subtle">1-4 shortcuts</span>
+          </div>
+          <p class="subtle">用 1-4 直接给当前数据打分，自动映射到内部标签组合。</p>
+          <div id="rating-grid" class="rating-grid">
+            <button id="rating-1-btn" class="rating-card rating-good" type="button">
+              <span class="rating-key">1</span>
+              <span class="rating-title">好的成功示范</span>
+              <span class="rating-desc">clean + success + goal_reached</span>
+            </button>
+            <button id="rating-2-btn" class="rating-card" type="button">
+              <span class="rating-key">2</span>
+              <span class="rating-title">可用但不完美</span>
+              <span class="rating-desc">usable + partial + near_goal_stop</span>
+            </button>
+            <button id="rating-3-btn" class="rating-card" type="button">
+              <span class="rating-key">3</span>
+              <span class="rating-title">失败但有价值</span>
+              <span class="rating-desc">usable + fail + operator_stop</span>
+            </button>
+            <button id="rating-4-btn" class="rating-card rating-discard" type="button">
+              <span class="rating-key">4</span>
+              <span class="rating-title">丢弃</span>
+              <span class="rating-desc">discard</span>
+            </button>
+          </div>
+        </section>
+
+      </section>
+    </section>
+  </main>
+  <script>const summaryGrid = document.getElementById("summary-grid");
+const summaryNote = document.getElementById("summary-note");
+const actionResult = document.getElementById("action-result");
+const monitorGrid = document.getElementById("monitor-grid");
+const monitorNote = document.getElementById("monitor-note");
+const cameraThumb = document.getElementById("camera-thumb");
+const cameraMeta = document.getElementById("camera-meta");
+const cameraFocusButton = document.getElementById("camera-focus-btn");
+const cameraTaskOverlay = document.getElementById("camera-task-overlay");
+const cameraStatusOverlay = document.getElementById("camera-status-overlay");
+const cameraControlsOverlay = document.getElementById("camera-controls-overlay");
+const cameraRatingOverlay = document.getElementById("camera-rating-overlay");
+const d435ColorThumb = document.getElementById("d435-color-thumb");
+const d435DepthThumb = document.getElementById("d435-depth-thumb");
+const d435Meta = document.getElementById("d435-meta");
+const d435ColorState = document.getElementById("d435-color-state");
+const d435ColorNote = document.getElementById("d435-color-note");
+const d435DepthState = document.getElementById("d435-depth-state");
+const d435DepthNote = document.getElementById("d435-depth-note");
+const controlsHint = document.getElementById("controls-hint");
+const ratingHint = document.getElementById("rating-hint");
+const singleD435RgbMode = document.body.classList.contains("single-d435-rgb-mode");
+
+const controls = {
+  start: document.getElementById("start-btn"),
+  stop: document.getElementById("stop-btn"),
+  discard: document.getElementById("discard-btn"),
+  estop: document.getElementById("estop-btn"),
+  clearFault: document.getElementById("clear-fault-btn"),
+  quit: document.getElementById("quit-btn"),
+};
+
+const ratingButtons = {
+  "1": document.getElementById("rating-1-btn"),
+  "2": document.getElementById("rating-2-btn"),
+  "3": document.getElementById("rating-3-btn"),
+  "4": document.getElementById("rating-4-btn"),
+};
+
+const ratingPresets = {
+  "1": {
+    segment_status: "clean",
+    success: "success",
+    termination_reason: "goal_reached",
+  },
+  "2": {
+    segment_status: "usable",
+    success: "partial",
+    termination_reason: "near_goal_stop",
+  },
+  "3": {
+    segment_status: "usable",
+    success: "fail",
+    termination_reason: "operator_stop",
+  },
+  "4": {
+    segment_status: "discard",
+    success: "",
+    termination_reason: "",
+  },
+};
+
+const configFields = {
+  sceneId: document.getElementById("cfg-scene-id"),
+  operatorId: document.getElementById("cfg-operator-id"),
+  instruction: document.getElementById("cfg-instruction"),
+  taskFamily: document.getElementById("cfg-task-family"),
+  targetDescription: document.getElementById("cfg-target-description"),
+  cmdVxMax: document.getElementById("cfg-cmd-vx-max"),
+  cmdWzMax: document.getElementById("cfg-cmd-wz-max"),
+};
+
+let statusCache = null;
+let cameraStreamUrl = "";
+let cameraReconnectTimer = null;
+let cameraFocusMode = false;
+
+const STATUS_POLL_INTERVAL_MS = 300;
+const CAMERA_RECONNECT_DELAY_MS = 1000;
+const D435_COLOR_REFRESH_MS = 220;
+const D435_DEPTH_REFRESH_MS = 320;
+const D435_STALE_REFRESH_MS = 1200;
+const MONITOR_MAX_HISTORY = 120;
+const MONITOR_THRESHOLDS = {
+  turn: 0.18,
+  correction: 0.10,
+  forward: 0.10,
+  stopVx: 0.03,
+  stopWz: 0.06,
+  recoveryVx: -0.04,
+};
+const monitorState = {
+  history: [],
+};
+const d435RefreshState = {
+  color: {
+    streamUrl: "",
+    reconnectTimer: null,
+  },
+  depth: {
+    streamUrl: "",
+    reconnectTimer: null,
+  },
+};
+
+const inputHints = {
+  wireless_controller: {
+    controlsHint: "wireless controller + web buttons",
+    ratingHint: "D-pad score / 1-4",
+    motionHint: "move: D-pad / yaw: X,B",
+    actionHint: "Start begin / A stop / Y discard / R2 estop / F1 clear / F2 stand",
+    labelHint: "score: D-pad up/right/down/left = 1/2/3/4",
+    buttons: {
+      start: ["Start", "Start"],
+      stop: ["Stop", "A"],
+      discard: ["Discard", "Y"],
+      estop: ["E-Stop", "R2"],
+      clearFault: ["Clear Fault", "F1"],
+      quit: ["Quit", "Web"],
+    },
+  },
+  evdev: {
+    controlsHint: "keyboard + web buttons",
+    ratingHint: "1-4 shortcuts",
+    motionHint: "move: W/S A/D / yaw: Q/E",
+    actionHint: "R begin / T stop / ESC discard / Space estop / C clear / V stand",
+    labelHint: "score: press 1 / 2 / 3 / 4",
+    buttons: {
+      start: ["Start", "R"],
+      stop: ["Stop", "T"],
+      discard: ["Discard", "ESC"],
+      estop: ["E-Stop", "Space"],
+      clearFault: ["Clear Fault", "C"],
+      quit: ["Quit", "Web"],
+    },
+  },
+  tty: {
+    controlsHint: "keyboard + web buttons",
+    ratingHint: "1-4 shortcuts",
+    motionHint: "move: W/S A/D / yaw: Q/E",
+    actionHint: "R begin / T stop / ESC discard / Space estop / C clear / V stand",
+    labelHint: "score: press 1 / 2 / 3 / 4",
+    buttons: {
+      start: ["Start", "R"],
+      stop: ["Stop", "T"],
+      discard: ["Discard", "ESC"],
+      estop: ["E-Stop", "Space"],
+      clearFault: ["Clear Fault", "C"],
+      quit: ["Quit", "Web"],
+    },
+  },
+};
+
+function getInputHints(inputBackend) {
+  return inputHints[inputBackend] || inputHints.tty;
+}
+
+function setLog(value) {
+  if (actionResult) {
+    actionResult.textContent = value;
+  }
+}
+
+function setCameraFocusMode(enabled) {
+  cameraFocusMode = enabled;
+  document.body.classList.toggle("camera-focus-mode", enabled);
+  cameraFocusButton.textContent = enabled ? "Exit Focus" : "Focus View";
+  cameraFocusButton.setAttribute("aria-pressed", enabled ? "true" : "false");
+}
+
+function clearCameraReconnectTimer() {
+  if (cameraReconnectTimer !== null) {
+    window.clearTimeout(cameraReconnectTimer);
+    cameraReconnectTimer = null;
+  }
+}
+
+function stopCameraStream() {
+  clearCameraReconnectTimer();
+  cameraThumb.removeAttribute("src");
+  cameraThumb.hidden = true;
+  cameraStreamUrl = "";
+}
+
+function scheduleCameraReconnect() {
+  if (cameraReconnectTimer !== null || !statusCache || !statusCache.robot.image_valid) {
+    return;
+  }
+  cameraReconnectTimer = window.setTimeout(() => {
+    cameraReconnectTimer = null;
+    ensureCameraStream();
+  }, CAMERA_RECONNECT_DELAY_MS);
+}
+
+function ensureCameraStream() {
+  if (!statusCache || !statusCache.robot.image_valid) {
+    stopCameraStream();
+    return;
+  }
+
+  if (cameraStreamUrl) {
+    return;
+  }
+
+  clearCameraReconnectTimer();
+  const nextUrl = `/api/image/stream.mjpeg?t=${Date.now()}`;
+  cameraStreamUrl = nextUrl;
+  cameraThumb.src = nextUrl;
+  cameraThumb.hidden = false;
+}
+
+function setButtonHint(button, label, shortcut) {
+  const labelNode = button.querySelector(".btn-label");
+  const shortcutNode = button.querySelector(".kbd");
+  if (labelNode) {
+    labelNode.textContent = label;
+  }
+  if (shortcutNode) {
+    shortcutNode.textContent = shortcut;
+  }
+}
+
+function renderItems(target, items) {
+  target.innerHTML = items.map(([label, value]) => (
+    `<div class="item"><span class="label">${label}</span><span class="value">${value ?? "-"}</span></div>`
+  )).join("");
+}
+
+function renderOverlayLines(target, lines) {
+  if (!target) {
+    return;
+  }
+  target.replaceChildren();
+  const filteredLines = lines.filter((line) => Boolean(line));
+  target.hidden = filteredLines.length === 0;
+  filteredLines.forEach((line) => {
+    const row = document.createElement("div");
+    row.className = "camera-overlay-line";
+    row.textContent = line;
+    target.appendChild(row);
+  });
+}
+
+function fmt(value, digits = 2) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number.toFixed(digits) : "-";
+}
+
+function formatSegmentBrief(status) {
+  const durationSeconds = Number(status.collector?.segment_duration_s || 0);
+  const bufferedFrames = Number(status.collector?.buffered_frames || 0);
+  if (status.collector?.recording) {
+    return `${durationSeconds.toFixed(1)}s / ${bufferedFrames}f`;
+  }
+  if (bufferedFrames > 0) {
+    return `${bufferedFrames}f buffered`;
+  }
+  return "idle";
+}
+
+function formatTaskBrief(status) {
+  const runContext = status.run_context || {};
+  return runContext.target_description || runContext.target_type || runContext.task_family || "manual task";
+}
+
+function classifyMonitorPhase(status) {
+  const vx = Number(status.command?.vx || 0);
+  const wz = Number(status.command?.wz || 0);
+  const recording = Boolean(status.collector?.recording);
+  const faultReason = String(status.collector?.fault_reason || "");
+
+  if (faultReason || vx <= MONITOR_THRESHOLDS.recoveryVx) {
+    return { phase: "RECOVERY", motion: "recover" };
+  }
+  if (Math.abs(vx) <= MONITOR_THRESHOLDS.stopVx && Math.abs(wz) <= MONITOR_THRESHOLDS.stopWz) {
+    return { phase: recording ? "STOP" : "IDLE", motion: recording ? "hold" : "idle" };
+  }
+  if (Math.abs(wz) >= MONITOR_THRESHOLDS.turn && Math.abs(vx) <= 0.05) {
+    return {
+      phase: wz > 0 ? "TURN_LEFT" : "TURN_RIGHT",
+      motion: wz > 0 ? "left turn" : "right turn",
+    };
+  }
+  if (Math.abs(wz) >= MONITOR_THRESHOLDS.correction && Math.abs(vx) >= 0.05) {
+    return { phase: "CORRECTION", motion: "correcting" };
+  }
+  if (vx >= MONITOR_THRESHOLDS.forward) {
+    return { phase: "FORWARD", motion: "forward" };
+  }
+  return { phase: "CORRECTION", motion: "mixed" };
+}
+
+function updateMonitorState(status) {
+  const classified = classifyMonitorPhase(status);
+  const sample = {
+    timestamp: Date.now(),
+    vx: Number(status.command?.vx || 0),
+    wz: Number(status.command?.wz || 0),
+    phase: classified.phase,
+    motion: classified.motion,
+  };
+  monitorState.history.push(sample);
+  if (monitorState.history.length > MONITOR_MAX_HISTORY) {
+    monitorState.history.shift();
+  }
+  return sample;
+}
+
+async function postJson(url, body = {}) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return response.json();
+}
+
+async function postAction(url, body = {}) {
+  const result = await postJson(url, body);
+  setLog(JSON.stringify(result, null, 2));
+  await refreshStatus();
+  return result;
+}
+
+function syncConfigForm(status) {
+  const cfg = status.run_context;
+  configFields.sceneId.value = cfg.scene_id || "";
+  configFields.operatorId.value = cfg.operator_id || "";
+  configFields.instruction.value = cfg.instruction || "";
+  configFields.taskFamily.value = cfg.task_family || "";
+  configFields.targetDescription.value = cfg.target_description || cfg.target_type || "";
+  configFields.cmdVxMax.value = cfg.cmd_vx_max ?? "";
+  configFields.cmdWzMax.value = cfg.cmd_wz_max ?? "";
+}
+
+function setRatingButtonsDisabled(disabled) {
+  Object.values(ratingButtons).forEach((button) => {
+    button.disabled = disabled;
+  });
+}
+
+function describeStopPhase(stopPhase) {
+  switch (stopPhase) {
+    case "waiting_release":
+      return "release motion";
+    case "finalizing":
+      return "finalizing";
+    case "label_ready":
+      return "ready / 1-4";
+    default:
+      return stopPhase || "idle";
+  }
+}
+
+function applyInputHints(inputBackend) {
+  const hints = getInputHints(inputBackend);
+  controlsHint.textContent = hints.controlsHint;
+  ratingHint.textContent = hints.ratingHint;
+  Object.entries(hints.buttons).forEach(([name, [label, shortcut]]) => {
+    setButtonHint(controls[name], label, shortcut);
+  });
+  return hints;
+}
+
+async function submitRatingPreset(key) {
+  if (!statusCache || !statusCache.actions.can_submit_label) {
+    return;
+  }
+  const preset = ratingPresets[key];
+  if (!preset) {
+    return;
+  }
+  await postAction("/api/label/submit", preset);
+}
+
+function renderMonitor(status, hints) {
+  const current = updateMonitorState(status);
+  const segmentBrief = formatSegmentBrief(status);
+  const labelBrief = status.actions.can_submit_label ? "ready / submit score" : describeStopPhase(status.collector.stop_phase);
+  const commandBrief = `vx ${fmt(status.command.vx)} vy ${fmt(status.command.vy)} wz ${fmt(status.command.wz)}`;
+
+  renderItems(monitorGrid, [
+    ["phase", current.phase],
+    ["cmd", commandBrief],
+    ["segment", segmentBrief],
+    ["label", labelBrief],
+  ]);
+
+  if (monitorNote) {
+    if (status.collector.fault_reason) {
+      monitorNote.textContent = `fault ${status.collector.fault_reason}`;
+    } else if (status.actions.can_submit_label) {
+      monitorNote.textContent = hints.labelHint;
+    } else if (status.collector.recording) {
+      monitorNote.textContent = `recording ${segmentBrief} / keep target clearly visible`;
+    } else {
+      monitorNote.textContent = hints.motionHint;
+    }
+  }
+
+  return {
+    phase: current.phase,
+    motion: current.motion,
+    labelBrief,
+    segmentBrief,
+    commandBrief,
+  };
+}
+
+function renderCameraOverlays(status, monitorSnapshot, hints, cameraState) {
+  const taskFamily = status.run_context.task_family || "legacy_motion";
+  const instruction = status.run_context.instruction || "set instruction before recording";
+  const taskBrief = formatTaskBrief(status);
+  const captureLine = status.collector.recording
+    ? `rec ${monitorSnapshot.segmentBrief}`
+    : `capture ${status.collector.capture_state}`;
+  const safetyLine = status.collector.fault_reason
+    ? `fault ${status.collector.fault_reason}`
+    : `safety ${status.collector.safety_state} / camera ${cameraState}`;
+  const labelLine = status.actions.can_submit_label
+    ? hints.labelHint
+    : (status.collector.stop_phase && status.collector.stop_phase !== "idle"
+        ? `label ${monitorSnapshot.labelBrief}`
+        : (status.collector.recording ? "stop current segment to enter rating" : "start when task setup is ready"));
+
+  renderOverlayLines(cameraTaskOverlay, [
+    instruction,
+    `${taskFamily} / ${taskBrief}`,
+  ]);
+  renderOverlayLines(cameraStatusOverlay, [
+    `phase ${monitorSnapshot.phase} / ${monitorSnapshot.motion}`,
+    `cmd ${monitorSnapshot.commandBrief}`,
+    captureLine,
+    safetyLine,
+  ]);
+  renderOverlayLines(cameraControlsOverlay, [
+    hints.motionHint,
+    hints.actionHint,
+  ]);
+  renderOverlayLines(cameraRatingOverlay, [
+    labelLine,
+    status.actions.can_submit_label ? "web buttons 1-4 also work" : hints.ratingHint,
+  ]);
+}
+
+function formatAgeSeconds(value) {
+  const age = Number(value);
+  if (!Number.isFinite(age) || age < 0) {
+    return "-";
+  }
+  return age < 1 ? `${age.toFixed(2)}s` : `${age.toFixed(1)}s`;
+}
+
+function describeD435Reason(reason) {
+  const labels = {
+    topic_probe_failed: "话题探测失败",
+    external_topics_unavailable: "外部话题未就绪",
+  };
+  if (!reason) {
+    return "未就绪";
+  }
+  return labels[reason] || reason.split("_").join(" ");
+}
+
+function setD435Badge(node, tone, text) {
+  if (!node) {
+    return;
+  }
+  node.className = `d435-badge ${tone}`;
+  node.textContent = text;
+}
+
+function clearD435ReconnectTimer(state) {
+  if (state.reconnectTimer !== null) {
+    window.clearTimeout(state.reconnectTimer);
+    state.reconnectTimer = null;
+  }
+}
+
+function resetD435Thumb(target, state) {
+  clearD435ReconnectTimer(state);
+  target.hidden = true;
+  target.removeAttribute("src");
+  state.streamUrl = "";
+}
+
+function scheduleD435Reconnect(target, state, endpoint) {
+  if (state.reconnectTimer !== null) {
+    return;
+  }
+  state.reconnectTimer = window.setTimeout(() => {
+    state.reconnectTimer = null;
+    ensureD435Stream(target, state, endpoint);
+  }, CAMERA_RECONNECT_DELAY_MS);
+}
+
+function ensureD435Stream(target, state, endpoint) {
+  if (state.streamUrl) {
+    return;
+  }
+  clearD435ReconnectTimer(state);
+  const nextUrl = `${endpoint}?t=${Date.now()}`;
+  state.streamUrl = nextUrl;
+  target.src = nextUrl;
+  target.hidden = false;
+}
+
+function renderD435(status) {
+  const d435 = status.d435i || {};
+  if (!d435Meta || !d435ColorThumb || !d435DepthThumb) {
+    return;
+  }
+
+  if (!d435.enabled) {
+    d435Meta.textContent = "D435i 未启用";
+    setD435Badge(d435ColorState, "offline", "未启用");
+    setD435Badge(d435DepthState, "offline", "未启用");
+    if (d435ColorNote) {
+      d435ColorNote.textContent = "未打开 D435i 采集。";
+    }
+    if (d435DepthNote) {
+      d435DepthNote.textContent = "未打开 D435i 采集。";
+    }
+    resetD435Thumb(d435ColorThumb, d435RefreshState.color);
+    resetD435Thumb(d435DepthThumb, d435RefreshState.depth);
+    return;
+  }
+
+  if (d435.degraded) {
+    d435Meta.textContent = `D435i 降级：${describeD435Reason(d435.degraded_reason)}`;
+  } else if (!d435.active) {
+    d435Meta.textContent = "D435i 启动中，等待 RGB-D 话题稳定";
+  } else if (singleD435RgbMode) {
+    d435Meta.textContent = d435.color_valid
+      ? `RGB 在线 ${formatAgeSeconds(d435.color_age_s)}`
+      : "RGB 等待首帧";
+  } else {
+    const colorLine = d435.color_valid
+      ? `彩色 ${d435.color_fresh ? "在线" : "变慢"} ${formatAgeSeconds(d435.color_age_s)}`
+      : "彩色等待首帧";
+    const depthLine = d435.depth_valid
+      ? `深度 ${d435.depth_fresh ? "在线" : "变慢"} ${formatAgeSeconds(d435.depth_age_s)}`
+      : "深度等待首帧";
+    d435Meta.textContent = `${colorLine} / ${depthLine}`;
+  }
+
+  if (d435ColorState) {
+    if (d435.color_valid && d435.color_fresh) {
+      setD435Badge(d435ColorState, "live", "在线");
+    } else if (d435.color_valid) {
+      setD435Badge(d435ColorState, "stale", "帧变慢");
+    } else {
+      setD435Badge(d435ColorState, d435.degraded ? "offline" : "waiting", d435.degraded ? "异常" : (d435.active ? "等首帧" : "启动中"));
+    }
+  }
+  if (d435ColorNote) {
+    d435ColorNote.textContent = d435.color_valid
+      ? `${d435.color_fresh ? "彩色流跟随状态轮询刷新" : "彩色流已连接，当前帧稍旧"} · age ${formatAgeSeconds(d435.color_age_s)}`
+      : (d435.degraded ? `彩色流不可用：${describeD435Reason(d435.degraded_reason)}` : "等待彩色图首帧。");
+  }
+
+  if (d435DepthState) {
+    if (d435.depth_valid && d435.depth_fresh) {
+      setD435Badge(d435DepthState, "live", "在线");
+    } else if (d435.depth_valid) {
+      setD435Badge(d435DepthState, "stale", "低频更新");
+    } else {
+      setD435Badge(d435DepthState, d435.degraded ? "offline" : "waiting", d435.degraded ? "异常" : (d435.active ? "等首帧" : "启动中"));
+    }
+  }
+  if (d435DepthNote) {
+    d435DepthNote.textContent = d435.depth_valid
+      ? `${d435.depth_fresh ? "深度图缓冲后再切帧，尽量减少闪烁" : "深度流仍在线，当前帧稍旧"} · age ${formatAgeSeconds(d435.depth_age_s)}`
+      : (d435.degraded ? `深度流不可用：${describeD435Reason(d435.degraded_reason)}` : "原始深度预览等待首帧。");
+  }
+
+  if (d435.color_valid) {
+    ensureD435Stream(d435ColorThumb, d435RefreshState.color, "/api/d435i/color.mjpeg");
+  } else {
+    resetD435Thumb(d435ColorThumb, d435RefreshState.color);
+  }
+
+  if (!singleD435RgbMode && d435.depth_valid) {
+    ensureD435Stream(d435DepthThumb, d435RefreshState.depth, "/api/d435i/depth.mjpeg");
+  } else {
+    resetD435Thumb(d435DepthThumb, d435RefreshState.depth);
+  }
+}
+
+function renderStatus(status) {
+  statusCache = status;
+  const hints = applyInputHints(status.process_config.input_backend);
+  const monitorSnapshot = renderMonitor(status, hints);
+  const cameraState = status.robot.image_valid
+    ? `${Number(status.robot.image_age_s).toFixed(2)}s`
+    : "waiting";
+
+  renderItems(summaryGrid, [
+    ["task", status.run_context.task_family || "legacy_motion"],
+    ["capture", status.collector.recording ? `on ${Number(status.collector.segment_duration_s || 0).toFixed(1)}s` : status.collector.capture_state],
+    ["phase", monitorSnapshot.phase],
+    ["label", monitorSnapshot.labelBrief],
+    ["safety", status.collector.safety_state],
+    ["target", formatTaskBrief(status)],
+  ]);
+
+  const summaryHints = [];
+  if (status.run_context.instruction) {
+    summaryHints.push(status.run_context.instruction);
+  }
+  if (status.collector.fault_reason) {
+    summaryHints.push(`fault ${status.collector.fault_reason}`);
+  } else if (status.collector.stop_phase && status.collector.stop_phase !== "idle") {
+    summaryHints.push(`label ${describeStopPhase(status.collector.stop_phase)}`);
+  } else {
+    summaryHints.push(`camera ${cameraState}`);
+  }
+  summaryNote.textContent = summaryHints.join("  |  ");
+
+  syncConfigForm(status);
+
+  controls.start.disabled = !status.actions.can_start_recording;
+  controls.stop.disabled = !status.actions.can_stop_recording;
+  controls.discard.disabled = !status.actions.can_discard_segment;
+  controls.estop.disabled = !status.actions.can_estop;
+  controls.clearFault.disabled = !status.actions.can_clear_fault;
+  setRatingButtonsDisabled(!status.actions.can_submit_label);
+
+  if (!singleD435RgbMode && status.robot.image_valid) {
+    if (cameraReconnectTimer !== null) {
+      cameraThumb.hidden = true;
+      cameraMeta.textContent = "stream reconnecting...";
+    } else if (Number(status.robot.image_age_s) > 1.5) {
+      stopCameraStream();
+      cameraMeta.textContent = "stream stalled, reconnecting...";
+      scheduleCameraReconnect();
+    } else {
+      ensureCameraStream();
+      cameraThumb.hidden = false;
+      cameraMeta.textContent = status.process_config.preview_mode
+        ? `image age ${Number(status.robot.image_age_s).toFixed(2)}s / preview stream`
+        : `image age ${Number(status.robot.image_age_s).toFixed(2)}s / live stream`;
+    }
+  } else {
+    stopCameraStream();
+    if (cameraMeta) {
+      cameraMeta.textContent = "waiting for image...";
+    }
+  }
+
+  if (!singleD435RgbMode) {
+    renderCameraOverlays(status, monitorSnapshot, hints, cameraState);
+  }
+  renderD435(status);
+}
+
+async function refreshStatus() {
+  try {
+    const response = await fetch("/api/status");
+    const status = await response.json();
+    renderStatus(status);
+  } catch (error) {
+    setLog(String(error));
+  }
+}
+
+cameraThumb.addEventListener("load", () => {
+  clearCameraReconnectTimer();
+});
+
+cameraThumb.addEventListener("error", () => {
+  cameraMeta.textContent = "stream reconnecting...";
+  cameraStreamUrl = "";
+  scheduleCameraReconnect();
+});
+
+d435ColorThumb.addEventListener("error", () => {
+  d435RefreshState.color.streamUrl = "";
+  scheduleD435Reconnect(d435ColorThumb, d435RefreshState.color, "/api/d435i/color.mjpeg");
+});
+
+d435DepthThumb.addEventListener("error", () => {
+  d435RefreshState.depth.streamUrl = "";
+  scheduleD435Reconnect(d435DepthThumb, d435RefreshState.depth, "/api/d435i/depth.mjpeg");
+});
+
+controls.start.addEventListener("click", async () => {
+  await postAction("/api/control/start");
+});
+controls.stop.addEventListener("click", async () => {
+  await postAction("/api/control/stop");
+});
+controls.discard.addEventListener("click", async () => {
+  await postAction("/api/control/discard");
+});
+controls.estop.addEventListener("click", async () => {
+  await postAction("/api/control/estop");
+});
+controls.clearFault.addEventListener("click", async () => {
+  await postAction("/api/control/clear-fault");
+});
+controls.quit.addEventListener("click", async () => {
+  const result = await postJson("/api/control/quit");
+  setLog(JSON.stringify(result, null, 2));
+});
+
+Object.entries(ratingButtons).forEach(([key, button]) => {
+  button.addEventListener("click", async () => {
+    await submitRatingPreset(key);
+  });
+});
+
+document.addEventListener("keydown", async (event) => {
+  if (event.repeat) {
+    return;
+  }
+
+  if (event.key === "Escape" && cameraFocusMode) {
+    event.preventDefault();
+    setCameraFocusMode(false);
+    return;
+  }
+
+  const activeTag = document.activeElement ? document.activeElement.tagName : "";
+  if (activeTag === "INPUT" || activeTag === "TEXTAREA" || activeTag === "SELECT") {
+    return;
+  }
+
+  if (statusCache && statusCache.actions.can_submit_label && ["1", "2", "3", "4"].includes(event.key)) {
+    event.preventDefault();
+    await submitRatingPreset(event.key);
+  }
+});
+
+cameraFocusButton.addEventListener("click", () => {
+  setCameraFocusMode(!cameraFocusMode);
+});
+
+cameraThumb.addEventListener("dblclick", () => {
+  setCameraFocusMode(!cameraFocusMode);
+});
+
+setInterval(refreshStatus, STATUS_POLL_INTERVAL_MS);
+refreshStatus();
+</script>
+<script>
+// Offline showcase data: preserve the real console layout and controls while
+// replacing only network-fed fields with a captured Go2 RGB frame.
+const camera=document.getElementById('camera-thumb');
+const mainCamera=document.querySelector('.main-camera-block');
+if (mainCamera) mainCamera.hidden=false;
+const d435=document.querySelector('.d435-block'); if (d435) d435.hidden=true;
+if (camera) camera.src='../real/sample_frames/ep_000001.jpg';
+for (const [id,value] of Object.entries({'cfg-scene-id':'corridor_a','cfg-operator-id':'operator_01','cfg-instruction':'go to the target','cfg-task-family':'goal_navigation','cfg-target-description':'RGB capture target','cfg-cmd-vx-max':'0.20','cfg-cmd-wz-max':'0.80'})) { const e=document.getElementById(id); if(e)e.value=value; }
+const sg=document.getElementById('summary-grid'); if(sg) sg.innerHTML='<div class="summary-card"><strong>READY</strong><span>recorded session</span></div><div class="summary-card"><strong>RGB</strong><span>front camera</span></div><div class="summary-card"><strong>5 Hz</strong><span>capture rate</span></div>';
+const mg=document.getElementById('monitor-grid'); if(mg) mg.innerHTML='<div class="summary-card"><strong>RUNNING</strong><span>teleoperation</span></div><div class="summary-card"><strong>0.20 m/s</strong><span>vx limit</span></div><div class="summary-card"><strong>REVIEW</strong><span>pending rating</span></div>';
+for (const [id,text] of Object.entries({'camera-meta':'real RGB frame · offline preview','camera-task-overlay':'go to the target','camera-status-overlay':'CAPTURING','camera-controls-overlay':'START  ·  STOP  ·  E-STOP','camera-rating-overlay':'RATE 1–4'})) { const e=document.getElementById(id); if(e)e.textContent=text; }
+const note=document.getElementById('summary-note'); if(note)note.textContent='Offline snapshot populated from a real Go2 collection session';
+</script></body>
+</html>
