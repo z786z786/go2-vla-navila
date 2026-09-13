@@ -41,3 +41,36 @@ The demo runs entirely on CPU and writes generated PPM observations plus a versi
 ## Licensing
 
 Project additions are Apache-2.0. Files imported from upstream projects retain their upstream licensing and notices in `licenses/` and `THIRD_PARTY_NOTICES.md`. Cite SmolVLA, NaVILA, LLaDA-V, SigLIP2, R2R/VLNCE, Matterport3D, Isaac Sim, and Unitree SDK when using corresponding components.
+
+## Visual demonstrations
+
+The repository includes source-backed demonstrations from the collection platform.
+
+### Real Go2 collection platform
+
+[Open the Go2 teleoperation console](media/ui/go2_teleop_console.html)
+
+These sample frames are operator-collected real-session data. They show the sensor stream and collection platform, not a claimed successful autonomous navigation run.
+
+| Real session sample | Preview |
+|---|---|
+| Episode 1 | ![real episode 1](media/real/sample_frames/ep_000001.jpg) |
+| Episode 2 | ![real episode 2](media/real/sample_frames/ep_000002.jpg) |
+| Episode 3 | ![real episode 3](media/real/sample_frames/ep_000003.jpg) |
+
+### Simulation and dual-box PoC
+
+[Open the simulation dataset review](media/real/simulation_dataset_review.html)
+
+These compact Isaac Sim clips are expert/collection traces: the dual-box-style expected-success rollout plus door and suitcase instruction examples. They are qualitative PoC assets, not measured model-success claims.
+
+- [Dual-box expert rollout](media/simulation/two_box_expert_rollout.mp4)
+- [Door instruction expert rollout](media/simulation/door_expert_rollout.mp4)
+- [Suitcase instruction expert rollout](media/simulation/suitcase_expert_rollout.mp4)
+- [Visual-language policy trace](media/simulation/visual_language_policy_trace.mp4)
+
+The SmolVLA PoC path uses the same instruction → visual observation → high-level velocity action interface:
+
+```bash
+PYTHONPATH=. python -m go2_nav.cli demo --episodes 2 --output artifacts/two_box
+```
