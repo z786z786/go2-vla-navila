@@ -1,0 +1,196 @@
+scene_config: scene_local_office_room.yaml
+robot_config: robot_go2_camera.yaml
+domain_randomization_config: domain_randomization.yaml
+packing_config: packing.yaml
+
+runtime:
+  run_name: dual_target_contrast_room_local_smoke
+  dataset_name: go2_isaac_dual_target_contrast_room_local_smoke
+  headless: true
+  auto_pack: false
+  num_episodes: 12
+  max_steps_per_episode: 160
+  pre_roll_frames: 3
+  post_success_settle_frames: 6
+  seed: 0
+  output_dir: ../data/sim_sessions/dual_target_contrast_room_local_smoke_seed0
+  packed_output_dir: ../data/pipeline_dual_target_contrast_room_local_smoke_seed0
+
+sim:
+  device: cuda:0
+  physics_dt: 0.01
+  control_dt: 0.05
+  warmup_steps_after_reset: 8
+  post_reset_settle_steps: 10
+  stabilization_max_steps: 64
+  stabilization_required_frames: 3
+  stabilization_max_frame_delta: 0.015
+  stabilization_min_mean: 0.05
+  stabilization_min_std: 0.02
+
+data:
+  image_format: jpg
+  jpeg_quality: 95
+  depth_format: png
+  depth_scale: 1000.0
+  chunk_len: 4
+  state_fields: [vx, vy, vz]
+  train_action_fields: [vx, wz]
+  raw_action_fields: [vx, vy, wz]
+
+camera:
+  enable_depth: true
+  depth_data_type: distance_to_image_plane
+  depth_min: 0.20
+  depth_max: 10.0
+  depth_invalid_fill_value: 0.0
+
+controller:
+  vx_min: -0.1
+  vx_max: 0.7
+  wz_min: -1.0
+  wz_max: 1.0
+  k_vx: 0.74
+  k_wz: 2.30
+  goal_tolerance: 0.40
+  robot_goal_clearance_radius: 0.20
+  target_stop_extra_margin: 0.08
+  box_target_stop_extent_mode: min
+  box_target_stop_extra_margin: 0.04
+  success_acceptance_margin: 0.12
+  goal_stop_buffer: 0.06
+  goal_stop_heading_deg: 18.0
+  near_goal_slow_radius: 0.65
+  near_goal_heading_gain: 0.55
+  startup_heading_threshold_deg: 8.0
+  startup_wz_lead_steps: 2
+  startup_vx_hold_steps: 1
+  startup_vx_cap: 0.08
+  startup_min_wz: 0.30
+  success_hold_steps: 2
+  success_stop_vx_threshold: 0.08
+  success_stop_wz_threshold: 0.16
+  turn_in_place_angle_deg: 45.0
+  slow_angle_deg: 14.0
+  min_turning_wz: 0.42
+  vx_acc_limit: 1.2
+  vx_dec_limit: 2.6
+  wz_acc_limit: 4.5
+  wz_dec_limit: 8.0
+
+scene:
+  targets:
+    - id: door_target
+      class: door
+      color_name: orange
+      shape: door
+      label: door
+      description: orange door
+      visual:
+        size: [0.12, 1.00, 1.10]
+        color: [0.96, 0.42, 0.16]
+        height: 0.55
+    - id: suitcase_target
+      class: dark_gray_suitcase
+      color_name: dark_gray
+      shape: box
+      label: dark gray suitcase
+      description: dark gray suitcase
+      visual:
+        size: [0.30, 0.50, 0.70]
+        color: [0.20, 0.20, 0.20]
+        height: 0.35
+
+task:
+  task_id: goal_navigation
+  scene_mode: dual_target_contrast_room_local_smoke
+  target_catalog:
+    - id: door_target
+      class: door
+      color: orange
+      shape: door
+      label: door
+      description: orange door
+    - id: suitcase_target
+      class: dark_gray_suitcase
+      color: dark_gray
+      shape: box
+      label: dark gray suitcase
+      description: dark gray suitcase
+  contrast_pairs:
+    enabled: true
+    target_ids: [door_target, suitcase_target]
+  instruction_templates:
+    - id: go_to_target
+      text: go to the {target_label}
+    - id: move_to_target
+      text: move to the {target_label}
+    - id: navigate_to_target
+      text: navigate to the {target_label}
+    - id: approach_target
+      text: approach the {target_label}
+  goal_distance_range: [1.8, 3.0]
+  goal_region_resample_attempts: 320
+  max_resample_attempts: 320
+  default_split_hint: train_candidate
+  min_target_separation: 1.1
+  workspace:
+    x: [-4.0, 4.0]
+    y: [-2.8, 2.8]
+  visibility_curriculum:
+    visible_early_ratio: 1.0
+    visible_after_small_turn_ratio: 0.0
+    search_ratio: 0.0
+  visibility_probe:
+    horizon_steps: 10
+    min_depth: 0.40
+    min_pixel_ratio: 0.0025
+    horizontal_margin_deg: 3.5
+    vertical_margin_deg: 3.5
+  layout_templates:
+    - id: visible_split_lr
+      visibility_buckets: [visible_early]
+      spawn_region: {x: [-1.8, -1.2], y: [-0.3, 0.3]}
+      visibility_reference_target_ids: [door_target, suitcase_target]
+      min_target_separation: 1.2
+      yaw_jitter_deg: 1.0
+      target_slots:
+        door_target:
+          region: {x: [0.8, 1.4], y: [-1.2, -0.6]}
+          distance_range: [1.8, 3.0]
+        suitcase_target:
+          region: {x: [0.8, 1.4], y: [0.6, 1.2]}
+          distance_range: [1.8, 3.0]
+    - id: visible_split_rl
+      visibility_buckets: [visible_early]
+      spawn_region: {x: [-1.8, -1.2], y: [-0.3, 0.3]}
+      visibility_reference_target_ids: [door_target, suitcase_target]
+      min_target_separation: 1.2
+      yaw_jitter_deg: 1.0
+      target_slots:
+        door_target:
+          region: {x: [0.8, 1.4], y: [0.6, 1.2]}
+          distance_range: [1.8, 3.0]
+        suitcase_target:
+          region: {x: [0.8, 1.4], y: [-1.2, -0.6]}
+          distance_range: [1.8, 3.0]
+
+packing:
+  chunk_len: 4
+  min_episode_steps: 8
+  require_success: true
+  drop_collision_episodes: true
+  drop_fall_episodes: false
+  min_progress_distance: 0.25
+  turning_threshold: 0.1
+  require_visibility_metadata: true
+  allow_search_episodes: false
+  visibility_sample_quota:
+    enabled: true
+    visible_early_ratio: 1.0
+    visible_after_small_turn_ratio: 0.0
+    search_ratio: 0.0
+  split:
+    train_ratio: 0.8
+    val_ratio: 0.1
+    test_ratio: 0.1

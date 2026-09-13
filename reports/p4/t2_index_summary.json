@@ -1,0 +1,416 @@
+{
+  "action_distribution": {
+    "action_counts": {
+      "I think I should stop because I have finished the instruction.": 32457,
+      "The next action is move forward 25 cm.": 37376,
+      "The next action is move forward 50 cm.": 28047,
+      "The next action is move forward 75 cm.": 106026,
+      "The next action is turn left 15 degree.": 31465,
+      "The next action is turn left 30 degree.": 15348,
+      "The next action is turn left 45 degree.": 31510,
+      "The next action is turn right 15 degree.": 31199,
+      "The next action is turn right 30 degree.": 14436,
+      "The next action is turn right 45 degree.": 26030
+    },
+    "majority_class": {
+      "action": "The next action is move forward 75 cm.",
+      "count": 106026,
+      "share_fraction": 0.2995981847671902,
+      "share_percent": 29.95981847671902
+    },
+    "total_record_count": 353894
+  },
+  "action_id_mapping": {
+    "0": "I think I should stop because I have finished the instruction.",
+    "1": "The next action is move forward 25 cm.",
+    "2": "The next action is move forward 50 cm.",
+    "3": "The next action is move forward 75 cm.",
+    "4": "The next action is turn left 15 degree.",
+    "5": "The next action is turn left 30 degree.",
+    "6": "The next action is turn left 45 degree.",
+    "7": "The next action is turn right 15 degree.",
+    "8": "The next action is turn right 30 degree.",
+    "9": "The next action is turn right 45 degree."
+  },
+  "distinct_video_count": 10819,
+  "distinct_video_id_count": 288594,
+  "frame_path_reconstruction": {
+    "frame_count_total_expected": 601125,
+    "frame_existence_verification": {
+      "reason": "P4-T2 did not read extracted frames; P4-T1 owns frame existence verification per dispatch",
+      "status": "MISSING"
+    },
+    "frame_file_paths_stored_in_index": false,
+    "index_fields": "frames_first is `<video>/frame_0.jpg`; frames_last is `<video>/frame_<n_frames-1>.jpg`; no full frame list is stored",
+    "source_annotation_rule": "for each row, source frame paths are exactly `<video>/frame_<i>.jpg` for integer i in [0, n_frames-1]",
+    "unpacked_absolute_rule": "/mnt/wxh/go2_short_vln/data/navila_dataset/R2R/train/<video>/frame_<i>.jpg"
+  },
+  "generated_at": "2026-09-12T15:34:26.497332+00:00",
+  "generator_command": "python3 /home/wxh/go2_short_vln/scripts/p4_build_navila_index.py",
+  "index_artifact": {
+    "bytes": 222781783,
+    "line_count": 353894,
+    "path": "/mnt/wxh/go2_short_vln/data/navila_dataset/R2R/index/t2_records.jsonl",
+    "sha256": "d894855183543d230a4802701a84aa3d430be9ad55b52d6dc5b6827829b7a09f",
+    "sha256_sidecar": "/mnt/wxh/go2_short_vln/data/navila_dataset/R2R/index/t2_records.sha256",
+    "status": "available"
+  },
+  "inputs": {
+    "/mnt/wxh/go2_short_vln/data/r2r_vlnce/R2R_VLNCE_v1-3/train/train.json.gz": {
+      "bytes": 1772932,
+      "sha256": "f411066b53f96d1241c045fd05a6a9e01b484c2ed9369f5b6f41806969056a34"
+    },
+    "/mnt/wxh/go2_short_vln/downloads/navila_probe/R2R_annotations.json": {
+      "bytes": 317267756,
+      "sha256": "3587c020cc03807cfc03c454bcbb37a3d409139e125e1ea047fa1fbcf8c4cc1a"
+    }
+  },
+  "majority_class_share_percent": 29.95981847671902,
+  "missing": [
+    {
+      "item": "/mnt/wxh/go2_short_vln/data/navila_dataset/R2R/train/<video>/frame_<i>.jpg existence",
+      "reason": "not checked by P4-T2 because the dispatch assigns frame existence to P4-T1 and forbids reading extracted frames",
+      "status": "MISSING"
+    }
+  ],
+  "multiplicity": {
+    "is_oversampled_copy_definition": "true exactly when multiplicity > 1; all records of an overrepresented video retain that video's multiplicity",
+    "records_by_multiplicity": {
+      "1": 234113,
+      "2": 87324,
+      "3": 32457
+    },
+    "videos_by_multiplicity": {
+      "1": 234113,
+      "2": 43662,
+      "3": 10819
+    }
+  },
+  "record_count": 353894,
+  "scene_count": 61,
+  "scene_distribution": {
+    "mp3d/17DRP5sb8fy/17DRP5sb8fy.glb": {
+      "record_count": 1716,
+      "scene_stem": "17DRP5sb8fy",
+      "video_count": 75
+    },
+    "mp3d/1LXtFkjw3qL/1LXtFkjw3qL.glb": {
+      "record_count": 4731,
+      "scene_stem": "1LXtFkjw3qL",
+      "video_count": 162
+    },
+    "mp3d/1pXnuDYAj8r/1pXnuDYAj8r.glb": {
+      "record_count": 9199,
+      "scene_stem": "1pXnuDYAj8r",
+      "video_count": 256
+    },
+    "mp3d/29hnd4uzFmX/29hnd4uzFmX.glb": {
+      "record_count": 4416,
+      "scene_stem": "29hnd4uzFmX",
+      "video_count": 192
+    },
+    "mp3d/2n8kARJN3HM/2n8kARJN3HM.glb": {
+      "record_count": 8822,
+      "scene_stem": "2n8kARJN3HM",
+      "video_count": 268
+    },
+    "mp3d/5LpN3gDmAk7/5LpN3gDmAk7.glb": {
+      "record_count": 7785,
+      "scene_stem": "5LpN3gDmAk7",
+      "video_count": 243
+    },
+    "mp3d/5q7pvUzZiYa/5q7pvUzZiYa.glb": {
+      "record_count": 4224,
+      "scene_stem": "5q7pvUzZiYa",
+      "video_count": 150
+    },
+    "mp3d/759xd9YjKW5/759xd9YjKW5.glb": {
+      "record_count": 8070,
+      "scene_stem": "759xd9YjKW5",
+      "video_count": 210
+    },
+    "mp3d/7y3sRwLe3Va/7y3sRwLe3Va.glb": {
+      "record_count": 6029,
+      "scene_stem": "7y3sRwLe3Va",
+      "video_count": 196
+    },
+    "mp3d/82sE5b5pLXE/82sE5b5pLXE.glb": {
+      "record_count": 6168,
+      "scene_stem": "82sE5b5pLXE",
+      "video_count": 195
+    },
+    "mp3d/8WUmhLawc2A/8WUmhLawc2A.glb": {
+      "record_count": 9057,
+      "scene_stem": "8WUmhLawc2A",
+      "video_count": 279
+    },
+    "mp3d/B6ByNegPMKs/B6ByNegPMKs.glb": {
+      "record_count": 6849,
+      "scene_stem": "B6ByNegPMKs",
+      "video_count": 252
+    },
+    "mp3d/D7G3Y4RVNrH/D7G3Y4RVNrH.glb": {
+      "record_count": 833,
+      "scene_stem": "D7G3Y4RVNrH",
+      "video_count": 34
+    },
+    "mp3d/D7N2EKCX4Sj/D7N2EKCX4Sj.glb": {
+      "record_count": 7692,
+      "scene_stem": "D7N2EKCX4Sj",
+      "video_count": 201
+    },
+    "mp3d/E9uDoFAP3SH/E9uDoFAP3SH.glb": {
+      "record_count": 10578,
+      "scene_stem": "E9uDoFAP3SH",
+      "video_count": 265
+    },
+    "mp3d/EDJbREhghzL/EDJbREhghzL.glb": {
+      "record_count": 7482,
+      "scene_stem": "EDJbREhghzL",
+      "video_count": 249
+    },
+    "mp3d/GdvgFV5R1Z5/GdvgFV5R1Z5.glb": {
+      "record_count": 459,
+      "scene_stem": "GdvgFV5R1Z5",
+      "video_count": 21
+    },
+    "mp3d/HxpKQynjfin/HxpKQynjfin.glb": {
+      "record_count": 357,
+      "scene_stem": "HxpKQynjfin",
+      "video_count": 15
+    },
+    "mp3d/JF19kD82Mey/JF19kD82Mey.glb": {
+      "record_count": 2250,
+      "scene_stem": "JF19kD82Mey",
+      "video_count": 63
+    },
+    "mp3d/JeFG25nYj2p/JeFG25nYj2p.glb": {
+      "record_count": 8139,
+      "scene_stem": "JeFG25nYj2p",
+      "video_count": 279
+    },
+    "mp3d/JmbYfDe2QKZ/JmbYfDe2QKZ.glb": {
+      "record_count": 6624,
+      "scene_stem": "JmbYfDe2QKZ",
+      "video_count": 210
+    },
+    "mp3d/PX4nDJXEHrG/PX4nDJXEHrG.glb": {
+      "record_count": 8421,
+      "scene_stem": "PX4nDJXEHrG",
+      "video_count": 240
+    },
+    "mp3d/Pm6F8kyY3z2/Pm6F8kyY3z2.glb": {
+      "record_count": 612,
+      "scene_stem": "Pm6F8kyY3z2",
+      "video_count": 24
+    },
+    "mp3d/PuKPg4mmafe/PuKPg4mmafe.glb": {
+      "record_count": 2934,
+      "scene_stem": "PuKPg4mmafe",
+      "video_count": 57
+    },
+    "mp3d/S9hNv5qa7GM/S9hNv5qa7GM.glb": {
+      "record_count": 7296,
+      "scene_stem": "S9hNv5qa7GM",
+      "video_count": 246
+    },
+    "mp3d/SN83YJsR3w2/SN83YJsR3w2.glb": {
+      "record_count": 7673,
+      "scene_stem": "SN83YJsR3w2",
+      "video_count": 232
+    },
+    "mp3d/ULsKaCPVFJR/ULsKaCPVFJR.glb": {
+      "record_count": 6387,
+      "scene_stem": "ULsKaCPVFJR",
+      "video_count": 234
+    },
+    "mp3d/Uxmj2M2itWa/Uxmj2M2itWa.glb": {
+      "record_count": 8508,
+      "scene_stem": "Uxmj2M2itWa",
+      "video_count": 228
+    },
+    "mp3d/V2XKFyX4ASd/V2XKFyX4ASd.glb": {
+      "record_count": 6717,
+      "scene_stem": "V2XKFyX4ASd",
+      "video_count": 198
+    },
+    "mp3d/VFuaQ6m2Qom/VFuaQ6m2Qom.glb": {
+      "record_count": 4923,
+      "scene_stem": "VFuaQ6m2Qom",
+      "video_count": 150
+    },
+    "mp3d/VLzqgDo317F/VLzqgDo317F.glb": {
+      "record_count": 6411,
+      "scene_stem": "VLzqgDo317F",
+      "video_count": 162
+    },
+    "mp3d/VVfe2KiqLaN/VVfe2KiqLaN.glb": {
+      "record_count": 3945,
+      "scene_stem": "VVfe2KiqLaN",
+      "video_count": 105
+    },
+    "mp3d/Vvot9Ly1tCj/Vvot9Ly1tCj.glb": {
+      "record_count": 8832,
+      "scene_stem": "Vvot9Ly1tCj",
+      "video_count": 276
+    },
+    "mp3d/VzqfbhrpDEA/VzqfbhrpDEA.glb": {
+      "record_count": 7272,
+      "scene_stem": "VzqfbhrpDEA",
+      "video_count": 237
+    },
+    "mp3d/XcA2TqTSSAj/XcA2TqTSSAj.glb": {
+      "record_count": 570,
+      "scene_stem": "XcA2TqTSSAj",
+      "video_count": 18
+    },
+    "mp3d/YmJkqBEsHnH/YmJkqBEsHnH.glb": {
+      "record_count": 198,
+      "scene_stem": "YmJkqBEsHnH",
+      "video_count": 9
+    },
+    "mp3d/ZMojNkEp431/ZMojNkEp431.glb": {
+      "record_count": 7743,
+      "scene_stem": "ZMojNkEp431",
+      "video_count": 225
+    },
+    "mp3d/aayBHfsNo7d/aayBHfsNo7d.glb": {
+      "record_count": 4242,
+      "scene_stem": "aayBHfsNo7d",
+      "video_count": 145
+    },
+    "mp3d/ac26ZMwG7aT/ac26ZMwG7aT.glb": {
+      "record_count": 10650,
+      "scene_stem": "ac26ZMwG7aT",
+      "video_count": 273
+    },
+    "mp3d/b8cTxDM8gDG/b8cTxDM8gDG.glb": {
+      "record_count": 4566,
+      "scene_stem": "b8cTxDM8gDG",
+      "video_count": 144
+    },
+    "mp3d/cV4RVeZvu5T/cV4RVeZvu5T.glb": {
+      "record_count": 4338,
+      "scene_stem": "cV4RVeZvu5T",
+      "video_count": 147
+    },
+    "mp3d/dhjEzFoUFzH/dhjEzFoUFzH.glb": {
+      "record_count": 1116,
+      "scene_stem": "dhjEzFoUFzH",
+      "video_count": 33
+    },
+    "mp3d/e9zR4mvMWw7/e9zR4mvMWw7.glb": {
+      "record_count": 4188,
+      "scene_stem": "e9zR4mvMWw7",
+      "video_count": 141
+    },
+    "mp3d/gTV8FGcVJC9/gTV8FGcVJC9.glb": {
+      "record_count": 7693,
+      "scene_stem": "gTV8FGcVJC9",
+      "video_count": 202
+    },
+    "mp3d/gZ6f7yhEvPG/gZ6f7yhEvPG.glb": {
+      "record_count": 57,
+      "scene_stem": "gZ6f7yhEvPG",
+      "video_count": 3
+    },
+    "mp3d/i5noydFURQK/i5noydFURQK.glb": {
+      "record_count": 5223,
+      "scene_stem": "i5noydFURQK",
+      "video_count": 177
+    },
+    "mp3d/jh4fc5c5qoQ/jh4fc5c5qoQ.glb": {
+      "record_count": 5184,
+      "scene_stem": "jh4fc5c5qoQ",
+      "video_count": 147
+    },
+    "mp3d/kEZ7cmS4wCh/kEZ7cmS4wCh.glb": {
+      "record_count": 7388,
+      "scene_stem": "kEZ7cmS4wCh",
+      "video_count": 196
+    },
+    "mp3d/mJXqzFtmKg4/mJXqzFtmKg4.glb": {
+      "record_count": 7470,
+      "scene_stem": "mJXqzFtmKg4",
+      "video_count": 267
+    },
+    "mp3d/p5wJjkQkbXX/p5wJjkQkbXX.glb": {
+      "record_count": 7727,
+      "scene_stem": "p5wJjkQkbXX",
+      "video_count": 202
+    },
+    "mp3d/pRbA3pwrgk9/pRbA3pwrgk9.glb": {
+      "record_count": 4800,
+      "scene_stem": "pRbA3pwrgk9",
+      "video_count": 135
+    },
+    "mp3d/qoiz87JEwZ2/qoiz87JEwZ2.glb": {
+      "record_count": 5559,
+      "scene_stem": "qoiz87JEwZ2",
+      "video_count": 174
+    },
+    "mp3d/r1Q1Z4BcV1o/r1Q1Z4BcV1o.glb": {
+      "record_count": 8439,
+      "scene_stem": "r1Q1Z4BcV1o",
+      "video_count": 222
+    },
+    "mp3d/r47D5H71a5s/r47D5H71a5s.glb": {
+      "record_count": 8871,
+      "scene_stem": "r47D5H71a5s",
+      "video_count": 279
+    },
+    "mp3d/rPc6DW4iMge/rPc6DW4iMge.glb": {
+      "record_count": 6537,
+      "scene_stem": "rPc6DW4iMge",
+      "video_count": 231
+    },
+    "mp3d/s8pcmisQ38h/s8pcmisQ38h.glb": {
+      "record_count": 3186,
+      "scene_stem": "s8pcmisQ38h",
+      "video_count": 84
+    },
+    "mp3d/sKLMLpTHeUy/sKLMLpTHeUy.glb": {
+      "record_count": 7074,
+      "scene_stem": "sKLMLpTHeUy",
+      "video_count": 237
+    },
+    "mp3d/sT4fr6TAbpF/sT4fr6TAbpF.glb": {
+      "record_count": 7056,
+      "scene_stem": "sT4fr6TAbpF",
+      "video_count": 252
+    },
+    "mp3d/uNb9QFRL6hY/uNb9QFRL6hY.glb": {
+      "record_count": 4815,
+      "scene_stem": "uNb9QFRL6hY",
+      "video_count": 159
+    },
+    "mp3d/ur6pFq6Qu1A/ur6pFq6Qu1A.glb": {
+      "record_count": 9204,
+      "scene_stem": "ur6pFq6Qu1A",
+      "video_count": 279
+    },
+    "mp3d/vyrNrziPKCB/vyrNrziPKCB.glb": {
+      "record_count": 8589,
+      "scene_stem": "vyrNrziPKCB",
+      "video_count": 234
+    }
+  },
+  "scene_split": {
+    "holdout_record_count": 35563,
+    "holdout_scene_count": 5,
+    "holdout_video_count": 1082,
+    "scene_intersection": [],
+    "seed": 20260913,
+    "train_record_count": 318331,
+    "train_scene_count": 56,
+    "train_video_count": 9737,
+    "video_intersection": []
+  },
+  "task_id": "P4-T2",
+  "write_permission_probe": {
+    "path_pattern": "/mnt/wxh/go2_short_vln/.probe_t2_<pid>",
+    "status": "PASS",
+    "verified_deleted": true,
+    "verified_write": true
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "task_id": "P4-T3",
+  "parser": {
+    "implementation": "actions.language_parser.LanguageParser",
+    "deterministic": true,
+    "method": "normalized frozen-vocabulary lookup followed by a native-compatible substring finite-state branch",
+    "default_fallback_policy": "layered"
+  },
+  "nav_command_contract": {
+    "vx_range": [0.0, 0.5],
+    "vy": 0.0,
+    "wz_range": [-0.5235987755982988, 0.5235987755982988],
+    "hold_steps": [0, 25, 50, 75],
+    "stop": "bool; stop commands require zero velocity and hold_steps=0",
+    "control_period_seconds": 0.02,
+    "durations_to_hold_steps": {"0.5": 25, "1.0": 50, "1.5": 75}
+  },
+  "vocabulary": [
+    {"index": 0, "text": "The next action is move forward 25 cm.", "vx": 0.5, "wz": 0.0, "hold_steps": 25, "stop": false},
+    {"index": 1, "text": "The next action is move forward 50 cm.", "vx": 0.5, "wz": 0.0, "hold_steps": 50, "stop": false},
+    {"index": 2, "text": "The next action is move forward 75 cm.", "vx": 0.5, "wz": 0.0, "hold_steps": 75, "stop": false},
+    {"index": 3, "text": "The next action is turn left 15 degree.", "vx": 0.0, "wz": 0.5235987755982988, "hold_steps": 25, "stop": false},
+    {"index": 4, "text": "The next action is turn left 30 degree.", "vx": 0.0, "wz": 0.5235987755982988, "hold_steps": 50, "stop": false},
+    {"index": 5, "text": "The next action is turn left 45 degree.", "vx": 0.0, "wz": 0.5235987755982988, "hold_steps": 75, "stop": false},
+    {"index": 6, "text": "The next action is turn right 15 degree.", "vx": 0.0, "wz": -0.5235987755982988, "hold_steps": 25, "stop": false},
+    {"index": 7, "text": "The next action is turn right 30 degree.", "vx": 0.0, "wz": -0.5235987755982988, "hold_steps": 50, "stop": false},
+    {"index": 8, "text": "The next action is turn right 45 degree.", "vx": 0.0, "wz": -0.5235987755982988, "hold_steps": 75, "stop": false},
+    {"index": 9, "text": "I think I should stop because I have finished the instruction.", "vx": 0.0, "wz": 0.0, "hold_steps": 0, "stop": true}
+  ],
+  "fallback_policies": {
+    "layered": {
+      "default": true,
+      "partial_match": "Preserve native branch and number priority; a direction or move keyword with no recognized number takes native minimum tier (15 degrees or 25 cm).",
+      "total_miss": {"vx": 0.0, "vy": 0.0, "wz": 0.0, "hold_steps": 25, "stop": false, "parse_failure": true, "meaning": "zero-velocity intent handed to the limiter for braking"}
+    },
+    "native": {
+      "default": false,
+      "partial_match": "Replicate get_vel_command's four fallback layers and substring checks: turn-left, turn-right, move/move-forward, then final fallback.",
+      "total_miss": {"vx": 0.5, "vy": 0.0, "wz": 0.0, "hold_steps": 25, "stop": false, "parse_failure": true}
+    },
+    "brake": {
+      "default": false,
+      "partial_match": "On a direction/move branch with no recognized number, replace the native fallback with zero velocity plus limiter braking; recognized native substrings remain unchanged.",
+      "total_miss": {"vx": 0.0, "vy": 0.0, "wz": 0.0, "hold_steps": 25, "stop": false, "parse_failure": true}
+    }
+  },
+  "classification": {
+    "exact": "Normalized input equals one of the ten frozen vocabulary strings (case, whitespace, and one terminal period are normalized).",
+    "partial_match": "At least one native keyword branch is present but the normalized input is not one of the ten entries; this includes invalid/missing numeric tiers and non-canonical stop phrases.",
+    "total_miss": "No native keyword branch is present.",
+    "parse_error_rate": "(partial_match + total_miss) / total",
+    "counters": ["exact", "partial_match", "total_miss", "total", "parse_error_rate"]
+  },
+  "native_reference": {
+    "function": "get_vel_command",
+    "path": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py",
+    "lines": "57-85",
+    "sha256": "c42b832a6e37b786f8c42e42f9ba790ca88fbb4fcf1cad8822d9695abc1e5bb0"
+  },
+  "native_substring_quirk": {
+    "input": "turn left 145 degree",
+    "native_reason": "The native code checks whether the substring '45' occurs before '30' and '15'.",
+    "all_policies": "Reproduced: partial_match, vx=0.0, vy=0.0, wz=+0.5235987755982988, hold_steps=75, stop=false."
+  },
+  "deviations_from_native": [
+    {
+      "area": "layered default total miss",
+      "behavior": "The default layered policy returns zero velocity with hold_steps=25 for a total miss, whereas native returns forward 25 cm. This is the dispatch-mandated safety behavior."
+    },
+    {
+      "area": "brake policy fallbacks",
+      "behavior": "The brake policy replaces native direction/move no-number and total-miss fallbacks with zero velocity plus limiter braking."
+    },
+    {
+      "area": "exact-input normalization",
+      "behavior": "The frozen ten entries accept case changes, collapsed whitespace, surrounding whitespace, and an optional terminal period. Native applies raw lower-case substring checks and does not provide this whole-string normalization."
+    },
+    {
+      "area": "output/time adapter",
+      "behavior": "The adapter emits validated NavCommand objects and converts native durations (seconds) to hold_steps using duration/0.02; native emits a velocity list and duration."
+    }
+  ],
+  "verification": {
+    "pytest_available": false,
+    "command": "python3 -m unittest discover -s tests/actions -p 'test_*.py' -v",
+    "test_groups": 10,
+    "result": "Ran 10 tests ... OK"
+  }
+}

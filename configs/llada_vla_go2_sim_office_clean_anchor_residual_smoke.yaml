@@ -1,0 +1,94 @@
+model:
+  model_path: null
+  model_name: llada-vla-go2-sim-office-clean-anchor-residual-smoke
+  bf16: true
+  attn_implementation: flash_attention_2
+  device_map: auto
+  init_checkpoint_path: null
+  reset_action_modules_after_load: true
+
+data:
+  train_data_path: null
+  eval_data_path: null
+  image_folder: null
+  image_aspect_ratio: square
+
+velocity_control:
+  horizon_k: 4
+  chunk_size: 4
+  control_hz: 10.0
+  n_bins: 256
+  action_bins: 256
+  vx_range: [-1.0, 1.0]
+  vy_range: [-0.6, 0.6]
+  wz_range: [-1.4, 1.4]
+  action_target_mode: anchored_residual
+  use_residual_action: true
+  anchor_mode: repeat_prev
+  anchor_decay_vx: 1.0
+  anchor_decay_vy: 0.6
+  anchor_decay_wz: 0.85
+  delta_vx_range: [-0.35, 0.35]
+  delta_vy_range: [-0.20, 0.20]
+  delta_wz_range: [-0.50, 0.50]
+  absolute_action_ranges:
+    vx: [-1.0, 1.0]
+    vy: [-0.6, 0.6]
+    wz: [-1.4, 1.4]
+  residual_action_ranges:
+    vx: [-0.35, 0.35]
+    vy: [-0.20, 0.20]
+    wz: [-0.50, 0.50]
+  use_prev_action_as_condition: true
+  prev_action_dropout_prob: 0.0
+  prev_action_dropout_mask_prob: 0.0
+  prev_action_dropout_noise_prob: 0.0
+  prev_action_dropout_noise_std: 0.02
+  anchor_use_dropped_prev_action: false
+  use_step_level_remask: true
+  step_level_remask_aggregation: mean_prob
+  per_dim_action_heads: true
+  loss_w_vx: 1.0
+  loss_w_vy: 1.0
+  loss_w_wz: 1.2
+  fallback_image_timeout_s: 0.5
+  ema_alpha: 0.25
+  max_delta_vx: 0.35
+  max_delta_vy: 0.20
+  max_delta_wz: 0.50
+  allowed_locomotion_modes: [1, 2, 3, 4]
+
+optimization:
+  train_mode: action_heads_only
+  freeze_vision_tower: false
+  freeze_llada_backbone: false
+
+lora:
+  enabled: false
+  r: 64
+  alpha: 16
+  dropout: 0.05
+  bias: none
+
+training:
+  output_dir: outputs/llada_vla_go2_sim_office_clean_anchor_residual_smoke
+  logging_dir: outputs/llada_vla_go2_sim_office_clean_anchor_residual_smoke/runs
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 1
+  num_train_epochs: 1
+  max_steps: 20
+  learning_rate: 1.0e-4
+  weight_decay: 0.0
+  warmup_ratio: 0.0
+  logging_steps: 1
+  save_strategy: 'no'
+  evaluation_strategy: 'no'
+  save_total_limit: 1
+  load_best_model_at_end: false
+  bf16: true
+  fp16: false
+  gradient_checkpointing: false
+  remove_unused_columns: false
+  dataloader_num_workers: 0
+  report_to: [tensorboard]

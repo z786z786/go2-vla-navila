@@ -1,0 +1,10 @@
+{
+  "backend": "mock",
+  "episodes": 2,
+  "valid_episodes": 2,
+  "action_schema": [
+    "vx",
+    "wz",
+    "stop"
+  ]
+}

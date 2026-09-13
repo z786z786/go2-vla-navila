@@ -1,0 +1,324 @@
+{
+  "task_id": "P0-T3",
+  "generated_at": "2026-09-12T19:39:28.689771+08:00",
+  "generator_command": "python /tmp/gen.py (hash paths; parse summary.json and NPZ headers)",
+  "inputs": {
+    "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3/summary.json": "8c2806bb490fbcbd534b05e030b540bb1a4866d3a589407952feca945b2692aa",
+    "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3/ablation_arrays.npz": "ae43c4ba37026fe5854175f85be473a63e01d17cca39c277a2170fdfe5cabd0b",
+    "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_continuous_v2/summary.json": "77a157269718adeabfb901652bb6585d208bce17274c088c66bdb938bdf1b180",
+    "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_continuous_v2/ablation_arrays.npz": "55d105db54bbf624cd993cd3516d6455a25cfbe752f8b9480f4c7de3cdecef82"
+  },
+  "findings": {
+    "capabilities": [
+      {
+        "capability": "Go2 低层 locomotion + 速度跟踪",
+        "claimed_evidence_path": "reports/r2r_ablation/20260910_ep1_v3/",
+        "actual_path": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3",
+        "sha256": {
+          "manifest_sha256": "00f188c7213f8cb329cf738409133cd70e6521d55808c57f4de8c5f52280f28d",
+          "file_count": 249,
+          "total_bytes": 17996116
+        },
+        "producing_command": "MISSING",
+        "status": "VERIFIED",
+        "notes": ""
+      },
+      {
+        "capability": "R2R-VLNCE 全量部署",
+        "claimed_evidence_path": "reports/r2r_vlnce/audit_report.md",
+        "actual_path": "/home/wxh/go2_short_vln/reports/r2r_vlnce/audit_report.md",
+        "sha256": null,
+        "producing_command": "MISSING",
+        "status": "MISSING",
+        "notes": "文档声称路径不存在"
+      },
+      {
+        "capability": "Habitat ↔ Isaac 坐标转换",
+        "claimed_evidence_path": "scripts/validate_r2r_episode_load.py",
+        "actual_path": "/home/wxh/go2_short_vln/scripts/validate_r2r_episode_load.py",
+        "sha256": "d0b5c2787cf089113afc85e7726679d09c925a0323ac1f85038ed072e9a1b1ce",
+        "producing_command": "MISSING",
+        "status": "VERIFIED",
+        "notes": ""
+      },
+      {
+        "capability": "路径 Expert",
+        "claimed_evidence_path": "scripts/collect_r2r_ablation.py",
+        "actual_path": "/home/wxh/go2_short_vln/scripts/collect_r2r_ablation.py",
+        "sha256": "71eea6d5f24d70ac334192f4a632d8781be1fce255ca4efc0e38b585f377f67e",
+        "producing_command": "MISSING",
+        "status": "VERIFIED",
+        "notes": ""
+      },
+      {
+        "capability": "采集链路 + 独立审计",
+        "claimed_evidence_path": "scripts/audit_r2r_ablation.py",
+        "actual_path": "/home/wxh/go2_short_vln/scripts/audit_r2r_ablation.py",
+        "sha256": "d235a679e97efd767cfc81b2f9508322b06ef469dba869f91be2f764dbdb8f63",
+        "producing_command": "MISSING",
+        "status": "VERIFIED",
+        "notes": ""
+      },
+      {
+        "capability": "消融数组接口",
+        "claimed_evidence_path": "ablation_arrays.npz",
+        "actual_path": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3/ablation_arrays.npz",
+        "sha256": "ae43c4ba37026fe5854175f85be473a63e01d17cca39c277a2170fdfe5cabd0b",
+        "producing_command": "MISSING",
+        "status": "VERIFIED",
+        "notes": ""
+      },
+      {
+        "capability": "GPU 共享治理",
+        "claimed_evidence_path": "src/dual_target/gpu_wait.py",
+        "actual_path": "/home/wxh/go2_short_vln/src/dual_target/gpu_wait.py",
+        "sha256": "cd82d3dceb4ed9d4a9234e10ec7104fce6b9f4a7c671e73237f73258842c2f14",
+        "producing_command": "MISSING",
+        "status": "VERIFIED",
+        "notes": ""
+      },
+      {
+        "capability": "极小可控场景",
+        "claimed_evidence_path": "config/dual_target_v1/task_contract.lock.json",
+        "actual_path": "/home/wxh/go2_short_vln/config/dual_target_v1/task_contract.lock.json",
+        "sha256": "ae040c5b66c7405197874d9d24408f03736606704c5d3cd278ad5827af5e0e14",
+        "producing_command": "MISSING",
+        "status": "VERIFIED",
+        "notes": ""
+      }
+    ],
+    "metrics": {
+      "20260910_ep1_v3": {
+        "summary": {
+          "status": "complete",
+          "success": true,
+          "training_eligible": false,
+          "termination_reason": "success",
+          "low_level_records": 1956,
+          "rgb_frames": 236,
+          "action_records": 196,
+          "stop_positive_actions": 13,
+          "final_hold_steps": 100,
+          "final_goal_distance_xy_m": 0.21640478593250906,
+          "path_length_xy_m": 7.09041748221512,
+          "sim_seconds": 39.12,
+          "collection_wall_seconds": 192.45774309709668,
+          "realtime_factor": 0.20326539930515344,
+          "bytes_by_category": {
+            "rgb": 6228556,
+            "low_level.jsonl": 8509068,
+            "actions.jsonl": 929897,
+            "frames.jsonl": 102395,
+            "warmup.jsonl": 376399
+          },
+          "total_recorded_bytes": 16146315,
+          "projected_bytes_per_sim_minute": 24764286.809815954,
+          "maximum_contact_force_n": 0.0,
+          "reset_count": 0,
+          "note": "training eligibility requires separate audit; contact includes normal foot support"
+        },
+        "npz_keys": {
+          "action_index": {
+            "shape": [
+              195
+            ],
+            "dtype": "<i8"
+          },
+          "rgb_frame_id": {
+            "shape": [
+              195
+            ],
+            "dtype": "<i8"
+          },
+          "history_frame_ids": {
+            "shape": [
+              195,
+              8
+            ],
+            "dtype": "<i8"
+          },
+          "history_padding_mask": {
+            "shape": [
+              195,
+              8
+            ],
+            "dtype": "|b1"
+          },
+          "state_velocity_pre": {
+            "shape": [
+              195,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "velocity_actual_post": {
+            "shape": [
+              195,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "velocity_actual_interval_mean": {
+            "shape": [
+              195,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "command_raw": {
+            "shape": [
+              195,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "command_applied": {
+            "shape": [
+              195,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "stop_intent": {
+            "shape": [
+              195
+            ],
+            "dtype": "<f4"
+          },
+          "action_command_stop": {
+            "shape": [
+              195,
+              4
+            ],
+            "dtype": "<f4"
+          }
+        }
+      },
+      "20260910_ep1_continuous_v2": {
+        "summary": {
+          "status": "complete",
+          "success": true,
+          "training_eligible": false,
+          "termination_reason": "success",
+          "low_level_records": 1700,
+          "rgb_frames": 205,
+          "action_records": 170,
+          "stop_positive_actions": 12,
+          "final_hold_steps": 100,
+          "final_goal_distance_xy_m": 0.23648784560538116,
+          "path_length_xy_m": 6.887718900381359,
+          "sim_seconds": 34.0,
+          "collection_wall_seconds": 186.92179760802537,
+          "realtime_factor": 0.1818942490126161,
+          "bytes_by_category": {
+            "rgb": 5575731,
+            "low_level.jsonl": 7519060,
+            "actions.jsonl": 838019,
+            "frames.jsonl": 88919,
+            "warmup.jsonl": 383399
+          },
+          "total_recorded_bytes": 14405128,
+          "projected_bytes_per_sim_minute": 25420814.11764706,
+          "maximum_contact_force_n": 0.0,
+          "reset_count": 0,
+          "note": "training eligibility requires separate audit; contact includes normal foot support"
+        },
+        "npz_keys": {
+          "action_index": {
+            "shape": [
+              170
+            ],
+            "dtype": "<i8"
+          },
+          "rgb_frame_id": {
+            "shape": [
+              170
+            ],
+            "dtype": "<i8"
+          },
+          "history_frame_ids": {
+            "shape": [
+              170,
+              8
+            ],
+            "dtype": "<i8"
+          },
+          "history_padding_mask": {
+            "shape": [
+              170,
+              8
+            ],
+            "dtype": "|b1"
+          },
+          "state_velocity_pre": {
+            "shape": [
+              170,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "velocity_actual_post": {
+            "shape": [
+              170,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "velocity_actual_interval_mean": {
+            "shape": [
+              170,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "command_raw": {
+            "shape": [
+              170,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "command_applied": {
+            "shape": [
+              170,
+              3
+            ],
+            "dtype": "<f4"
+          },
+          "stop_intent": {
+            "shape": [
+              170
+            ],
+            "dtype": "<f4"
+          },
+          "action_command_stop": {
+            "shape": [
+              170,
+              4
+            ],
+            "dtype": "<f4"
+          }
+        }
+      }
+    },
+    "claimed_numbers": {
+      "ep1_v3": {
+        "intervals": 196,
+        "rgb": 236,
+        "stop_intent": 13,
+        "distance_m": 0.2164048
+      },
+      "continuous_v2": {
+        "intervals": 170,
+        "rgb": 205,
+        "distance_m": 0.2364878
+      },
+      "wz_raw_abs_max": 2.536
+    }
+  },
+  "missing": [
+    "reports/r2r_ablation/20260910_ep1_v3/ (实际 /mnt/.../outputs)",
+    "reports/r2r_vlnce/audit_report.md",
+    "reports/OFFICIAL_NAVILA_VELOCITY_0911.md"
+  ]
+}

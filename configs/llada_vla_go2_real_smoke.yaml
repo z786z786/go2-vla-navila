@@ -1,0 +1,62 @@
+model:
+  model_path: null
+  model_name: llada-vla-go2-real-smoke
+  bf16: true
+  attn_implementation: flash_attention_2
+  device_map: auto
+
+data:
+  train_data_path: null
+  eval_data_path: null
+  image_folder: null
+  image_aspect_ratio: square
+
+velocity_control:
+  horizon_k: 4
+  chunk_size: 4
+  control_hz: 10.0
+  n_bins: 256
+  vx_range: [-1.0, 1.0]
+  vy_range: [-0.6, 0.6]
+  wz_range: [-1.2, 1.2]
+  fallback_image_timeout_s: 0.5
+  ema_alpha: 0.25
+  max_delta_vx: 0.25
+  max_delta_vy: 0.20
+  max_delta_wz: 0.35
+  allowed_locomotion_modes: [1, 2, 3, 4]
+
+optimization:
+  train_mode: action_heads_only
+  freeze_vision_tower: false
+  freeze_llada_backbone: false
+
+lora:
+  enabled: false
+  r: 64
+  alpha: 16
+  dropout: 0.05
+  bias: none
+
+training:
+  output_dir: outputs/llada_vla_go2_real_smoke
+  logging_dir: outputs/llada_vla_go2_real_smoke/runs
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 1
+  num_train_epochs: 1
+  max_steps: 20
+  learning_rate: 1.0e-4
+  weight_decay: 0.0
+  warmup_ratio: 0.0
+  logging_steps: 1
+  save_strategy: 'no'
+  evaluation_strategy: 'no'
+  save_total_limit: 1
+  load_best_model_at_end: false
+  bf16: true
+  fp16: false
+  gradient_checkpointing: false
+  remove_unused_columns: false
+  dataloader_num_workers: 0
+  report_to: [tensorboard]

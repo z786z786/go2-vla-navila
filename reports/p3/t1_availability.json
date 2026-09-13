@@ -1,0 +1,1081 @@
+{
+  "task_id": "P3-T1",
+  "generated_at": "2026-09-12T21:03:05.636275+08:00",
+  "generator_command": "python heredoc: sequential subprocess curl; max 4 attempts/URL, 20s API / 30s metadata; 360s total deadline; persist after each success",
+  "inputs": {
+    "dispatch": "/home/wxh/go2_short_vln/reports/p3/DISPATCH_P3.md",
+    "evaluation_scene_ids": [
+      "2azQ1b91cZZ",
+      "8194nk5LbLH",
+      "EU6Fwq7SyZv",
+      "QUCTc6BB5sX",
+      "TbHJrupSAjP",
+      "X7HyMhZNoso",
+      "Z6MFQCViBuw",
+      "oLBMNvg9in8",
+      "pLe4wQe7qrG",
+      "x8F5xyUWy9e",
+      "zsNo4HB9uLZ"
+    ],
+    "retry": 2,
+    "discovery": "Exact dataset endpoints supplied by user; local benchmark README:12 links a8cheng NaVILA collection, :82 links evaluation assets, :184 MIT applies to benchmark code only."
+  },
+  "findings": {
+    "network": "AVAILABLE_WITH_INTERMITTENT_FAILURES",
+    "leakage": {
+      "status": "UNVERIFIABLE",
+      "intersection": null,
+      "evaluation_ids_used": [
+        "2azQ1b91cZZ",
+        "8194nk5LbLH",
+        "EU6Fwq7SyZv",
+        "QUCTc6BB5sX",
+        "TbHJrupSAjP",
+        "X7HyMhZNoso",
+        "Z6MFQCViBuw",
+        "oLBMNvg9in8",
+        "pLe4wQe7qrG",
+        "x8F5xyUWy9e",
+        "zsNo4HB9uLZ"
+      ],
+      "reason": "R2R per-episode scene ids were not visible in fetched metadata; do not infer NO-LEAKAGE."
+    },
+    "fetches": [
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset",
+        "label": "a8cheng_api.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_a8cheng_api.json",
+        "bytes": 948,
+        "sha256": "f7a66fbf707bedebba6f077117a704cb3ead115551f8cce33435633ac42866dd",
+        "data": {
+          "_id": "686a5b6cede72a5904550f5e",
+          "id": "a8cheng/NaVILA-Dataset",
+          "author": "a8cheng",
+          "sha": "ac19a27127516abb32406167ef7071086007bdfe",
+          "lastModified": "2025-07-06T11:21:03.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "tags": [
+            "region:us"
+          ],
+          "downloads": 561,
+          "likes": 11,
+          "siblings": [
+            {
+              "rfilename": ".gitattributes"
+            },
+            {
+              "rfilename": "EnvDrop/annotations.json"
+            },
+            {
+              "rfilename": "Human/annotations.json"
+            },
+            {
+              "rfilename": "Human/video_ids.txt"
+            },
+            {
+              "rfilename": "R2R/annotations.json"
+            },
+            {
+              "rfilename": "R2R/train.tar.gz"
+            },
+            {
+              "rfilename": "RxR/annotations.json"
+            },
+            {
+              "rfilename": "RxR/train.tar.gz"
+            },
+            {
+              "rfilename": "ScanQA/annotations/ScanQA_v1.0_test_w_obj_reformat.json"
+            },
+            {
+              "rfilename": "ScanQA/annotations/ScanQA_v1.0_test_wo_obj_reformat.json"
+            },
+            {
+              "rfilename": "ScanQA/annotations/ScanQA_v1.0_train_reformat.json"
+            },
+            {
+              "rfilename": "ScanQA/annotations/ScanQA_v1.0_val_reformat.json"
+            },
+            {
+              "rfilename": "ScanQA/videos.tar.gz"
+            }
+          ],
+          "createdAt": "2025-07-06T11:18:04.000Z",
+          "usedStorage": 46160544850
+        }
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset/tree/main",
+        "label": "a8cheng_tree_root.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_a8cheng_tree_root.json",
+        "bytes": 571,
+        "sha256": "f8027922768928700e3e22683abc979a1c98327c792cb4eb7635fdad39c55749",
+        "data": [
+          {
+            "type": "directory",
+            "oid": "df6b2f646cfdb8c7a7ebf7cf466b67ddfee94b60",
+            "size": 0,
+            "path": "EnvDrop"
+          },
+          {
+            "type": "directory",
+            "oid": "f9939f75c20370de45ba3aa9a6c97a1c9d6756c2",
+            "size": 0,
+            "path": "Human"
+          },
+          {
+            "type": "directory",
+            "oid": "0dd9ecc63872f1dd8632944e2ab20fd33542265e",
+            "size": 0,
+            "path": "R2R"
+          },
+          {
+            "type": "directory",
+            "oid": "d71b0e4dfc1506ec1ff2798901ba4b227050cb25",
+            "size": 0,
+            "path": "RxR"
+          },
+          {
+            "type": "directory",
+            "oid": "88f0971c2e1b5a2b49b2da073696158ab327d0e5",
+            "size": 0,
+            "path": "ScanQA"
+          },
+          {
+            "type": "file",
+            "oid": "85cf9e3f9f4016a476329f8906faed990c5215f0",
+            "size": 2695,
+            "path": ".gitattributes"
+          }
+        ]
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset/tree/main/EnvDrop",
+        "label": "tree_EnvDrop.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 35,
+            "http_status": "000",
+            "stderr": "curl: (35) error:0A000126:SSL routines::unexpected eof while reading"
+          },
+          {
+            "attempt": 2,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_tree_EnvDrop.json",
+        "bytes": 308,
+        "sha256": "684178418ec551a629a3e2f4c7908b80e9e6270559c716af8334d6230469b99a",
+        "data": [
+          {
+            "type": "file",
+            "oid": "c03058b08d730f7baa9f23a476d01d4475856c62",
+            "size": 22528286,
+            "lfs": {
+              "oid": "8a70857df44918c45268ad3193f9cce86f31ba598db53a35eff8f8f83d3e264b",
+              "size": 22528286,
+              "pointerSize": 133
+            },
+            "xetHash": "69c75779a6f42816db49a814a0b496c06df69affe927badea3f7597ed51ebec3",
+            "path": "EnvDrop/annotations.json"
+          }
+        ]
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset/tree/main/Human",
+        "label": "tree_Human.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_tree_Human.json",
+        "bytes": 415,
+        "sha256": "b703a57c3473e43d6795cfacf2ea976ad3e822adbfdfade8aa969b7cac4775a5",
+        "data": [
+          {
+            "type": "file",
+            "oid": "c6cf29df532f095a1b4d8b22f93653f2439cc492",
+            "size": 422715423,
+            "lfs": {
+              "oid": "7fa76a7f77c3676561143bfeae50771b60961150c555daf62d9353b61dbcc87b",
+              "size": 422715423,
+              "pointerSize": 134
+            },
+            "xetHash": "baa82df01d0cf69aea371d242ca840c0399ad2a7f8b92dd980942fffe5fa8088",
+            "path": "Human/annotations.json"
+          },
+          {
+            "type": "file",
+            "oid": "2a57a019a8c9e20947b1b4c2f79f478dea071626",
+            "size": 23784,
+            "path": "Human/video_ids.txt"
+          }
+        ]
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset/tree/main/R2R",
+        "label": "tree_R2R.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_tree_R2R.json",
+        "bytes": 611,
+        "sha256": "296570d7936fc217eff21da47511267bac250ac1a141e6b111f3059d833be31e",
+        "data": [
+          {
+            "type": "file",
+            "oid": "caac11b583a8361119046bd96ff5cb108e359bfa",
+            "size": 317267756,
+            "lfs": {
+              "oid": "3587c020cc03807cfc03c454bcbb37a3d409139e125e1ea047fa1fbcf8c4cc1a",
+              "size": 317267756,
+              "pointerSize": 134
+            },
+            "xetHash": "1c4d56c1da8108c84a1bf99b07dd722753cb4d703cdbff9d806a0db5eede61db",
+            "path": "R2R/annotations.json"
+          },
+          {
+            "type": "file",
+            "oid": "33945b9be38b36bcdb88dee79acc736d8b3dcba4",
+            "size": 19703787520,
+            "lfs": {
+              "oid": "49ffc4f88e15ae4bdd2a8f01b16a8685deee0bd4d05711998d9ae88a99d4d228",
+              "size": 19703787520,
+              "pointerSize": 136
+            },
+            "xetHash": "35c96607ae2031fc9f2835950c3d89da0fbef832aa96bd1258519512bb6c3bf2",
+            "path": "R2R/train.tar.gz"
+          }
+        ]
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset/tree/main/RxR",
+        "label": "tree_RxR.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_tree_RxR.json",
+        "bytes": 613,
+        "sha256": "b091b4413a37193efb397a53dfff687e0e08cf7937d6d6160fc9f91f110af283",
+        "data": [
+          {
+            "type": "file",
+            "oid": "387a2cfe1df951c7539d20cd600f6c9fe26abd62",
+            "size": 1458888437,
+            "lfs": {
+              "oid": "f0b21d71486987b9539b752a19dd23d4d5ca1440efd6af055db6702e2486e0d5",
+              "size": 1458888437,
+              "pointerSize": 135
+            },
+            "xetHash": "c7a7e5cb546cfe60a84c223eec076b0862fdd75f04ce650ec72cf1d77a77c1ad",
+            "path": "RxR/annotations.json"
+          },
+          {
+            "type": "file",
+            "oid": "2d2b71958a7891005d6bddb736ae0ac7cbb70d51",
+            "size": 23570935028,
+            "lfs": {
+              "oid": "24aa22a78e17b7d0865409d61b874d8524868eec5c984df93cef261461be9de7",
+              "size": 23570935028,
+              "pointerSize": 136
+            },
+            "xetHash": "30455c16d1a9225dcc725bb29db0cea5e8ed8d97798ae799be1a22cbd2817df1",
+            "path": "RxR/train.tar.gz"
+          }
+        ]
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset/tree/main/ScanQA",
+        "label": "tree_ScanQA.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_tree_ScanQA.json",
+        "bytes": 413,
+        "sha256": "ebce25743f00a32c06ba7e7cb8ccffd242b18d930121889db0bf96faec6711e0",
+        "data": [
+          {
+            "type": "directory",
+            "oid": "c33a91d8ef4d3d34ef80b6ecbdeb67ee2a801fda",
+            "size": 0,
+            "path": "ScanQA/annotations"
+          },
+          {
+            "type": "file",
+            "oid": "9ea3d9fd9fae53605b35c368a8d9958895b14e4e",
+            "size": 664422400,
+            "lfs": {
+              "oid": "5b54df5ea805d4b926baf97e1d9ad5212b3d68761f34fa2c96cb0a3cd93dc0a1",
+              "size": 664422400,
+              "pointerSize": 134
+            },
+            "xetHash": "fc5444322df23a32e8b854d5f20d4b36d0f171146fcc450af609764ec60d6295",
+            "path": "ScanQA/videos.tar.gz"
+          }
+        ]
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/a8cheng/NaVILA-Dataset/tree/main/ScanQA/annotations",
+        "label": "tree_ScanQA/annotations.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_tree_ScanQA__annotations.json",
+        "bytes": 569,
+        "sha256": "74fceabdcc434b407ad698ba2d80757f8cad4a5a8c10ca6ee44f8b4ca2f2dcef",
+        "data": [
+          {
+            "type": "file",
+            "oid": "dd0a89f47e986c27a90d1a292dbdd64e59ee4961",
+            "size": 902412,
+            "path": "ScanQA/annotations/ScanQA_v1.0_test_w_obj_reformat.json"
+          },
+          {
+            "type": "file",
+            "oid": "549d0e18711eeac116aadfe12007b50b42bddc09",
+            "size": 1114014,
+            "path": "ScanQA/annotations/ScanQA_v1.0_test_wo_obj_reformat.json"
+          },
+          {
+            "type": "file",
+            "oid": "21ea1e6811009883170e0f7d564ce4cf5415a3a3",
+            "size": 5465442,
+            "path": "ScanQA/annotations/ScanQA_v1.0_train_reformat.json"
+          },
+          {
+            "type": "file",
+            "oid": "b2321f16e32dbe40e3c462103f6419f7b4f5b274",
+            "size": 1122930,
+            "path": "ScanQA/annotations/ScanQA_v1.0_val_reformat.json"
+          }
+        ]
+      },
+      {
+        "url": "https://huggingface.co/api/datasets/ML-GOD/navila_r2r",
+        "label": "mlgod_api.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_mlgod_api.json",
+        "bytes": 7051,
+        "sha256": "60b3aa7155211d81e11262dc03fd58612439a81f0cf9142c8dfb1ee35f271244",
+        "data": {
+          "_id": "68c89a4416a222c3e43d1c79",
+          "id": "ML-GOD/navila_r2r",
+          "author": "ML-GOD",
+          "sha": "2f467cd1815cab0679e8ffe299dfec6f4beaddd5",
+          "lastModified": "2025-09-15T22:59:25.000Z",
+          "private": false,
+          "gated": false,
+          "disabled": false,
+          "tags": [
+            "task_categories:robotics",
+            "license:apache-2.0",
+            "size_categories:1K<n<10K",
+            "format:parquet",
+            "modality:image",
+            "modality:timeseries",
+            "library:datasets",
+            "library:dask",
+            "library:polars",
+            "library:mlcroissant",
+            "region:us",
+            "LeRobot",
+            "lerobot"
+          ],
+          "description": "This dataset was created using LeRobot.\n\n\t\n\t\t\n\t\n\t\n\t\tDataset Structure\n\t\n\nmeta/info.json:\n{\n    \"codebase_version\": \"v2.1\",\n    \"robot_type\": null,\n    \"total_episodes\": 101,\n    \"total_frames\": 5666,\n    \"total_tasks\": 101,\n    \"total_videos\": 0,\n    \"total_chunks\": 1,\n    \"chunks_size\": 1000,\n    \"fps\": 10,\n    \"splits\": {\n        \"train\": \"0:101\"\n    },\n    \"data_path\": \"data/chunk-{episode_chunk:03d}/episode_{episode_index:06d}.parquet\",\n    \"video_path\": null,\n    \"features\": {… See the full description on the dataset page: https://huggingface.co/datasets/ML-GOD/navila_r2r.",
+          "downloads": 30,
+          "likes": 0,
+          "cardData": {
+            "license": "apache-2.0",
+            "task_categories": [
+              "robotics"
+            ],
+            "tags": [
+              "LeRobot",
+              "lerobot"
+            ],
+            "configs": [
+              {
+                "config_name": "default",
+                "data_files": "data/*/*.parquet"
+              }
+            ]
+          },
+          "siblings": [
+            {
+              "rfilename": ".gitattributes"
+            },
+            {
+              "rfilename": "README.md"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000000.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000001.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000002.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000003.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000004.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000005.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000006.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000007.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000008.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000009.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000010.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000011.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000012.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000013.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000014.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000015.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000016.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000017.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000018.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000019.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000020.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000021.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000022.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000023.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000024.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000025.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000026.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000027.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000028.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000029.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000030.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000031.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000032.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000033.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000034.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000035.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000036.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000037.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000038.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000039.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000040.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000041.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000042.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000043.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000044.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000045.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000046.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000047.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000048.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000049.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000050.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000051.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000052.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000053.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000054.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000055.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000056.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000057.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000058.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000059.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000060.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000061.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000062.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000063.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000064.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000065.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000066.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000067.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000068.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000069.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000070.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000071.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000072.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000073.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000074.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000075.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000076.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000077.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000078.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000079.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000080.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000081.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000082.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000083.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000084.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000085.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000086.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000087.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000088.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000089.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000090.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000091.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000092.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000093.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000094.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000095.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000096.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000097.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000098.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000099.parquet"
+            },
+            {
+              "rfilename": "data/chunk-000/episode_000100.parquet"
+            },
+            {
+              "rfilename": "meta/episodes.jsonl"
+            },
+            {
+              "rfilename": "meta/episodes_stats.jsonl"
+            },
+            {
+              "rfilename": "meta/info.json"
+            },
+            {
+              "rfilename": "meta/tasks.jsonl"
+            }
+          ],
+          "createdAt": "2025-09-15T22:59:16.000Z",
+          "usedStorage": 1497184017
+        }
+      },
+      {
+        "url": "https://huggingface.co/datasets/ML-GOD/navila_r2r/resolve/main/meta/info.json",
+        "label": "mlgod_info.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_mlgod_info.json",
+        "bytes": 1887,
+        "sha256": "28467b617e3f8b6daa665864925f3ab0c921a5d108a5e45b511934c80ee7306f",
+        "data": {
+          "codebase_version": "v2.1",
+          "robot_type": null,
+          "total_episodes": 101,
+          "total_frames": 5666,
+          "total_tasks": 101,
+          "total_videos": 0,
+          "total_chunks": 1,
+          "chunks_size": 1000,
+          "fps": 10,
+          "splits": {
+            "train": "0:101"
+          },
+          "data_path": "data/chunk-{episode_chunk:03d}/episode_{episode_index:06d}.parquet",
+          "video_path": null,
+          "features": {
+            "timestamp": {
+              "dtype": "float32",
+              "shape": [
+                1
+              ],
+              "names": null
+            },
+            "frame_index": {
+              "dtype": "int64",
+              "shape": [
+                1
+              ],
+              "names": null
+            },
+            "episode_index": {
+              "dtype": "int64",
+              "shape": [
+                1
+              ],
+              "names": null
+            },
+            "index": {
+              "dtype": "int64",
+              "shape": [
+                1
+              ],
+              "names": null
+            },
+            "task_index": {
+              "dtype": "int64",
+              "shape": [
+                1
+              ],
+              "names": null
+            },
+            "observation.image": {
+              "dtype": "image",
+              "names": [
+                "height",
+                "width",
+                "channels"
+              ],
+              "shape": [
+                512,
+                512,
+                3
+              ]
+            },
+            "observation.state": {
+              "dtype": "float32",
+              "names": null,
+              "shape": [
+                4
+              ]
+            },
+            "observation.dummy_state": {
+              "dtype": "float32",
+              "names": null,
+              "shape": [
+                4
+              ]
+            },
+            "action": {
+              "dtype": "float32",
+              "names": null,
+              "shape": [
+                4
+              ]
+            }
+          }
+        }
+      },
+      {
+        "url": "https://huggingface.co/datasets/a8cheng/NaVILA-Dataset/resolve/main/ScanQA/annotations/ScanQA_v1.0_test_w_obj_reformat.json",
+        "label": "annotation_ScanQA__annotations__ScanQA_v1.0_test_w_obj_reformat.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_annotation_ScanQA__annotations__ScanQA_v1.0_test_w_obj_reformat.json",
+        "bytes": 902412,
+        "sha256": "594a89400f185c10179604db4a491ce0438bb1ea8028dffdabf93a6dfd71b11a",
+        "content_summary": "Downloaded successfully; raw file retained under /mnt probe path; not embedded in JSON."
+      },
+      {
+        "url": "https://huggingface.co/datasets/a8cheng/NaVILA-Dataset/resolve/main/ScanQA/annotations/ScanQA_v1.0_test_wo_obj_reformat.json",
+        "label": "annotation_ScanQA__annotations__ScanQA_v1.0_test_wo_obj_reformat.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_annotation_ScanQA__annotations__ScanQA_v1.0_test_wo_obj_reformat.json",
+        "bytes": 1114014,
+        "sha256": "cf2cd79e309c716f5894fb01050f7a04458efd0c84eb1b7c8da275c8f83dbb3a",
+        "content_summary": "Downloaded successfully; raw file retained under /mnt probe path; not embedded in JSON."
+      },
+      {
+        "url": "https://huggingface.co/datasets/a8cheng/NaVILA-Dataset/resolve/main/ScanQA/annotations/ScanQA_v1.0_val_reformat.json",
+        "label": "annotation_ScanQA__annotations__ScanQA_v1.0_val_reformat.json",
+        "status": "AVAILABLE",
+        "attempts": [
+          {
+            "attempt": 1,
+            "returncode": 28,
+            "http_status": "200",
+            "stderr": "curl: (28) Operation timed out after 15489 milliseconds with 925696 out of 1122930 bytes received"
+          },
+          {
+            "attempt": 2,
+            "returncode": 0,
+            "http_status": "200",
+            "stderr": ""
+          }
+        ],
+        "local_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t1_retry2_annotation_ScanQA__annotations__ScanQA_v1.0_val_reformat.json",
+        "bytes": 1122930,
+        "sha256": "556dc597bd519859620b1f0abdfb7df1b5486d792c8853e87fda5d62d4accc2a",
+        "content_summary": "Downloaded successfully; raw file retained under /mnt probe path; not embedded in JSON."
+      }
+    ],
+    "tree_traversal": {
+      "requests": 7,
+      "max_depth": 3,
+      "remaining_directories": [],
+      "pagination": "First response page only; no pagination requests authorized."
+    },
+    "annotation_candidates": [
+      {
+        "type": "file",
+        "oid": "dd0a89f47e986c27a90d1a292dbdd64e59ee4961",
+        "size": 902412,
+        "path": "ScanQA/annotations/ScanQA_v1.0_test_w_obj_reformat.json"
+      },
+      {
+        "type": "file",
+        "oid": "549d0e18711eeac116aadfe12007b50b42bddc09",
+        "size": 1114014,
+        "path": "ScanQA/annotations/ScanQA_v1.0_test_wo_obj_reformat.json"
+      },
+      {
+        "type": "file",
+        "oid": "b2321f16e32dbe40e3c462103f6419f7b4f5b274",
+        "size": 1122930,
+        "path": "ScanQA/annotations/ScanQA_v1.0_val_reformat.json"
+      },
+      {
+        "type": "file",
+        "oid": "21ea1e6811009883170e0f7d564ce4cf5415a3a3",
+        "size": 5465442,
+        "path": "ScanQA/annotations/ScanQA_v1.0_train_reformat.json"
+      }
+    ],
+    "network_elapsed_seconds": 119.33,
+    "availability": {
+      "a8cheng": "AVAILABLE (public, ungated)",
+      "ML-GOD/navila_r2r": "AVAILABLE (public, ungated, LeRobot parquet)"
+    },
+    "hosting_urls": [
+      "https://huggingface.co/datasets/a8cheng/NaVILA-Dataset",
+      "https://huggingface.co/datasets/ML-GOD/navila_r2r"
+    ],
+    "license": {
+      "a8cheng": "MISSING: API response did not expose a dataset license; local benchmark MIT license applies to benchmark code only (README.md:184), not proven for dataset.",
+      "ML-GOD/navila_r2r": "Apache-2.0 (HF API cardData.license and tag)"
+    },
+    "sizes": {
+      "a8cheng_used_storage_bytes": 46160544850,
+      "R2R_annotations_uncompressed_bytes": 317267756,
+      "R2R_train_tar_gz_bytes": 19703787520,
+      "RxR_annotations_uncompressed_bytes": 1458888437,
+      "RxR_train_tar_gz_bytes": 23570935028,
+      "MLGOD_used_storage_bytes": 1497184017,
+      "MLGOD_meta_info": "not stated as file size"
+    },
+    "directory_structure": {
+      "a8cheng": [
+        "EnvDrop/annotations.json",
+        "Human/annotations.json",
+        "Human/video_ids.txt",
+        "R2R/annotations.json",
+        "R2R/train.tar.gz",
+        "RxR/annotations.json",
+        "RxR/train.tar.gz",
+        "ScanQA/annotations/*",
+        "ScanQA/videos.tar.gz"
+      ],
+      "MLGOD": [
+        "data/chunk-000/episode_*.parquet",
+        "meta/info.json",
+        "meta/episodes.jsonl",
+        "meta/episodes_stats.jsonl",
+        "meta/tasks.jsonl"
+      ]
+    },
+    "annotation_format": {
+      "a8cheng": "JSON annotations; R2R file identified from tree but not downloaded (317 MB).",
+      "MLGOD": "LeRobot parquet episodes; meta/info.json fetched."
+    },
+    "per_sample_fields": {
+      "MLGOD": [
+        "timestamp",
+        "frame_index",
+        "episode_index",
+        "index",
+        "task_index",
+        "observation.image (512x512x3)",
+        "observation.state (4 float32)",
+        "observation.dummy_state (4 float32)",
+        "action (4 float32)"
+      ],
+      "a8cheng": "UNVERIFIABLE for R2R because annotation file exceeds 20 MB download limit."
+    },
+    "scene_identity": {
+      "status": "UNVERIFIABLE",
+      "reason": "No fetched per-episode R2R annotation or episode metadata exposed scene_id; ML-GOD info.json only describes tensor schema. ScanQA files are unrelated to R2R scene coverage."
+    },
+    "scene_id_list": {
+      "status": "UNVERIFIABLE",
+      "ids": null
+    },
+    "discovery_evidence": [
+      "User-specified exact Hugging Face API/resolve URLs",
+      "local third_party/NaVILA-Bench/README.md:12 collection link and :82 data link",
+      "HF API dataset cards and tree responses"
+    ],
+    "missing": [
+      {
+        "status": "MISSING",
+        "item": "a8cheng R2R annotations content/fields/scene ids",
+        "reason": "317,267,756 bytes, above 20 MB per-file limit; not downloaded"
+      },
+      {
+        "status": "MISSING",
+        "item": "a8cheng dataset license text",
+        "reason": "not present in fetched API/tree metadata"
+      },
+      {
+        "status": "UNVERIFIABLE",
+        "item": "leakage intersection",
+        "reason": "scene ids unavailable"
+      }
+    ]
+  },
+  "missing": [
+    {
+      "status": "MISSING",
+      "item": "Analysis pending; partial checkpoint"
+    }
+  ]
+}

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>llada-vla-go2 Architecture Diagrams</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --panel: rgba(255, 250, 241, 0.92);
+      --ink: #1f2a2e;
+      --muted: #5d6a6f;
+      --line: #cdbfa9;
+      --accent: #b6543a;
+      --accent-2: #245a73;
+      --accent-3: #5f7d3b;
+      --accent-4: #805e2f;
+      --shadow: 0 18px 40px rgba(57, 43, 27, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(182, 84, 58, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(36, 90, 115, 0.18), transparent 28%),
+        linear-gradient(180deg, #f8f2e8 0%, var(--bg) 48%, #efe7db 100%);
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      line-height: 1.55;
+    }
+
+    header {
+      padding: 56px 24px 28px;
+    }
+
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255, 248, 238, 0.95), rgba(247, 239, 225, 0.9));
+      border: 1px solid rgba(93, 106, 111, 0.16);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 30px 30px 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -70px -70px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(182, 84, 58, 0.16), transparent 70%);
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+    }
+
+    .subtitle {
+      margin: 0 0 16px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 820px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(36, 90, 115, 0.08);
+      color: var(--accent-2);
+      border: 1px solid rgba(36, 90, 115, 0.14);
+      font-size: 0.92rem;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px 56px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 12px 0 28px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid rgba(93, 106, 111, 0.15);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+    }
+
+    section {
+      margin-top: 26px;
+    }
+
+    .section-card {
+      background: var(--panel);
+      border: 1px solid rgba(93, 106, 111, 0.14);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 24px 20px 20px;
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding: 0 6px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 2vw, 2rem);
+    }
+
+    .section-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.97rem;
+      max-width: 760px;
+    }
+
+    .svg-wrap {
+      overflow-x: auto;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(251, 246, 238, 0.9));
+      border: 1px solid rgba(93, 106, 111, 0.1);
+      padding: 16px;
+    }
+
+    svg {
+      width: 100%;
+      min-width: 1080px;
+      height: auto;
+      display: block;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin: 14px 8px 0;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      padding: 0 6px;
+    }
+
+    .legend-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(93, 106, 111, 0.1);
+      border-radius: 16px;
+      padding: 10px 12px;
+    }
+
+    .swatch {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      flex: 0 0 auto;
+    }
+
+    footer {
+      max-width: 1180px;
+      margin: 18px auto 0;
+      padding: 0 24px 40px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 760px) {
+      header {
+        padding-top: 28px;
+      }
+
+      .hero,
+      .section-card {
+        border-radius: 20px;
+      }
+
+      .svg-wrap {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <h1>llada-vla-go2 Architecture Atlas</h1>
+      <p class="subtitle">
+        这是把当前项目的总架构、数据流、模型前向/推理流程，整理成可直接在浏览器里查看的版本。
+        重点是把“采集 -> 加工 -> 训练 -> 解码 -> 在线控制”整条链打通。
+      </p>
+      <div class="pill-row">
+        <span class="pill">总览架构图</span>
+        <span class="pill">数据流细化图</span>
+        <span class="pill">模型前向 / 推理细化图</span>
+        <span class="pill">本页为离线 HTML，无需外部依赖</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <nav>
+      <a href="#overview">总览</a>
+      <a href="#dataflow">数据流</a>
+      <a href="#modelflow">模型流</a>
+    </nav>
+
+    <section id="overview">
+      <div class="section-card">
+        <div class="section-head">
+          <h2>总览架构图</h2>
+          <p class="section-note">从工作区编排层开始，串到采集、加工、训练，再到推理和在线部署。</p>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1600 1060" xmlns="http://www.w3.org/2000/svg" aria-labelledby="overview-title">
+            <title id="overview-title">llada-vla-go2 overall architecture</title>
+            <defs>
+              <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                <path d="M0,0 L12,6 L0,12 z" fill="#6d6a64"/>
+              </marker>
+              <style>
+                .zone { fill: rgba(255,255,255,0.58); stroke: #bfae94; stroke-width: 2; rx: 24; }
+                .label { font: 600 28px Georgia, serif; fill: #1f2a2e; }
+                .desc { font: 18px Georgia, serif; fill: #4f5e64; }
+                .boxtext { font: 600 20px Georgia, serif; fill: #1f2a2e; }
+                .small { font: 16px Georgia, serif; fill: #415056; }
+                .line { stroke: #6d6a64; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+              </style>
+            </defs>
+
+            <rect x="20" y="20" width="1560" height="150" class="zone"/>
+            <text x="44" y="58" class="label">Workspace / 编排层</text>
+            <rect x="60" y="85" width="300" height="58" rx="18" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="84" y="120" class="boxtext">workspace config</text>
+            <text x="84" y="140" class="small">configs/workspace.yaml</text>
+            <rect x="392" y="85" width="332" height="58" rx="18" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="418" y="120" class="boxtext">root scripts</text>
+            <text x="418" y="140" class="small">train/eval shell entrypoints</text>
+            <rect x="756" y="85" width="320" height="58" rx="18" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="784" y="120" class="boxtext">training config</text>
+            <text x="784" y="140" class="small">configs/llada_vla_go2.yaml</text>
+
+            <rect x="20" y="205" width="760" height="286" class="zone"/>
+            <text x="44" y="243" class="label">数据采集层</text>
+            <text x="56" y="278" class="desc">Sim 和 Real 两条采集链最终都沉淀为 session / episode / images</text>
+
+            <rect x="52" y="308" width="318" height="54" rx="18" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="78" y="341" class="boxtext">Sim collector</text>
+            <text x="78" y="360" class="small">collect_raw_trajectories.py</text>
+            <rect x="52" y="388" width="318" height="54" rx="18" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="78" y="421" class="boxtext">Isaac env + privileged expert</text>
+            <text x="78" y="440" class="small">go2_nav_env.py + heuristic_nav_controller.py</text>
+
+            <rect x="410" y="308" width="318" height="54" rx="18" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="438" y="341" class="boxtext">Real collector</text>
+            <text x="438" y="360" class="small">go2_collector.cpp</text>
+            <rect x="410" y="388" width="318" height="54" rx="18" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="438" y="421" class="boxtext">Go2 state / video / input</text>
+            <text x="438" y="440" class="small">Unitree SDK + Web UI + input backend</text>
+
+            <rect x="820" y="205" width="760" height="286" class="zone"/>
+            <text x="844" y="243" class="label">数据加工层</text>
+            <text x="856" y="278" class="desc">把 raw session 统一转成 processed training contract</text>
+
+            <rect x="854" y="308" width="320" height="54" rx="18" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="882" y="341" class="boxtext">session/sample abstraction</text>
+            <text x="882" y="360" class="small">collectors/common/llada_vla_common.py</text>
+            <rect x="854" y="388" width="320" height="54" rx="18" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="882" y="421" class="boxtext">processed dataset builder</text>
+            <text x="882" y="440" class="small">collectors/common/processed_dataset.py</text>
+            <rect x="1212" y="348" width="324" height="72" rx="18" fill="#fff5db" stroke="#805e2f"/>
+            <text x="1240" y="382" class="boxtext">train/val/test jsonl</text>
+            <text x="1240" y="402" class="small">instruction + state + image_path</text>
+            <text x="1240" y="422" class="small">action_chunk + action_mask</text>
+
+            <rect x="20" y="525" width="760" height="255" class="zone"/>
+            <text x="44" y="563" class="label">训练适配层</text>
+            <text x="56" y="598" class="desc">把 jsonl 样本变成 prompt、图像张量、离散动作标签和 mask</text>
+
+            <rect x="54" y="628" width="320" height="56" rx="18" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="82" y="662" class="boxtext">VelocityControlDataset</text>
+            <text x="82" y="682" class="small">dataset_vla.py</text>
+            <rect x="410" y="628" width="320" height="56" rx="18" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="438" y="662" class="boxtext">Prompt Builder</text>
+            <text x="438" y="682" class="small">instruction + state + action placeholders</text>
+            <rect x="232" y="706" width="320" height="56" rx="18" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="258" y="740" class="boxtext">Velocity Tokenizer + Collator</text>
+            <text x="258" y="760" class="small">continuous action to discrete labels</text>
+
+            <rect x="820" y="525" width="760" height="255" class="zone"/>
+            <text x="844" y="563" class="label">模型层</text>
+            <text x="856" y="598" class="desc">LLaDA-V backbone 负责多模态条件理解，自定义动作头负责速度输出</text>
+
+            <rect x="852" y="628" width="290" height="56" rx="18" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="882" y="662" class="boxtext">LLaDA-V backbone</text>
+            <text x="882" y="682" class="small">vision + language condition modeling</text>
+            <rect x="1172" y="628" width="362" height="56" rx="18" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1200" y="662" class="boxtext">Robotics wrapper</text>
+            <text x="1200" y="682" class="small">llada_vla_velocity.py</text>
+            <rect x="1012" y="706" width="362" height="56" rx="18" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="1040" y="740" class="boxtext">Action embeddings + localized heads</text>
+            <text x="1040" y="760" class="small">vx / vy / wz</text>
+
+            <rect x="20" y="815" width="760" height="215" class="zone"/>
+            <text x="44" y="853" class="label">训练与评测层</text>
+            <rect x="56" y="895" width="318" height="58" rx="18" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="82" y="929" class="boxtext">train_velocity.py</text>
+            <text x="82" y="949" class="small">Trainer / freeze modes / LoRA</text>
+            <rect x="410" y="895" width="318" height="58" rx="18" fill="#fff5db" stroke="#805e2f"/>
+            <text x="438" y="929" class="boxtext">checkpoint output</text>
+            <text x="438" y="949" class="small">backbone + robotics_velocity_head.bin</text>
+
+            <rect x="820" y="815" width="760" height="215" class="zone"/>
+            <text x="844" y="853" class="label">推理与在线部署层</text>
+            <rect x="852" y="895" width="270" height="58" rx="18" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="878" y="929" class="boxtext">iterative decoder</text>
+            <text x="878" y="949" class="small">velocity_diffusion_decoder.py</text>
+            <rect x="1152" y="895" width="216" height="58" rx="18" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="1176" y="929" class="boxtext">controller loop</text>
+            <text x="1176" y="949" class="small">run_once / receding horizon</text>
+            <rect x="1396" y="895" width="152" height="58" rx="18" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1420" y="929" class="boxtext">Go2 / mock</text>
+            <text x="1420" y="949" class="small">adapter target</text>
+
+            <path d="M360 114 L392 114" class="line"/>
+            <path d="M724 114 L756 114" class="line"/>
+            <path d="M370 335 C390 335 390 335 410 335" class="line"/>
+            <path d="M728 335 C790 335 790 335 854 335" class="line"/>
+            <path d="M374 655 C612 655 612 656 852 656" class="line"/>
+            <path d="M1536 384 C1570 384 1570 656 1534 656" class="line"/>
+            <path d="M374 924 L410 924" class="line"/>
+            <path d="M728 924 C790 924 790 924 852 924" class="line"/>
+            <path d="M1122 924 L1152 924" class="line"/>
+            <path d="M1368 924 L1396 924" class="line"/>
+          </svg>
+        </div>
+        <p class="caption">一句话概括：本项目是把 real/sim 采集来的 Go2 导航数据，统一加工成“图像 + 指令 + 状态 -> 未来 K 步速度块”的训练样本，再用 LLaDA-V backbone + 自定义动作头学习该映射，并放入在线控制环执行。</p>
+      </div>
+    </section>
+
+    <section id="dataflow">
+      <div class="section-card">
+        <div class="section-head">
+          <h2>数据流细化图</h2>
+          <p class="section-note">回答“数据从哪里来，怎么变成训练样本，以及训练 loader 最终拿到什么”。</p>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1820 1200" xmlns="http://www.w3.org/2000/svg" aria-labelledby="dataflow-title">
+            <title id="dataflow-title">llada-vla-go2 dataflow diagram</title>
+            <defs>
+              <marker id="arrow2" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                <path d="M0,0 L12,6 L0,12 z" fill="#6d6a64"/>
+              </marker>
+              <style>
+                .zone { fill: rgba(255,255,255,0.58); stroke: #bfae94; stroke-width: 2; rx: 24; }
+                .label { font: 600 28px Georgia, serif; fill: #1f2a2e; }
+                .desc { font: 18px Georgia, serif; fill: #4f5e64; }
+                .boxtext { font: 600 19px Georgia, serif; fill: #1f2a2e; }
+                .small { font: 15px Georgia, serif; fill: #415056; }
+                .line { stroke: #6d6a64; stroke-width: 3; fill: none; marker-end: url(#arrow2); }
+              </style>
+            </defs>
+
+            <rect x="20" y="20" width="1780" height="176" class="zone"/>
+            <text x="44" y="58" class="label">A. 原始数据源</text>
+            <text x="56" y="92" class="desc">Sim 与 Real 两条采集链最终都落到统一的 session / episode / images 结构</text>
+
+            <rect x="56" y="118" width="280" height="50" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="80" y="149" class="boxtext">Sim collector</text>
+            <text x="80" y="166" class="small">collect_raw_trajectories.py</text>
+            <rect x="368" y="118" width="340" height="50" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="394" y="149" class="boxtext">Isaac env + privileged expert</text>
+            <text x="394" y="166" class="small">go2_nav_env.py + heuristic_nav_controller.py</text>
+            <rect x="740" y="118" width="256" height="50" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="766" y="149" class="boxtext">sim raw session</text>
+            <text x="766" y="166" class="small">index + episodes + images</text>
+
+            <rect x="1070" y="118" width="284" height="50" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1096" y="149" class="boxtext">Real collector</text>
+            <text x="1096" y="166" class="small">go2_collector.cpp</text>
+            <rect x="1388" y="118" width="180" height="50" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1412" y="149" class="boxtext">Go2 IO</text>
+            <text x="1412" y="166" class="small">state/video/input</text>
+            <rect x="1600" y="118" width="156" height="50" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1622" y="149" class="boxtext">real raw session</text>
+            <text x="1622" y="166" class="small">same contract</text>
+
+            <path d="M336 143 L368 143" class="line"/>
+            <path d="M708 143 L740 143" class="line"/>
+            <path d="M1354 143 L1388 143" class="line"/>
+            <path d="M1568 143 L1600 143" class="line"/>
+
+            <rect x="20" y="228" width="1780" height="172" class="zone"/>
+            <text x="44" y="266" class="label">B. 统一解析层</text>
+            <text x="56" y="300" class="desc">读取 index / episode / frames，并做质量过滤与帧筛选</text>
+            <rect x="58" y="324" width="248" height="50" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="82" y="354" class="boxtext">discover_session_roots</text>
+            <rect x="336" y="324" width="210" height="50" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="362" y="354" class="boxtext">episode_entries</text>
+            <rect x="576" y="324" width="236" height="50" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="604" y="354" class="boxtext">load_session_samples</text>
+            <rect x="846" y="324" width="210" height="50" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="872" y="354" class="boxtext">quality filtering</text>
+            <rect x="1088" y="324" width="224" height="50" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="1112" y="354" class="boxtext">frame selection</text>
+            <rect x="1342" y="324" width="246" height="50" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="1368" y="354" class="boxtext">per-frame Sample expansion</text>
+
+            <path d="M306 349 L336 349" class="line"/>
+            <path d="M546 349 L576 349" class="line"/>
+            <path d="M812 349 L846 349" class="line"/>
+            <path d="M1056 349 L1088 349" class="line"/>
+            <path d="M1312 349 L1342 349" class="line"/>
+            <path d="M868 168 C868 242 868 242 868 324" class="line"/>
+            <path d="M1678 168 C1678 242 1678 242 1588 349" class="line"/>
+
+            <rect x="20" y="432" width="1780" height="196" class="zone"/>
+            <text x="44" y="470" class="label">C. 样本规范化层</text>
+            <text x="56" y="504" class="desc">把单帧信息和未来动作块组装成统一的 Sample 抽象</text>
+            <rect x="58" y="528" width="230" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="84" y="560" class="boxtext">state_from_frame</text>
+            <rect x="320" y="528" width="286" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="346" y="560" class="boxtext">raw/control action extraction</text>
+            <rect x="640" y="528" width="286" height="54" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="666" y="560" class="boxtext">future K-step action_chunk</text>
+            <rect x="958" y="528" width="286" height="54" rx="16" fill="#fff5db" stroke="#805e2f"/>
+            <text x="986" y="560" class="boxtext">task metadata + quality + labels</text>
+            <rect x="1278" y="528" width="248" height="54" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1304" y="560" class="boxtext">Sample dataclass</text>
+
+            <path d="M288 555 L320 555" class="line"/>
+            <path d="M606 555 L640 555" class="line"/>
+            <path d="M926 555 L958 555" class="line"/>
+            <path d="M1244 555 L1278 555" class="line"/>
+            <path d="M1464 374 C1464 450 1464 450 1464 528" class="line"/>
+
+            <rect x="20" y="660" width="1780" height="218" class="zone"/>
+            <text x="44" y="698" class="label">D. Processed Dataset 构建</text>
+            <text x="56" y="732" class="desc">生成训练合同：relative image path、state、action_chunk、action_mask、split</text>
+            <rect x="58" y="758" width="254" height="52" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="84" y="789" class="boxtext">sample_to_processed_record</text>
+            <rect x="344" y="758" width="258" height="52" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="370" y="789" class="boxtext">yaw_speed normalize</text>
+            <rect x="634" y="758" width="232" height="52" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="660" y="789" class="boxtext">build action_mask</text>
+            <rect x="896" y="758" width="242" height="52" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="924" y="789" class="boxtext">materialize image tree</text>
+            <rect x="1170" y="758" width="204" height="52" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="1196" y="789" class="boxtext">merge real + sim</text>
+            <rect x="1404" y="758" width="172" height="52" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="1428" y="789" class="boxtext">assign_splits</text>
+            <rect x="1602" y="748" width="168" height="72" rx="16" fill="#fff5db" stroke="#805e2f"/>
+            <text x="1626" y="782" class="boxtext">train/val/test</text>
+            <text x="1626" y="802" class="small">dataset.jsonl stats.json</text>
+
+            <path d="M312 784 L344 784" class="line"/>
+            <path d="M602 784 L634 784" class="line"/>
+            <path d="M866 784 L896 784" class="line"/>
+            <path d="M1138 784 L1170 784" class="line"/>
+            <path d="M1374 784 L1404 784" class="line"/>
+            <path d="M1576 784 L1602 784" class="line"/>
+            <path d="M1526 555 C1564 555 1564 758 1576 784" class="line"/>
+
+            <rect x="20" y="910" width="1780" height="264" class="zone"/>
+            <text x="44" y="948" class="label">E. 训练 Loader 层</text>
+            <text x="56" y="982" class="desc">把 processed jsonl 变成真正送给 Trainer 的 batch</text>
+            <rect x="54" y="1008" width="220" height="52" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="80" y="1040" class="boxtext">load json/jsonl</text>
+            <rect x="304" y="1008" width="228" height="52" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="328" y="1040" class="boxtext">validate required keys</text>
+            <rect x="562" y="1008" width="238" height="52" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="590" y="1040" class="boxtext">legacy format compatibility</text>
+            <rect x="830" y="1008" width="214" height="52" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="856" y="1040" class="boxtext">resolve image path</text>
+            <rect x="1074" y="1008" width="214" height="52" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="1100" y="1040" class="boxtext">pad/trim chunk</text>
+            <rect x="1318" y="1008" width="198" height="52" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="1344" y="1040" class="boxtext">encode labels</text>
+            <rect x="1546" y="1008" width="214" height="52" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="1572" y="1040" class="boxtext">build prompt + labels</text>
+
+            <rect x="510" y="1094" width="780" height="54" rx="18" fill="#f6f0e2" stroke="#bfae94"/>
+            <text x="538" y="1127" class="boxtext">final batch = input_ids + labels + images + action_labels + action_mask + action_valid_mask + continuous_actions</text>
+
+            <path d="M274 1034 L304 1034" class="line"/>
+            <path d="M532 1034 L562 1034" class="line"/>
+            <path d="M800 1034 L830 1034" class="line"/>
+            <path d="M1044 1034 L1074 1034" class="line"/>
+            <path d="M1288 1034 L1318 1034" class="line"/>
+            <path d="M1516 1034 L1546 1034" class="line"/>
+            <path d="M1650 820 C1650 916 1650 916 1650 1008" class="line"/>
+            <path d="M1650 1060 C1650 1118 1360 1121 1290 1121" class="line"/>
+          </svg>
+        </div>
+        <p class="caption">最重要的拐点有四个：raw session -> Sample、Sample -> processed record、processed jsonl -> prompt + labels、collate -> Trainer batch。</p>
+      </div>
+    </section>
+
+    <section id="modelflow">
+      <div class="section-card">
+        <div class="section-head">
+          <h2>模型前向 / 推理细化图</h2>
+          <p class="section-note">回答“样本进模型后，训练时如何做 masked denoising，推理时如何做 iterative remasking”。</p>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 1820 1260" xmlns="http://www.w3.org/2000/svg" aria-labelledby="model-title">
+            <title id="model-title">llada-vla-go2 model forward and inference diagram</title>
+            <defs>
+              <marker id="arrow3" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                <path d="M0,0 L12,6 L0,12 z" fill="#6d6a64"/>
+              </marker>
+              <style>
+                .zone { fill: rgba(255,255,255,0.58); stroke: #bfae94; stroke-width: 2; rx: 24; }
+                .label { font: 600 28px Georgia, serif; fill: #1f2a2e; }
+                .desc { font: 18px Georgia, serif; fill: #4f5e64; }
+                .boxtext { font: 600 19px Georgia, serif; fill: #1f2a2e; }
+                .small { font: 15px Georgia, serif; fill: #415056; }
+                .line { stroke: #6d6a64; stroke-width: 3; fill: none; marker-end: url(#arrow3); }
+              </style>
+            </defs>
+
+            <rect x="20" y="20" width="1780" height="172" class="zone"/>
+            <text x="44" y="58" class="label">A. 输入 batch 与 prompt 语义</text>
+            <text x="56" y="92" class="desc">训练 batch 的核心是 prompt tokens、图像、尾部动作监督和动作 mask</text>
+            <rect x="56" y="118" width="188" height="50" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="82" y="149" class="boxtext">input_ids</text>
+            <rect x="274" y="118" width="188" height="50" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="300" y="149" class="boxtext">labels</text>
+            <rect x="492" y="118" width="188" height="50" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="518" y="149" class="boxtext">images</text>
+            <rect x="710" y="118" width="188" height="50" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="736" y="149" class="boxtext">action_labels</text>
+            <rect x="928" y="118" width="206" height="50" rx="16" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="954" y="149" class="boxtext">action_valid_mask</text>
+
+            <rect x="1180" y="110" width="560" height="64" rx="18" fill="#f6f0e2" stroke="#bfae94"/>
+            <text x="1208" y="142" class="boxtext">prompt = instruction + serialized state + action plan + tail 3K [MASK] action tokens</text>
+
+            <rect x="20" y="224" width="1780" height="178" class="zone"/>
+            <text x="44" y="262" class="label">B. 多模态输入准备</text>
+            <text x="56" y="296" class="desc">复用 LLaDA-V / LLaVA 现有多模态输入接口，把图像与文本对齐到统一序列空间</text>
+            <rect x="72" y="320" width="330" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="98" y="352" class="boxtext">prepare_inputs_labels_for_multimodal</text>
+            <rect x="438" y="320" width="282" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="464" y="352" class="boxtext">vision/text embedding fusion</text>
+            <rect x="754" y="320" width="264" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="782" y="352" class="boxtext">inputs_embeds</text>
+            <rect x="1052" y="320" width="264" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="1080" y="352" class="boxtext">sequence positions</text>
+            <rect x="1350" y="320" width="266" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="1376" y="352" class="boxtext">attention mask</text>
+
+            <path d="M244 143 C302 143 302 320 330 320" class="line"/>
+            <path d="M462 143 C462 280 462 280 438 320" class="line"/>
+            <path d="M680 143 C680 280 680 280 402 347" class="line"/>
+            <path d="M402 347 L438 347" class="line"/>
+            <path d="M720 347 L754 347" class="line"/>
+            <path d="M1018 347 L1052 347" class="line"/>
+            <path d="M1316 347 L1350 347" class="line"/>
+
+            <rect x="20" y="434" width="1780" height="214" class="zone"/>
+            <text x="44" y="472" class="label">C. Robotics Wrapper 注入动作语义</text>
+            <text x="56" y="506" class="desc">把尾部动作 token 区域从普通文本占位，替换成专门的 vx / vy / wz action embeddings</text>
+            <rect x="74" y="532" width="286" height="56" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="100" y="564" class="boxtext">LladaVLAForVelocityControl</text>
+            <rect x="394" y="532" width="254" height="56" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="422" y="564" class="boxtext">vx/vy/wz embeddings</text>
+            <rect x="682" y="532" width="310" height="56" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="710" y="564" class="boxtext">inject true action labels into tail region</text>
+            <rect x="1026" y="532" width="240" height="56" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1054" y="564" class="boxtext">record action_positions</text>
+            <rect x="1300" y="532" width="340" height="56" rx="16" fill="#f6f0e2" stroke="#bfae94"/>
+            <text x="1328" y="564" class="boxtext">result: clean_embeds with action-aware tail</text>
+
+            <path d="M1018 347 C1056 347 1056 560 1026 560" class="line"/>
+            <path d="M898 143 C898 248 898 248 838 532" class="line"/>
+            <path d="M360 560 L394 560" class="line"/>
+            <path d="M648 560 L682 560" class="line"/>
+            <path d="M992 560 L1026 560" class="line"/>
+            <path d="M1266 560 L1300 560" class="line"/>
+
+            <rect x="20" y="680" width="1780" height="188" class="zone"/>
+            <text x="44" y="718" class="label">D. 训练时 masked denoising</text>
+            <text x="56" y="752" class="desc">随机遮掉一部分动作位置，只让模型恢复这些被 mask 的动作 token</text>
+            <rect x="88" y="776" width="232" height="54" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="114" y="808" class="boxtext">sample p_mask</text>
+            <rect x="354" y="776" width="300" height="54" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="382" y="808" class="boxtext">replace some action embeds with mask embed</text>
+            <rect x="688" y="776" width="230" height="54" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="716" y="808" class="boxtext">noisy_embeds</text>
+            <rect x="952" y="776" width="258" height="54" rx="16" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="980" y="808" class="boxtext">masked_action_mask</text>
+
+            <path d="M320 803 L354 803" class="line"/>
+            <path d="M654 803 L688 803" class="line"/>
+            <path d="M918 803 L952 803" class="line"/>
+            <path d="M1470 588 C1470 700 1470 700 1182 803" class="line"/>
+
+            <rect x="20" y="900" width="1780" height="186" class="zone"/>
+            <text x="44" y="938" class="label">E. Backbone 前向与动作头</text>
+            <text x="56" y="972" class="desc">backbone 给出 action hidden states，三路动作头分别预测 vx / vy / wz 的离散 bins</text>
+            <rect x="74" y="996" width="232" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="100" y="1028" class="boxtext">backbone forward</text>
+            <rect x="338" y="996" width="236" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="364" y="1028" class="boxtext">hidden_states</text>
+            <rect x="606" y="996" width="258" height="54" rx="16" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="634" y="1028" class="boxtext">gather action states</text>
+            <rect x="896" y="996" width="218" height="54" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="924" y="1028" class="boxtext">vx / vy / wz heads</text>
+            <rect x="1146" y="996" width="248" height="54" rx="16" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1174" y="1028" class="boxtext">action_predictions</text>
+            <rect x="1426" y="996" width="278" height="54" rx="16" fill="#fff5db" stroke="#805e2f"/>
+            <text x="1454" y="1028" class="boxtext">masked cross-entropy loss</text>
+
+            <path d="M306 1023 L338 1023" class="line"/>
+            <path d="M574 1023 L606 1023" class="line"/>
+            <path d="M864 1023 L896 1023" class="line"/>
+            <path d="M1114 1023 L1146 1023" class="line"/>
+            <path d="M1394 1023 L1426 1023" class="line"/>
+            <path d="M804 830 C804 914 804 914 190 996" class="line"/>
+            <path d="M1080 830 C1080 914 1080 914 1566 996" class="line"/>
+
+            <rect x="20" y="1118" width="1780" height="122" class="zone"/>
+            <text x="44" y="1156" class="label">F. 推理路径：iterative remasking -> continuous actions -> online control</text>
+            <rect x="60" y="1178" width="300" height="38" rx="14" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="84" y="1202" class="boxtext">all tail action slots initialized as mask embeddings</text>
+            <rect x="394" y="1178" width="286" height="38" rx="14" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="420" y="1202" class="boxtext">decoder iteratively predicts all action tokens</text>
+            <rect x="714" y="1178" width="252" height="38" rx="14" fill="#efe0c6" stroke="#805e2f"/>
+            <text x="740" y="1202" class="boxtext">resolve confident token/step</text>
+            <rect x="998" y="1178" width="244" height="38" rx="14" fill="#e1ecd2" stroke="#5f7d3b"/>
+            <text x="1024" y="1202" class="boxtext">decode bins to continuous Kx3</text>
+            <rect x="1274" y="1178" width="210" height="38" rx="14" fill="#d9e8ef" stroke="#245a73"/>
+            <text x="1300" y="1202" class="boxtext">take execute_steps</text>
+            <rect x="1516" y="1178" width="242" height="38" rx="14" fill="#f2d9d2" stroke="#b6543a"/>
+            <text x="1542" y="1202" class="boxtext">safety filter -> command send</text>
+
+            <path d="M360 1197 L394 1197" class="line"/>
+            <path d="M680 1197 L714 1197" class="line"/>
+            <path d="M966 1197 L998 1197" class="line"/>
+            <path d="M1242 1197 L1274 1197" class="line"/>
+            <path d="M1484 1197 L1516 1197" class="line"/>
+          </svg>
+        </div>
+        <p class="caption">训练时是“真实动作嵌入 + 随机遮挡 + 恢复被遮动作”；推理时是“全 mask 初始化 + 多轮逐步解析 + 解码成连续速度 + 安全过滤后执行”。</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <div class="section-head">
+          <h2>图例</h2>
+          <p class="section-note">不同颜色表示不同职责区域，方便你快速扫图。</p>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><span class="swatch" style="background:#d9e8ef"></span><span>蓝色：底座能力 / IO / 多模态处理</span></div>
+          <div class="legend-item"><span class="swatch" style="background:#f2d9d2"></span><span>红色：robotics wrapper / real collector / deploy 目标</span></div>
+          <div class="legend-item"><span class="swatch" style="background:#e1ecd2"></span><span>绿色：训练数据适配 / batch / decode输出</span></div>
+          <div class="legend-item"><span class="swatch" style="background:#efe0c6"></span><span>赭色：数据处理 / corruption / iterative decode</span></div>
+          <div class="legend-item"><span class="swatch" style="background:#fff5db"></span><span>浅金色：合同产物 / 评测与最终输出</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    页面文件：<code>docs/architecture_diagrams.html</code>
+  </footer>
+</body>
+</html>

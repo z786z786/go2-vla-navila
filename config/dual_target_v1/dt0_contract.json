@@ -1,0 +1,30 @@
+{
+  "format": "go2-dual-target-task-contract-v1-draft",
+  "status": "pending_sim_validation",
+  "policy_inputs": [
+    "observation.images.front",
+    "observation.state",
+    "task"
+  ],
+  "state_names": ["body_vx", "body_vy", "body_yaw_rate"],
+  "action": {
+    "names": ["vx", "vy", "wz"],
+    "chunk_size": 50,
+    "execute_steps": 10,
+    "rate_hz": 50,
+    "deployment_bounds": {"vx": [0.0, 0.5], "vy": [0.0, 0.0], "wz": [-0.5, 0.5]}
+  },
+  "parking_draft": {
+    "radius_m": 0.3,
+    "raw_vx_abs_lt_mps": 0.03,
+    "raw_wz_abs_lt_radps": 0.05,
+    "duration_sim_s": 1.0,
+    "dt1_must_calibrate_actual_body_velocity_thresholds": true
+  },
+  "dt1_required_before_lock": [
+    "real camera/collision precheck",
+    "physical time and decimation observation mapping",
+    "actual body stop thresholds",
+    "low-level command/history chain verification"
+  ]
+}

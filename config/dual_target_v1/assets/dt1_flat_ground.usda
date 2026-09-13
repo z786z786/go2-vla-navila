@@ -1,0 +1,47 @@
+#usda 1.0
+(
+    defaultPrim = "Ground"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+# A finite, source-controlled, static PhysX collision mesh for the DT1 Go2
+# flat-ground smoke.  It has no external asset/reference payload, so the
+# terrain importer never needs a separately cached environment asset.
+def Xform "Ground"
+{
+    def Mesh "mesh" (
+        prepend apiSchemas = ["PhysicsCollisionAPI"]
+    )
+    {
+        uniform bool doubleSided = true
+        int[] faceVertexCounts = [3, 3]
+        int[] faceVertexIndices = [0, 1, 2, 0, 2, 3]
+        point3f[] points = [(-10, -10, 0), (10, -10, 0), (10, 10, 0), (-10, 10, 0)]
+        float3[] extent = [(-10, -10, 0), (10, 10, 0)]
+        uniform token subdivisionScheme = "none"
+        bool physics:collisionEnabled = 1
+        rel material:binding = </Ground/Looks/ground_material>
+        rel material:binding:physics = </Ground/Looks/ground_material>
+    }
+
+    def Scope "Looks"
+    {
+        def Material "ground_material" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:staticFriction = 1.0
+            float physics:dynamicFriction = 1.0
+            float physics:restitution = 0.0
+            token outputs:surface.connect = </Ground/Looks/ground_material/PreviewSurface.outputs:surface>
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.22, 0.22, 0.22)
+                float inputs:roughness = 0.8
+                token outputs:surface
+            }
+        }
+    }
+}

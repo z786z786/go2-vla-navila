@@ -1,0 +1,503 @@
+{
+  "task_id": "P4-T1",
+  "generated_at": "2026-09-13T03:25:58.138583+00:00",
+  "generator_command": "python3 scripts/p4_extract_navila.py",
+  "inputs": {
+    "path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/R2R_train.tar.gz",
+    "sha256": "49ffc4f88e15ae4bdd2a8f01b16a8685deee0bd4d05711998d9ae88a99d4d228",
+    "bytes": 19703787520
+  },
+  "probe": {
+    "status": "success",
+    "path": "/mnt/wxh/go2_short_vln/.probe_t1_4",
+    "bytes_written": 18,
+    "removed": true
+  },
+  "quarantine": {
+    "action": "already_quarantined",
+    "path": "/mnt/wxh/go2_short_vln/data/navila_dataset/R2R/annotations.INCOMPLETE-184991744B.json.quarantine",
+    "size_bytes": 184991744
+  },
+  "extraction": {
+    "mode": "skipped_existing_complete",
+    "extract_seconds": 0.0,
+    "elapsed_seconds": 72.151
+  },
+  "counts": {
+    "jpg": 601125,
+    "video_directories": 10819,
+    "jpg_total_bytes": 19236004882
+  },
+  "disk_usage": {
+    "train_logical_bytes": 19236004882,
+    "train_disk_bytes": 19280708626,
+    "filesystem_free_bytes": 1880441290752
+  },
+  "tar_disk_set_check": {
+    "tar_file_count": 601125,
+    "disk_file_count": 601125,
+    "missing_files": [],
+    "extra_files": [],
+    "tar_dir_count": 10819,
+    "disk_dir_count": 10819,
+    "missing_dirs": [],
+    "extra_dirs": []
+  },
+  "sampling": {
+    "description": "Sort all MNT-relative .jpg paths bytewise in POSIX lexical order; choose floor(i*(N-1)/63), i=0..63.",
+    "ordering": "Python str.sort() over POSIX paths",
+    "formula": "floor(i*(N-1)/63)",
+    "count": 64
+  },
+  "samples": [
+    {
+      "ordinal": 0,
+      "sorted_index": 0,
+      "path": "data/navila_dataset/R2R/train/1/frame_0.jpg",
+      "sha256": "0f05ff03c4e2491d379daba99833bb721d753376f1b76ea16711f6d7aa562a36",
+      "bytes": 23700
+    },
+    {
+      "ordinal": 1,
+      "sorted_index": 9541,
+      "path": "data/navila_dataset/R2R/train/10151/frame_26.jpg",
+      "sha256": "ccaac12eb1ef84f8053a055fe95669390309965ff2e0967f90e0cdba9cabdc29",
+      "bytes": 21691
+    },
+    {
+      "ordinal": 2,
+      "sorted_index": 19083,
+      "path": "data/navila_dataset/R2R/train/10304/frame_1.jpg",
+      "sha256": "44f97552b6a0dd72ddb749174e41494b36c15ff356bb774a0311e3d657900172",
+      "bytes": 44508
+    },
+    {
+      "ordinal": 3,
+      "sorted_index": 28624,
+      "path": "data/navila_dataset/R2R/train/10469/frame_12.jpg",
+      "sha256": "909bf35d6226c29523e42e16ba793f439b45e239591b3e86d308dc45daa127a8",
+      "bytes": 23585
+    },
+    {
+      "ordinal": 4,
+      "sorted_index": 38166,
+      "path": "data/navila_dataset/R2R/train/10620/frame_27.jpg",
+      "sha256": "d5dbca99fcb0a8664db524c0a9c3d734cd772a7b7d7eed3259f84ab6a1c0ce3a",
+      "bytes": 35579
+    },
+    {
+      "ordinal": 5,
+      "sorted_index": 47708,
+      "path": "data/navila_dataset/R2R/train/10779/frame_13.jpg",
+      "sha256": "9a587dc3fda388de2ed399d91fca5d987e15bab68ce420ffe6842873d44e6e40",
+      "bytes": 37554
+    },
+    {
+      "ordinal": 6,
+      "sorted_index": 57249,
+      "path": "data/navila_dataset/R2R/train/1183/frame_27.jpg",
+      "sha256": "4b5bcd5d463c05ca7b7207ff991083f56304425185909540b5db5e8da6b3fb85",
+      "bytes": 28566
+    },
+    {
+      "ordinal": 7,
+      "sorted_index": 66791,
+      "path": "data/navila_dataset/R2R/train/1331/frame_4.jpg",
+      "sha256": "98a1d7791c15719189f74bfba4be60ecc1fbfd711a77486ed2095936c3a66355",
+      "bytes": 18999
+    },
+    {
+      "ordinal": 8,
+      "sorted_index": 76333,
+      "path": "data/navila_dataset/R2R/train/1488/frame_36.jpg",
+      "sha256": "7c6c63a378efb30ef134ca56e4d3e7c13e8491b5b6240e7fef29bb789c29ad18",
+      "bytes": 22257
+    },
+    {
+      "ordinal": 9,
+      "sorted_index": 85874,
+      "path": "data/navila_dataset/R2R/train/1636/frame_59.jpg",
+      "sha256": "3ea113b3cb9cbe70c1629bafded5daa08bc722b95f6a669e56ed06b59be12062",
+      "bytes": 28969
+    },
+    {
+      "ordinal": 10,
+      "sorted_index": 95416,
+      "path": "data/navila_dataset/R2R/train/18/frame_36.jpg",
+      "sha256": "b254f2c3bb65947bff42ac6c31133c75d2913fa7b9c8e31a1d7a81e801280d7f",
+      "bytes": 45001
+    },
+    {
+      "ordinal": 11,
+      "sorted_index": 104958,
+      "path": "data/navila_dataset/R2R/train/1957/frame_10.jpg",
+      "sha256": "6ffa959f454a67f632969b43fd06e66c552088c3b43380c6f7f6f567d5140f60",
+      "bytes": 19326
+    },
+    {
+      "ordinal": 12,
+      "sorted_index": 114499,
+      "path": "data/navila_dataset/R2R/train/2120/frame_34.jpg",
+      "sha256": "996aad86308f39c5076c59ed0cab7e6f9cd499ed38e677732b6619459f837d8a",
+      "bytes": 34898
+    },
+    {
+      "ordinal": 13,
+      "sorted_index": 124041,
+      "path": "data/navila_dataset/R2R/train/2288/frame_30.jpg",
+      "sha256": "ae6b8443622310bf85b59496127b8dce4ea71d2ba0f15f3a9053a5ff15d2ad37",
+      "bytes": 29395
+    },
+    {
+      "ordinal": 14,
+      "sorted_index": 133583,
+      "path": "data/navila_dataset/R2R/train/2430/frame_14.jpg",
+      "sha256": "0e139cda1572140859b2275703cfda168c58d63f44c1cd55678cca6c477bbf4d",
+      "bytes": 42697
+    },
+    {
+      "ordinal": 15,
+      "sorted_index": 143124,
+      "path": "data/navila_dataset/R2R/train/2589/frame_45.jpg",
+      "sha256": "21a3d9d763e744b540660e1ea5a17d999c1bb838139a44cbe66f79294a3be73d",
+      "bytes": 19309
+    },
+    {
+      "ordinal": 16,
+      "sorted_index": 152666,
+      "path": "data/navila_dataset/R2R/train/2740/frame_40.jpg",
+      "sha256": "8bfb43180caad8e8de3dafb415ae21e2b1d2480b64ed591708b6f4f8f16388eb",
+      "bytes": 27616
+    },
+    {
+      "ordinal": 17,
+      "sorted_index": 162208,
+      "path": "data/navila_dataset/R2R/train/2896/frame_26.jpg",
+      "sha256": "d7abef6a1646d6d29a90aa2434e9b74d7be97edd2e7d82958f71a7de592f2c8d",
+      "bytes": 22395
+    },
+    {
+      "ordinal": 18,
+      "sorted_index": 171749,
+      "path": "data/navila_dataset/R2R/train/3045/frame_29.jpg",
+      "sha256": "5b78b0c35410e3af73fca4d7e38e3e2fa772ab8c03d4abca42169cf4f8f482f0",
+      "bytes": 17045
+    },
+    {
+      "ordinal": 19,
+      "sorted_index": 181291,
+      "path": "data/navila_dataset/R2R/train/3189/frame_144.jpg",
+      "sha256": "fca212a4de70af08d8ccd116e39c9136412a7f52416cb2d4035687921739eb8a",
+      "bytes": 23168
+    },
+    {
+      "ordinal": 20,
+      "sorted_index": 190833,
+      "path": "data/navila_dataset/R2R/train/3348/frame_9.jpg",
+      "sha256": "f1220ead15c33a35ad9b1aa454bb3294e8adb8c23f8f2f3f4cb1951049623285",
+      "bytes": 34049
+    },
+    {
+      "ordinal": 21,
+      "sorted_index": 200374,
+      "path": "data/navila_dataset/R2R/train/3500/frame_44.jpg",
+      "sha256": "bae79e21a9e49955b8e093cad67b51b1f91e1f1c422f4373274c689e63c2589a",
+      "bytes": 29983
+    },
+    {
+      "ordinal": 22,
+      "sorted_index": 209916,
+      "path": "data/navila_dataset/R2R/train/3664/frame_33.jpg",
+      "sha256": "dc9983342ade087f00044f6a0323e672039c0f89492cffca7a57f9eeff3567d0",
+      "bytes": 32470
+    },
+    {
+      "ordinal": 23,
+      "sorted_index": 219457,
+      "path": "data/navila_dataset/R2R/train/3819/frame_42.jpg",
+      "sha256": "a70b248d8e617df8914ee525f47e8454f1b8e93c55f0b76b35a050643e54df2b",
+      "bytes": 31110
+    },
+    {
+      "ordinal": 24,
+      "sorted_index": 228999,
+      "path": "data/navila_dataset/R2R/train/3974/frame_38.jpg",
+      "sha256": "fcd1d9f7515cd58b4ba249cc977d544819fbb4935b481d7ce3ef6e245b65da96",
+      "bytes": 20651
+    },
+    {
+      "ordinal": 25,
+      "sorted_index": 238541,
+      "path": "data/navila_dataset/R2R/train/4134/frame_14.jpg",
+      "sha256": "a74ea5217512cb18560b65807fa69d37a76f522f3b70f07e1731370ad343c21b",
+      "bytes": 49588
+    },
+    {
+      "ordinal": 26,
+      "sorted_index": 248082,
+      "path": "data/navila_dataset/R2R/train/4280/frame_24.jpg",
+      "sha256": "86072517ab4b74f1527f66d01542715ad1fbbc40320125c973c09c3f10464a9e",
+      "bytes": 17588
+    },
+    {
+      "ordinal": 27,
+      "sorted_index": 257624,
+      "path": "data/navila_dataset/R2R/train/443/frame_40.jpg",
+      "sha256": "ac30180d60f8adaa8f6d7cbc03754aca38ffafa30a57839fce08c121698393c1",
+      "bytes": 52662
+    },
+    {
+      "ordinal": 28,
+      "sorted_index": 267166,
+      "path": "data/navila_dataset/R2R/train/4586/frame_22.jpg",
+      "sha256": "2ace35ad06612f2fa6aaf9d12e3dde925934bd1709a9272e6e140c9bbfa5a282",
+      "bytes": 22532
+    },
+    {
+      "ordinal": 29,
+      "sorted_index": 276707,
+      "path": "data/navila_dataset/R2R/train/4732/frame_6.jpg",
+      "sha256": "a41f56fc7f3d5837f2d8dd67851019f03a242ec33c6b4bcddcb86e180f04e3d2",
+      "bytes": 21659
+    },
+    {
+      "ordinal": 30,
+      "sorted_index": 286249,
+      "path": "data/navila_dataset/R2R/train/4858/frame_27.jpg",
+      "sha256": "4681f5864311411fc35ac12b5e436e511f6f5b0cc8a9da8bd5bc9238b7065d81",
+      "bytes": 27394
+    },
+    {
+      "ordinal": 31,
+      "sorted_index": 295791,
+      "path": "data/navila_dataset/R2R/train/502/frame_26.jpg",
+      "sha256": "59c8bd39ee190e10f49e0b4e48ed758e41395eeedd6e4349c1e143bcfbae03b6",
+      "bytes": 17327
+    },
+    {
+      "ordinal": 32,
+      "sorted_index": 305332,
+      "path": "data/navila_dataset/R2R/train/5175/frame_21.jpg",
+      "sha256": "2c406e2ac0bd11662e2ddbcd41d3de54e7928f13dba2f2ea97c5763d77568a10",
+      "bytes": 32470
+    },
+    {
+      "ordinal": 33,
+      "sorted_index": 314874,
+      "path": "data/navila_dataset/R2R/train/5333/frame_15.jpg",
+      "sha256": "342304490f3ad2e4b44ca4debbc159d0c1576095b8a9a9f525828236fb982891",
+      "bytes": 31044
+    },
+    {
+      "ordinal": 34,
+      "sorted_index": 324416,
+      "path": "data/navila_dataset/R2R/train/5486/frame_14.jpg",
+      "sha256": "24b2f495d90fe396afbce08a06e4b06b2bdc37660d9dbe477af34637ca9a6c10",
+      "bytes": 34578
+    },
+    {
+      "ordinal": 35,
+      "sorted_index": 333957,
+      "path": "data/navila_dataset/R2R/train/5647/frame_26.jpg",
+      "sha256": "8ec7d8320a4c8bfb4c81b20f9b9bd5a0e3dddc2924feb45f302a8e6e656f5753",
+      "bytes": 32158
+    },
+    {
+      "ordinal": 36,
+      "sorted_index": 343499,
+      "path": "data/navila_dataset/R2R/train/5801/frame_14.jpg",
+      "sha256": "f4a8591ebb256d9078a3d03d844a5eb64058686beb95e7d1fc259c961cc575d3",
+      "bytes": 28406
+    },
+    {
+      "ordinal": 37,
+      "sorted_index": 353041,
+      "path": "data/navila_dataset/R2R/train/5968/frame_15.jpg",
+      "sha256": "f3aad293ba91db82111f09200151f470f2a4e755fb7357e43c3098ababb56088",
+      "bytes": 40320
+    },
+    {
+      "ordinal": 38,
+      "sorted_index": 362582,
+      "path": "data/navila_dataset/R2R/train/6113/frame_32.jpg",
+      "sha256": "a17a659e124bcd76b451a6bc1132b73d649f19a8f42dee23428d80ae8a7427c7",
+      "bytes": 21720
+    },
+    {
+      "ordinal": 39,
+      "sorted_index": 372124,
+      "path": "data/navila_dataset/R2R/train/6263/frame_7.jpg",
+      "sha256": "a1f8a59bb6138dc3ab56c75270cda9c619f99973f17e60f58a98432510f6ff6f",
+      "bytes": 24864
+    },
+    {
+      "ordinal": 40,
+      "sorted_index": 381666,
+      "path": "data/navila_dataset/R2R/train/643/frame_19.jpg",
+      "sha256": "707ae89ea84f44d14d4662e70efff940344f6d2742c8edfb310c5ddf548ec19b",
+      "bytes": 39778
+    },
+    {
+      "ordinal": 41,
+      "sorted_index": 391207,
+      "path": "data/navila_dataset/R2R/train/6585/frame_27.jpg",
+      "sha256": "64bcc3fcd5e91aed335ed9bfd3b19bfd4e9c43cca14abdfc2a53f3c60b211f27",
+      "bytes": 27258
+    },
+    {
+      "ordinal": 42,
+      "sorted_index": 400749,
+      "path": "data/navila_dataset/R2R/train/6723/frame_8.jpg",
+      "sha256": "660a59b1f04155f49b2f4cd1f173e8975c7fbe27b5cdb0e27b1e3a5e0e4c9d1d",
+      "bytes": 20859
+    },
+    {
+      "ordinal": 43,
+      "sorted_index": 410290,
+      "path": "data/navila_dataset/R2R/train/688/frame_9.jpg",
+      "sha256": "d5a60f7ed592c845b218351d28c606b845a81d22c729f8b6868a0daa782d2bb4",
+      "bytes": 23155
+    },
+    {
+      "ordinal": 44,
+      "sorted_index": 419832,
+      "path": "data/navila_dataset/R2R/train/7028/frame_32.jpg",
+      "sha256": "97483d239b0419cc84a5d7a3a2eee225ac9d56ad6aabbee95b794a56b2e39321",
+      "bytes": 32490
+    },
+    {
+      "ordinal": 45,
+      "sorted_index": 429374,
+      "path": "data/navila_dataset/R2R/train/7186/frame_69.jpg",
+      "sha256": "8493f6a28f944ff68556f3f8eca5b74ddcd0aaa54d02f64c68a71acf9761e195",
+      "bytes": 35746
+    },
+    {
+      "ordinal": 46,
+      "sorted_index": 438915,
+      "path": "data/navila_dataset/R2R/train/7351/frame_19.jpg",
+      "sha256": "684a25241c9713517d94c2534532c10cd92fae10e052cc51db4a3118f0f116c1",
+      "bytes": 36115
+    },
+    {
+      "ordinal": 47,
+      "sorted_index": 448457,
+      "path": "data/navila_dataset/R2R/train/7501/frame_13.jpg",
+      "sha256": "b3ee5877b242fb2cfb026770292e1b47294683ed6ca13de538443f0912b38c04",
+      "bytes": 27006
+    },
+    {
+      "ordinal": 48,
+      "sorted_index": 457999,
+      "path": "data/navila_dataset/R2R/train/7652/frame_2.jpg",
+      "sha256": "3be07fbbb0bbb52f782d48b006f1647b9bd791ea55c2a9b91531c0bbd6ffad91",
+      "bytes": 41344
+    },
+    {
+      "ordinal": 49,
+      "sorted_index": 467540,
+      "path": "data/navila_dataset/R2R/train/781/frame_38.jpg",
+      "sha256": "b6f2a2966a8bdae5ffe9816fbdb01936d8cf15a2ab4d50cc42c8ca4dab03ebce",
+      "bytes": 67184
+    },
+    {
+      "ordinal": 50,
+      "sorted_index": 477082,
+      "path": "data/navila_dataset/R2R/train/7975/frame_1.jpg",
+      "sha256": "ccadf50eabd0a8751d31566c8d7cb9ebc157dd1e019c93228d6ab6e7279f44d3",
+      "bytes": 38229
+    },
+    {
+      "ordinal": 51,
+      "sorted_index": 486624,
+      "path": "data/navila_dataset/R2R/train/814/frame_38.jpg",
+      "sha256": "4b2174a1593eb064b633042b7f67b4170459f136660bed3a2877fd9d7c96454c",
+      "bytes": 26743
+    },
+    {
+      "ordinal": 52,
+      "sorted_index": 496165,
+      "path": "data/navila_dataset/R2R/train/8291/frame_18.jpg",
+      "sha256": "cfd17cd958c639ef653240100fe8dbfd9bda4ae7a966896a1f2874efda1bdd00",
+      "bytes": 39545
+    },
+    {
+      "ordinal": 53,
+      "sorted_index": 505707,
+      "path": "data/navila_dataset/R2R/train/8440/frame_6.jpg",
+      "sha256": "250d858c55cd377b0bf9d26f137102f6afc26fa0489b192f2d1b6ec127f5d8b0",
+      "bytes": 25077
+    },
+    {
+      "ordinal": 54,
+      "sorted_index": 515249,
+      "path": "data/navila_dataset/R2R/train/8602/frame_18.jpg",
+      "sha256": "89fc142bf6478a19346f9689beae78cc8a03a87cd6480dcbfd56d8a5fcd51c60",
+      "bytes": 39870
+    },
+    {
+      "ordinal": 55,
+      "sorted_index": 524790,
+      "path": "data/navila_dataset/R2R/train/875/frame_33.jpg",
+      "sha256": "0a4aedbb38c794b6902917bc47a7014ff2aa6462a6b2083bdbecde695f3442c3",
+      "bytes": 46466
+    },
+    {
+      "ordinal": 56,
+      "sorted_index": 534332,
+      "path": "data/navila_dataset/R2R/train/8899/frame_11.jpg",
+      "sha256": "97136ef4637c5492c72eeb77e67cd5d219f3af9f8e4490be5939bf0a71d66241",
+      "bytes": 22596
+    },
+    {
+      "ordinal": 57,
+      "sorted_index": 543874,
+      "path": "data/navila_dataset/R2R/train/9042/frame_74.jpg",
+      "sha256": "7686f297e6183677420920a3b1cdebbd2d0049dd967e0884f0d41767b81fa1ee",
+      "bytes": 29427
+    },
+    {
+      "ordinal": 58,
+      "sorted_index": 553415,
+      "path": "data/navila_dataset/R2R/train/9201/frame_50.jpg",
+      "sha256": "f019725fbeb3c0d1c3b0cb59824d3f32b4b024e23f32613abdb4183b2e9dacde",
+      "bytes": 29351
+    },
+    {
+      "ordinal": 59,
+      "sorted_index": 562957,
+      "path": "data/navila_dataset/R2R/train/9370/frame_26.jpg",
+      "sha256": "10a358701ec38c928a41850fdc0c02b15b1368594e3b3e1622dacd20be50c86e",
+      "bytes": 38782
+    },
+    {
+      "ordinal": 60,
+      "sorted_index": 572499,
+      "path": "data/navila_dataset/R2R/train/9529/frame_71.jpg",
+      "sha256": "945b86d259a59ca8a4764416af3519869310a174cdd276a689c296da6b905963",
+      "bytes": 24650
+    },
+    {
+      "ordinal": 61,
+      "sorted_index": 582040,
+      "path": "data/navila_dataset/R2R/train/9689/frame_39.jpg",
+      "sha256": "f77c951b0ebb03f2a4e2f01820dbb250a99ae74ceedda5e4b5924f3ac975b8d0",
+      "bytes": 33218
+    },
+    {
+      "ordinal": 62,
+      "sorted_index": 591582,
+      "path": "data/navila_dataset/R2R/train/9849/frame_33.jpg",
+      "sha256": "9481c27550f08297a529b84f2942b4a348013debe92c988355cbfd5513ccf79f",
+      "bytes": 26275
+    },
+    {
+      "ordinal": 63,
+      "sorted_index": 601124,
+      "path": "data/navila_dataset/R2R/train/9999/frame_9.jpg",
+      "sha256": "604e9a55534f7f493d8fd04f46e1bf2a958c250f345d89da4a4c63af3be721c1",
+      "bytes": 39785
+    }
+  ],
+  "per_video_index": "/mnt/wxh/go2_short_vln/data/navila_dataset/R2R/index/t1_per_video_frames.json"
+}

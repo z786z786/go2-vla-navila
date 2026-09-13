@@ -1,0 +1,156 @@
+{
+  "task_id": "P3-T3",
+  "generated_at": "2026-09-12T20:35:59+08:00",
+  "generator_command": "Read-only batch inspection of local IsaacLab/NaVILA-Bench configs, IsaacLab camera source, the two specified frames.jsonl files, and every JPEG in their rgb directories using /mnt/wxh/go2_short_vln/envs/conda/smolvla/bin/python (PIL + numpy); no Isaac launch or GPU use.",
+  "inputs": {
+    "network_probe": {
+      "status": "UNAVAILABLE",
+      "urls": ["https://huggingface.co", "https://github.com"],
+      "result": "Both short curl probes failed to connect (curl code 7, HTTP status 000) within the 5 s timeout. No retry was made."
+    },
+    "go2_config": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/go2_matterport_base_cfg.py",
+    "isaaclab_camera_sources": [
+      "/mnt/wxh/go2_short_vln/third_party/IsaacLab/source/extensions/omni.isaac.lab/omni/isaac/lab/sim/spawners/sensors/sensors_cfg.py",
+      "/mnt/wxh/go2_short_vln/third_party/IsaacLab/source/extensions/omni.isaac.lab/omni/isaac/lab/sensors/camera/camera_cfg.py",
+      "/mnt/wxh/go2_short_vln/third_party/IsaacLab/source/extensions/omni.isaac.lab/omni/isaac/lab/sensors/camera/camera_data.py",
+      "/mnt/wxh/go2_short_vln/third_party/IsaacLab/source/extensions/omni.isaac.lab/omni/isaac/lab/sensors/camera/utils.py"
+    ],
+    "go2_rollouts": [
+      {
+        "root": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3",
+        "rgb_dir": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3/rgb",
+        "frames_jsonl": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3/frames.jsonl",
+        "manifest": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3/manifest.json"
+      },
+      {
+        "root": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_continuous_v2",
+        "rgb_dir": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_continuous_v2/rgb",
+        "frames_jsonl": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_continuous_v2/frames.jsonl",
+        "manifest": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_continuous_v2/manifest.json"
+      }
+    ],
+    "contract_claim": {
+      "file": "CODEX_VLN_PLATFORM_MILESTONES.md",
+      "section": "§3.1 Observation API",
+      "claim": "rgb: uint8 [512, 512, 3]"
+    }
+  },
+  "findings": {
+    "go2_camera": {
+      "status": "VERIFIED",
+      "sensor_name": "rgbd_camera",
+      "config_source": {
+        "path": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/go2_matterport_base_cfg.py",
+        "lines": "301-307",
+        "fields": {
+          "scene.rgbd_camera.prim_path": "{ENV_REGEX_NS}/Robot/base/rgbd_camera",
+          "scene.rgbd_camera.offset.pos": [0.1, 0.0, 0.5],
+          "scene.rgbd_camera.offset.rot_wxyz": [-0.5, 0.5, -0.5, 0.5],
+          "scene.rgbd_camera.offset.convention": "ros (CameraCfg.OffsetCfg default)",
+          "scene.rgbd_camera.spawn.horizontal_aperture_mm": 54.0,
+          "scene.rgbd_camera.width_px": 512,
+          "scene.rgbd_camera.height_px": 512,
+          "scene.rgbd_camera.data_types": ["rgb", "distance_to_image_plane"]
+        }
+      },
+      "relative_mount_pose": {
+        "parent": "Robot/base",
+        "position_m_xyz": [0.1, 0.0, 0.5],
+        "mount_height_m_above_parent_base": 0.5,
+        "pitch_deg_nominal": 0.0,
+        "pitch_derivation": "The config exposes offset.rot (quaternion), not an Euler pitch field. In the ROS convention (+Z forward, -Y up), (-0.5, 0.5, -0.5, 0.5) maps optical +Z to parent +X with zero elevation/pitch; convention and axis definitions are documented in IsaacLab camera_cfg.py lines 27-35 and camera_data.py lines 72-80.",
+        "relative_quaternion_wxyz": [-0.5, 0.5, -0.5, 0.5]
+      },
+      "fov": {
+        "config_horizontal_aperture_mm": 54.0,
+        "config_focal_length_cm": 24.0,
+        "focal_length_source": "Inherited PinholeCameraCfg default, sensors_cfg.py lines 40-43",
+        "horizontal_fov_deg_derived_from_config": 96.7329,
+        "vertical_fov_deg_derived_from_intrinsics": 96.7329,
+        "derivation": "2*atan(pixel_extent/(2*focal_pixels)); manifest K has fx=fy=227.55555725097656 and 512 px extent, giving 96.7329209 degrees in both axes. The config does not explicitly set vertical_aperture.",
+        "manifest_intrinsics": [[227.55555725097656, 0.0, 256.0], [0.0, 227.55555725097656, 256.0], [0.0, 0.0, 1.0]]
+      }
+    },
+    "on_disk_rgb": {
+      "status": "VERIFIED",
+      "interpreter": "/mnt/wxh/go2_short_vln/envs/conda/smolvla/bin/python",
+      "method": "PIL-decode every JPEG, convert to RGB, then inspect numpy shape and dtype",
+      "contract_match": true,
+      "runs": [
+        {
+          "run": "20260910_ep1_v3",
+          "rgb_dir": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_v3/rgb",
+          "file_count": 236,
+          "decoded_shape_dtype_counts": {"[512, 512, 3] uint8": 236},
+          "decode_errors": 0
+        },
+        {
+          "run": "20260910_ep1_continuous_v2",
+          "rgb_dir": "/mnt/wxh/go2_short_vln/outputs/r2r_ablation/20260910_ep1_continuous_v2/rgb",
+          "file_count": 205,
+          "decoded_shape_dtype_counts": {"[512, 512, 3] uint8": 205},
+          "decode_errors": 0
+        }
+      ],
+      "total_files_checked": 441,
+      "mismatch": false,
+      "note": "JPEG files are compressed on disk; uint8 refers to the decoded RGB array required by the observation contract."
+    },
+    "go2_empirical_viewpoint": {
+      "status": "VERIFIED",
+      "source_fields": ["frames.jsonl.camera_position_w", "frames.jsonl.camera_quaternion_ros_wxyz", "manifest.json.camera_intrinsics"],
+      "camera_world_z_m": {
+        "20260910_ep1_v3": {"min": 0.805232, "max": 0.833156, "mean": 0.815057, "std_population": 0.005637},
+        "20260910_ep1_continuous_v2": {"min": 0.805054, "max": 0.833156, "mean": 0.815197, "std_population": 0.006109}
+      },
+      "optical_axis_elevation_deg": {
+        "20260910_ep1_v3": {"min": -2.145688, "max": 4.218963, "mean": 1.828678, "std_population": 1.229414},
+        "20260910_ep1_continuous_v2": {"min": -2.145688, "max": 4.055028, "mean": 1.997298, "std_population": 1.296718}
+      },
+      "geometric_horizon_y_px_at_center_x_256": {
+        "definition": "Projection of the world-horizontal ray plane using saved ROS camera quaternion; indoor RGB may not contain a visible semantic horizon line.",
+        "20260910_ep1_v3": {"min": 247.474210, "max": 272.788005, "mean": 263.267994, "std_population": 4.887055},
+        "20260910_ep1_continuous_v2": {"min": 247.474210, "max": 272.133867, "mean": 263.938772, "std_population": 5.154529}
+      },
+      "combined_saved_frames": {
+        "count": 441,
+        "camera_world_z_m": {"min": 0.805054, "max": 0.833156, "mean": 0.815122, "std_population": 0.005861},
+        "optical_axis_elevation_deg": {"min": -2.145688, "max": 4.218963, "mean": 1.907062, "std_population": 1.263949},
+        "geometric_horizon_y_px_at_center_x_256": {"min": 247.474210, "max": 272.788005, "mean": 263.579807, "std_population": 5.024317}
+      }
+    },
+    "navila_render_camera": {
+      "status": "MISSING",
+      "height": "MISSING",
+      "fov": "MISSING",
+      "resolution": "MISSING",
+      "frames": "MISSING",
+      "reason": "Network probes to HuggingFace and GitHub were unavailable. The permitted local NaVILA-Bench tree contains the Go2 IsaacLab task/config and evaluation code, but no independent NaVILA training-render camera metadata or NaVILA RGB frame set. navila_eval.py selects the Go2 task and its camera_obs; its set_camera_view call is a viewer camera, not a source-data render parameter. No value is inferred from it."
+    },
+    "per_item_difference": [
+      {"item": "mount height", "go2": "0.500 m above Robot/base by scene.rgbd_camera.offset.pos[2]; saved camera world-z 0.805054-0.833156 m", "navila": "MISSING", "difference": "UNVERIFIABLE"},
+      {"item": "horizontal FOV", "go2": "96.7329 deg (K/config-derived)", "navila": "MISSING", "difference": "UNVERIFIABLE"},
+      {"item": "vertical FOV", "go2": "96.7329 deg (K-derived; no explicit vertical_aperture)", "navila": "MISSING", "difference": "UNVERIFIABLE"},
+      {"item": "resolution width", "go2": "512 px configured and decoded", "navila": "MISSING", "difference": "UNVERIFIABLE"},
+      {"item": "resolution height", "go2": "512 px configured and decoded", "navila": "MISSING", "difference": "UNVERIFIABLE"},
+      {"item": "aspect ratio", "go2": "1.000 (512:512)", "navila": "MISSING", "difference": "UNVERIFIABLE"},
+      {"item": "nominal pitch/viewpoint", "go2": "0 deg relative to Robot/base forward; empirical optical-axis elevation mean +1.907 deg, range -2.146 to +4.219 deg over 441 saved frames", "navila": "MISSING", "difference": "UNVERIFIABLE"}
+    ],
+    "embodiment_gap": {
+      "status": "UNVERIFIABLE",
+      "comparison_number": null,
+      "go2_only_evidence": "Go2 is a low-mounted camera with a 0.5 m parent-base offset and approximately 0.815 m saved world height; its orientation remains near level, with a 25.31 px full range in geometric horizon center position across ep1_v3 and a +1.907 deg mean optical-axis elevation over both runs.",
+      "conclusion": "A NaVILA-vs-Go2 viewpoint/height gap cannot be judged as large or small from the available evidence because the NaVILA render height/FOV/resolution/frames are missing. The Go2 evidence establishes the deployment viewpoint that any source-data camera must match; a materially higher or differently pitched NaVILA camera would be a plausible distribution-shift mechanism, but its magnitude and threshold are not verifiable here.",
+      "figure": {
+        "status": "MISSING",
+        "requested_path": "/mnt/wxh/go2_short_vln/downloads/navila_probe/t3_figs/",
+        "reason": "The specified /mnt figure directory was absent and the sandbox rejected mkdir there as Read-only file system. No figure was written elsewhere or presented as a comparison figure."
+      }
+    }
+  },
+  "missing": [
+    "NaVILA independent render camera height, FOV, resolution, and frames: MISSING because local source/data are absent and network is unavailable.",
+    "NaVILA-vs-Go2 per-item numerical differences: UNVERIFIABLE while the NaVILA side is missing.",
+    "Comparison figure: MISSING because the user-specified /mnt/.../t3_figs directory is sandbox-read-only; no fabricated comparison was made."
+  ]
+}

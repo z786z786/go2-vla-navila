@@ -1,0 +1,19 @@
+packing:
+  chunk_len: 4
+  min_episode_steps: 8
+  require_success: false
+  drop_collision_episodes: true
+  drop_fall_episodes: false
+  min_progress_distance: 0.2
+  turning_threshold: 0.1
+  require_visibility_metadata: true
+  allow_search_episodes: true
+  visibility_sample_quota:
+    enabled: true
+    visible_early_ratio: 0.75
+    visible_after_small_turn_ratio: 0.17
+    search_ratio: 0.08
+  split:
+    train_ratio: 0.8
+    val_ratio: 0.1
+    test_ratio: 0.1

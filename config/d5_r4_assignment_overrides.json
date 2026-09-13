@@ -1,0 +1,13 @@
+{
+  "format": "go2-short-vln-m6_2-d5-assignment-overrides-v1",
+  "source_dataset_sha256": "88255ffb8e175372048c4948531d7ad059a9d8aa9217b7be95e2f60f520b34b6",
+  "assignments": [
+    {
+      "short_episode_id": "short_vln_v1_1051",
+      "source_split": "seen-val",
+      "collection_split": "train",
+      "reason": "recover_required_train_scene_coverage",
+      "exclude_from_seen_val_evaluation": true
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+scene_config: scene_office.yaml
+robot_config: robot_go2_camera.yaml
+domain_randomization_config: domain_randomization.yaml
+packing_config: packing.yaml
+
+runtime:
+  run_name: semantic_goal_nav
+  dataset_name: go2_isaac_semantic_goal_nav
+  headless: true
+  auto_pack: false
+  num_episodes: 600
+  max_steps_per_episode: 240
+  seed: 0
+  output_dir: ../data/isaac_sim_raw/semantic_goal_nav_seed0
+  packed_output_dir: ../data/isaac_sim_packed/semantic_goal_nav_seed0
+
+sim:
+  device: cuda:0
+  physics_dt: 0.01
+  control_dt: 0.05
+  warmup_steps_after_reset: 3
+
+data:
+  image_format: jpg
+  jpeg_quality: 95
+  chunk_len: 4
+  state_fields: [vx, vy, vz]
+  train_action_fields: [vx, wz]
+  raw_action_fields: [vx, vy, wz]
+
+controller:
+  vx_min: -0.1
+  vx_max: 1.0
+  wz_min: -1.4
+  wz_max: 1.4
+  k_vx: 0.75
+  k_wz: 2.2
+  goal_tolerance: 0.4
+  turn_in_place_angle_deg: 60.0
+  slow_angle_deg: 20.0
+  min_turning_wz: 0.25
+  vx_acc_limit: 1.0
+  wz_acc_limit: 3.0
+
+task:
+  task_id: goal_navigation
+  scene_mode: semantic_variation
+  target_catalog:
+    - class: black_box
+      color: black
+      shape: box
+      label: black box
+    - class: red_cube
+      color: red
+      shape: cube
+      label: red cube
+    - class: blue_cone
+      color: blue
+      shape: cone
+      label: blue cone
+    - class: green_cylinder
+      color: green
+      shape: cylinder
+      label: green cylinder
+  instruction_templates:
+    - id: go_to_target
+      text: go to the {target_label}
+    - id: approach_target
+      text: approach the {target_label}
+  goal_distance_range: [1.0, 4.2]
+  turning_angle_tolerance_deg: 24.0
+  goal_region_resample_attempts: 256
+  max_resample_attempts: 128
+  default_split_hint: train_candidate
+  workspace:
+    x: [-4.5, 4.5]
+    y: [-3.5, 3.5]
+  turning_strategy:
+    straight_ratio: 0.18
+    left_small_ratio: 0.22
+    left_large_ratio: 0.22
+    right_small_ratio: 0.18
+    right_large_ratio: 0.20
+    reverse_reorient_ratio: 0.0

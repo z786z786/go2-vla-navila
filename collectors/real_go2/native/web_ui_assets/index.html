@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Go2 Collector</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="single-d435-rgb-mode">
+  <main class="shell">
+    <section class="panel summary-panel">
+      <div class="summary-layout">
+        <section class="summary-status-block">
+          <div class="title-row">
+            <div>
+              <h1>Go2 Collector</h1>
+              <p class="subtle">task first, image first</p>
+            </div>
+          </div>
+          <div id="summary-grid" class="summary-grid status-strip"></div>
+          <p id="summary-note" class="summary-note subtle"></p>
+        </section>
+        <section class="summary-context-block">
+          <div class="section-head compact-head">
+            <h2>Run Context</h2>
+            <span class="subtle">场景 / 指令 / 速度上限</span>
+          </div>
+          <form id="config-form" class="compact-form">
+            <div class="form-grid context-grid">
+              <label><span>Scene</span><input id="cfg-scene-id" type="text" placeholder="ex: corridor_a" readonly disabled></label>
+              <label><span>Operator</span><input id="cfg-operator-id" type="text" placeholder="ex: op_01" readonly disabled></label>
+              <label class="wide"><span>Instruction</span><input id="cfg-instruction" type="text" placeholder="ex: go to the red door" readonly disabled></label>
+              <label><span>Task Family</span><input id="cfg-task-family" type="text" placeholder="ex: goal_navigation" readonly disabled></label>
+              <label class="wide"><span>Target</span><input id="cfg-target-description" type="text" placeholder="ex: door / person in black" readonly disabled></label>
+              <div class="wide dual-row">
+                <label><span>cmd_vx_max</span><input id="cfg-cmd-vx-max" type="number" step="0.01" placeholder="ex: 0.20" readonly disabled></label>
+                <label><span>cmd_wz_max</span><input id="cfg-cmd-wz-max" type="number" step="0.01" placeholder="ex: 0.80" readonly disabled></label>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <section class="columns">
+      <section class="panel right-panel">
+        <section class="stack-block controls-block">
+          <div class="section-head">
+            <h2>Controls</h2>
+            <span id="controls-hint" class="subtle">keyboard + web buttons</span>
+          </div>
+          <div class="actions actions-keys controls-grid">
+            <button id="start-btn"><span class="btn-label">Start</span><span class="kbd">R</span></button>
+            <button id="stop-btn"><span class="btn-label">Stop</span><span class="kbd">T</span></button>
+            <button id="discard-btn"><span class="btn-label">Discard</span><span class="kbd">ESC</span></button>
+            <button id="estop-btn" class="danger"><span class="btn-label">E-Stop</span><span class="kbd">Space</span></button>
+            <button id="clear-fault-btn"><span class="btn-label">Clear Fault</span><span class="kbd">C</span></button>
+            <button id="quit-btn"><span class="btn-label">Quit</span><span class="kbd">X</span></button>
+          </div>
+        </section>
+
+        <section class="stack-block monitor-block">
+          <div class="section-head">
+            <h2>Live Monitor</h2>
+            <span class="subtle">phase / command / label</span>
+          </div>
+          <div id="monitor-grid" class="summary-grid compact-monitor-grid"></div>
+          <p id="monitor-note" class="summary-note subtle"></p>
+        </section>
+
+        <section class="stack-block camera-block main-camera-block" hidden>
+          <div class="section-head">
+            <h2>Wide Camera</h2>
+            <div class="camera-head-actions">
+              <button id="camera-focus-btn" class="ghost-btn" type="button" aria-pressed="false">Focus View</button>
+              <div id="camera-meta" class="camera-meta">waiting for image...</div>
+            </div>
+          </div>
+          <div class="camera-frame">
+            <img id="camera-thumb" class="camera-thumb" alt="collector thumbnail">
+            <div id="camera-task-overlay" class="camera-overlay camera-overlay-top-left"></div>
+            <div id="camera-status-overlay" class="camera-overlay camera-overlay-top-right camera-overlay-tight"></div>
+            <div id="camera-controls-overlay" class="camera-overlay camera-overlay-bottom-left"></div>
+            <div id="camera-rating-overlay" class="camera-overlay camera-overlay-bottom-right camera-overlay-tight"></div>
+          </div>
+        </section>
+
+        <section class="stack-block d435-block">
+          <div class="section-head">
+            <h2>D435i RGB</h2>
+            <div id="d435-meta" class="camera-meta">等待 D435i</div>
+          </div>
+          <div class="d435-grid">
+            <div class="d435-card">
+              <div class="d435-card-head">
+                <div class="d435-copy">
+                  <div class="subtle">D435i Color</div>
+                  <p id="d435-color-note" class="d435-note">等待首帧</p>
+                </div>
+                <span id="d435-color-state" class="d435-badge waiting">等待中</span>
+              </div>
+              <div class="camera-frame d435-frame d435-frame-color">
+                <img id="d435-color-thumb" class="camera-thumb" alt="d435i color preview">
+              </div>
+            </div>
+            <div class="d435-card depth-card" hidden>
+              <div class="d435-card-head">
+                <div class="d435-copy">
+                  <div class="subtle">D435i Depth</div>
+                  <p id="d435-depth-note" class="d435-note">原始深度预览，等待首帧</p>
+                </div>
+                <span id="d435-depth-state" class="d435-badge waiting">等待中</span>
+              </div>
+              <div class="camera-frame d435-frame d435-frame-depth">
+                <img id="d435-depth-thumb" class="camera-thumb" alt="d435i depth preview">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stack-block rating-block">
+          <div class="section-head">
+            <h2>Data Rating</h2>
+            <span id="rating-hint" class="subtle">1-4 shortcuts</span>
+          </div>
+          <p class="subtle">用 1-4 直接给当前数据打分，自动映射到内部标签组合。</p>
+          <div id="rating-grid" class="rating-grid">
+            <button id="rating-1-btn" class="rating-card rating-good" type="button">
+              <span class="rating-key">1</span>
+              <span class="rating-title">好的成功示范</span>
+              <span class="rating-desc">clean + success + goal_reached</span>
+            </button>
+            <button id="rating-2-btn" class="rating-card" type="button">
+              <span class="rating-key">2</span>
+              <span class="rating-title">可用但不完美</span>
+              <span class="rating-desc">usable + partial + near_goal_stop</span>
+            </button>
+            <button id="rating-3-btn" class="rating-card" type="button">
+              <span class="rating-key">3</span>
+              <span class="rating-title">失败但有价值</span>
+              <span class="rating-desc">usable + fail + operator_stop</span>
+            </button>
+            <button id="rating-4-btn" class="rating-card rating-discard" type="button">
+              <span class="rating-key">4</span>
+              <span class="rating-title">丢弃</span>
+              <span class="rating-desc">discard</span>
+            </button>
+          </div>
+        </section>
+
+      </section>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

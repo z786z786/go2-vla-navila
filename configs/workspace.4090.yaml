@@ -1,0 +1,11 @@
+paths:
+  model_root: /root/autodl-tmp/models/LLaDA-V
+  siglip_root: /root/autodl-tmp/models/siglip2-so400m-patch14-384
+  real_raw_root: /root/autodl-tmp/llada-vla-go2/data/real_sessions
+  sim_raw_root: /root/autodl-tmp/llada-vla-go2/collectors/data/sim_sessions
+  train_data_path: /root/autodl-tmp/llada-vla-go2/datasets/current_v2_sim_today_main_turnpilot_20260425/train.jsonl
+  eval_data_path: /root/autodl-tmp/llada-vla-go2/datasets/current_v2_sim_today_main_turnpilot_20260425/val.jsonl
+  image_root: /root/autodl-tmp/llada-vla-go2/datasets/current_v2_sim_today_main_turnpilot_20260425/images
+  outputs_root: /root/autodl-tmp/llada-vla-go2/outputs
+  checkpoints_root: /root/autodl-tmp/llada-vla-go2/checkpoints
+  unitree_sdk2_default: /root/autodl-tmp/llada-vla-go2/unitree_sdk2

@@ -1,0 +1,93 @@
+model:
+  model_path: null
+  model_name: llada-vla-go2
+  bf16: true
+  attn_implementation: flash_attention_2
+
+data:
+  train_data_path: null
+  eval_data_path: null
+  image_folder: null
+  image_aspect_ratio: square
+
+velocity_control:
+  horizon_k: 4
+  chunk_size: 4
+  control_hz: 10.0
+  n_bins: 256
+  action_bins: 256
+  vx_range: [-1.0, 1.0]
+  vy_range: [-0.6, 0.6]
+  wz_range: [-1.2, 1.2]
+  use_residual_action: false
+  anchor_mode: repeat_prev
+  anchor_decay_vx: 1.0
+  anchor_decay_vy: 0.6
+  anchor_decay_wz: 0.85
+  use_prev_action_as_condition: true
+  prev_action_dropout_prob: 0.0
+  prev_action_dropout_mask_prob: 0.0
+  prev_action_dropout_noise_prob: 0.0
+  prev_action_dropout_noise_std: 0.02
+  anchor_use_dropped_prev_action: false
+  use_step_level_remask: true
+  step_level_remask_aggregation: mean_prob
+  per_dim_action_heads: true
+  loss_w_vx: 1.0
+  loss_w_vy: 1.0
+  loss_w_wz: 1.2
+  absolute_action_ranges:
+    vx: [-1.0, 1.0]
+    vy: [-0.6, 0.6]
+    wz: [-1.2, 1.2]
+  residual_action_ranges:
+    vx: [-0.25, 0.25]
+    vy: [-0.20, 0.20]
+    wz: [-0.35, 0.35]
+  fallback_image_timeout_s: 0.5
+  ema_alpha: 0.25
+  max_delta_vx: 0.25
+  max_delta_vy: 0.20
+  max_delta_wz: 0.35
+  allowed_locomotion_modes: [1, 2, 3, 4]
+
+optimization:
+  train_mode: full_finetune
+  freeze_vision_tower: false
+  freeze_llada_backbone: false
+
+lora:
+  enabled: true
+  r: 64
+  alpha: 16
+  dropout: 0.05
+  bias: none
+  last_n_layers: 4
+  layers_pattern: layers
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+training:
+  output_dir: outputs/llada_vla_go2
+  logging_dir: outputs/llada_vla_go2/runs
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 1
+  num_train_epochs: 1
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  logging_steps: 1
+  save_strategy: steps
+  save_steps: 50
+  evaluation_strategy: steps
+  eval_steps: 50
+  save_total_limit: 2
+  load_best_model_at_end: true
+  metric_for_best_model: eval_loss
+  greater_is_better: false
+  bf16: true
+  fp16: false
+  gradient_checkpointing: true
+  remove_unused_columns: false
+  dataloader_num_workers: 0
+  report_to: [tensorboard]

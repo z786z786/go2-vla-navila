@@ -1,0 +1,5 @@
+# Required by Isaac Sim 4.1 Kit's bundled botocore 1.34.68.
+# Scope: /mnt/wxh/go2_short_vln/envs/conda/navila-isaac only.
+boto3==1.34.68
+botocore==1.34.68
+s3transfer==0.10.0

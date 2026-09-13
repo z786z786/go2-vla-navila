@@ -1,0 +1,123 @@
+{
+  "action_distribution": {
+    "action_counts": {
+      "I think I should stop because I have finished the instruction.": 32457,
+      "The next action is move forward 25 cm.": 37376,
+      "The next action is move forward 50 cm.": 28047,
+      "The next action is move forward 75 cm.": 106026,
+      "The next action is turn left 15 degree.": 31465,
+      "The next action is turn left 30 degree.": 15348,
+      "The next action is turn left 45 degree.": 31510,
+      "The next action is turn right 15 degree.": 31199,
+      "The next action is turn right 30 degree.": 14436,
+      "The next action is turn right 45 degree.": 26030
+    },
+    "action_vocabulary_size": 10,
+    "action_vocabulary_sorted": [
+      "I think I should stop because I have finished the instruction.",
+      "The next action is move forward 25 cm.",
+      "The next action is move forward 50 cm.",
+      "The next action is move forward 75 cm.",
+      "The next action is turn left 15 degree.",
+      "The next action is turn left 30 degree.",
+      "The next action is turn left 45 degree.",
+      "The next action is turn right 15 degree.",
+      "The next action is turn right 30 degree.",
+      "The next action is turn right 45 degree."
+    ],
+    "majority_class": {
+      "action": "The next action is move forward 75 cm.",
+      "count": 106026,
+      "share_fraction": 0.2995981847671902,
+      "share_percent": 29.95981847671902
+    },
+    "stop_action": {
+      "action": "I think I should stop because I have finished the instruction.",
+      "count": 32457,
+      "share_fraction": 0.09171390303311161,
+      "share_percent": 9.171390303311162
+    },
+    "total_record_count": 353894
+  },
+  "generated_at": "2026-09-12T15:34:26.497332+00:00",
+  "generator_command": "python3 /home/wxh/go2_short_vln/scripts/p3_navila_leakage_join.py",
+  "inputs": {
+    "/mnt/wxh/go2_short_vln/assets/vln_ce_isaac/vln_ce_isaac_v1.json.gz": {
+      "bytes": 501265,
+      "label": "eval11",
+      "sha256": "ceb2a2a9ac1f6d1a1ebbf9fe205867b101b1b7bb61d532a4d491124c7c0b0eec"
+    },
+    "/mnt/wxh/go2_short_vln/data/r2r_vlnce/R2R_VLNCE_v1-3/test/test.json.gz": {
+      "bytes": 335501,
+      "label": "r2r_test",
+      "sha256": "69ed5962fac658d34be5739c1f8f15805cf5ce9bfa28f64a338da338244578b7"
+    },
+    "/mnt/wxh/go2_short_vln/data/r2r_vlnce/R2R_VLNCE_v1-3/train/train.json.gz": {
+      "bytes": 1772932,
+      "label": "r2r_train",
+      "sha256": "f411066b53f96d1241c045fd05a6a9e01b484c2ed9369f5b6f41806969056a34"
+    },
+    "/mnt/wxh/go2_short_vln/data/r2r_vlnce/R2R_VLNCE_v1-3/val_seen/val_seen.json.gz": {
+      "bytes": 172881,
+      "label": "r2r_val_seen",
+      "sha256": "7fc94841ebbd2eac0d398e020a2f638426948beaf4a561f6ee310dd67cddce55"
+    },
+    "/mnt/wxh/go2_short_vln/data/r2r_vlnce/R2R_VLNCE_v1-3/val_unseen/val_unseen.json.gz": {
+      "bytes": 325775,
+      "label": "r2r_val_unseen",
+      "sha256": "d173d8028537f30ab652dc5d24ead737e2b6010b6a4599f974351685710d18e8"
+    },
+    "/mnt/wxh/go2_short_vln/downloads/navila_probe/R2R_annotations.json": {
+      "bytes": 317267756,
+      "label": "navila_r2r_annotations_full",
+      "sha256": "3587c020cc03807cfc03c454bcbb37a3d409139e125e1ea047fa1fbcf8c4cc1a"
+    }
+  },
+  "missing": [],
+  "task_id": "P3-T1E",
+  "temporal_structure": {
+    "decision_points_definition": "number of unique numeric steps per video prefix; repeated rows with the same step are separate instruction-variant records",
+    "decision_points_per_video": {
+      "count": 10819,
+      "max": 289,
+      "min": 8,
+      "p25": 20,
+      "p50": 25,
+      "p75": 31,
+      "p90": 38,
+      "percentile_method": "nearest rank: sorted[ceil(p*n)-1]"
+    },
+    "frames_contiguity": {
+      "contiguous_record_count": 353894,
+      "counterexamples_first_3": [],
+      "definition": "each frames element path ends in frame_<i>.jpg for list index i, so indices are exactly 0..N-1",
+      "non_contiguous_record_count": 0
+    },
+    "frames_per_record": {
+      "count": 353894,
+      "max": 501,
+      "min": 1,
+      "p25": 14,
+      "p50": 29,
+      "p75": 46,
+      "p90": 62,
+      "percentile_method": "nearest rank: sorted[ceil(p*n)-1]"
+    },
+    "n_frames_monotonicity": {
+      "conflicting_n_frames_at_same_step_video_count": 0,
+      "conflicting_n_frames_at_same_step_video_ids_first_3": [],
+      "counterexample_video_count": 0,
+      "counterexamples_first_3": [],
+      "definition": "within each video prefix, sort unique integer steps parsed from video_id '<video>-<step>'; duplicate rows at one step are checked for equal n_frames, then the unique-step sequence must be non-decreasing",
+      "duplicate_numeric_step_video_count": 10819,
+      "duplicate_numeric_step_video_ids_first_3": [
+        "1",
+        "10",
+        "100"
+      ],
+      "monotonic_nondecreasing_video_count": 10819
+    },
+    "percentile_method": "nearest rank: sorted[ceil(p*n)-1]",
+    "video_count": 10819
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "schema_version": "go2-dual-target-task-contract-v1-locked",
+  "status": "LOCKED_AFTER_DT1_REVIEW",
+  "locked_date": "2026-09-06",
+  "locked_by": "root",
+  "scope": "simple dual-target RGB-language high-level velocity navigation; not learned-model success",
+  "next_stage_requires_user_instruction": true,
+  "policy_input_keys": ["observation.images.front", "observation.state", "task"],
+  "state_names": ["body_vx", "body_vy", "body_yaw_rate"],
+  "state_dim": 3,
+  "instructions": ["Go to the red box and stop in front of it.", "Go to the blue box and stop in front of it."],
+  "action_names": ["vx", "vy", "wz"],
+  "action_dim": 3,
+  "action_bounds": [[0.0, 0.5], [0.0, 0.0], [-0.5, 0.5]],
+  "action_mapping": "clip vx and wz to bounds; force vy=0; retain raw and applied actions for scoring",
+  "action_chunk_size": 50,
+  "execute_action_steps": 10,
+  "high_level_rate_hz": 50,
+  "replan_sim_time_s": 0.2,
+  "physics_dt_s": 0.005,
+  "decimation": 4,
+  "warmup_env_steps": 100,
+  "max_episode_env_steps": 1500,
+  "max_episode_sim_time_s": 30.0,
+  "wall_time_during_inference": "physics paused; slower-than-real-time allowed",
+  "camera": {
+    "sensor": "rgbd_camera",
+    "policy_data_type": "rgb_only",
+    "shape_hwc": [512, 512, 3],
+    "prim_path": "{ENV_REGEX_NS}/Robot/base/rgbd_camera",
+    "offset_position_m": [0.1, 0.0, 0.5],
+    "offset_quaternion_wxyz": [-0.5, 0.5, -0.5, 0.5],
+    "horizontal_aperture": 54.0,
+    "other_camera_defaults": "inherited Isaac Lab 1.1 / Isaac Sim 4.1 configuration; no camera adaptation in DT1"
+  },
+  "scene": {
+    "num_envs": 1,
+    "ground_size_m": [20.0, 20.0],
+    "ground_sha256": "85c5d540d27f30a097e0df78ab5a2d957d5bfd358e3a67a233c7394012131e43",
+    "box_size_m": [0.5, 0.5, 0.5],
+    "box_front_unit_xy": [-1.0, 0.0],
+    "stand_off_from_box_front_m": 0.75,
+    "parking_center_rule": "box center + front_unit * (box_half_depth + stand_off); independent of start and route",
+    "parking_radius_m": 0.3,
+    "min_effective_travel_m": 0.8,
+    "parking_disc_root_to_box_face_clearance_m": 0.45,
+    "target_contact_threshold_n": 1.0,
+    "target_contact_body_count": 19,
+    "ground_only_height_scan": true,
+    "development_groups": [
+      {"id": "dt1_dev_000", "start_xy": [0.0, 0.0], "A_xy": [2.0, 1.2], "B_xy": [2.0, -1.2]},
+      {"id": "dt1_dev_001", "start_xy": [0.0, 0.0], "A_xy": [2.35, 0.9], "B_xy": [2.35, -1.45]}
+    ]
+  },
+  "parking_thresholds": {
+    "parking_radius_m": 0.3,
+    "raw_vx_mps": 0.03,
+    "raw_wz_radps": 0.05,
+    "applied_vx_mps": 0.03,
+    "applied_wz_radps": 0.05,
+    "body_linear_speed_mps": 0.03,
+    "body_yaw_rate_radps": 0.05,
+    "required_duration_s": 1.0,
+    "max_observation_gap_s": 0.05
+  },
+  "stop_semantics": "strictly below velocity thresholds, in correct region continuously for at least 1 simulation second; warmup excluded; no GT-triggered stop accepted",
+  "failure_events": ["target_collision", "fallen", "wrong_target_stop", "evaluator_stop", "timeout", "auto_reset"],
+  "fall_min_root_height_m": 0.18,
+  "fall_max_abs_roll_or_pitch_rad": 0.85,
+  "reset_comparison": {
+    "policy": "task_equivalence_v2",
+    "same_pair_config_and_seed": true,
+    "root_position_difference_m": 0.02,
+    "root_orientation_difference_deg": 3.0,
+    "history_cleared_abs_tolerance": 0.000001,
+    "stationary_start_required": true,
+    "cross_run_joint_equality_required": false,
+    "cross_run_rgb_equality_required": false,
+    "per_file_rgb_integrity_required": true
+  },
+  "low_level": {
+    "checkpoint_sha256": "1e21097122ab0bfccaf9d4df2df794d8c1c918a1ddca72c07e38b36768f2e76c",
+    "proprio_dim": 45,
+    "history_length": 9,
+    "velocity_command_slice": [6, 9],
+    "history_flattened_rebuild_required": true,
+    "legacy_goal_planner_allowed": false
+  },
+  "normalization": {
+    "coexistence_probe": "fresh_identity_mean0_std1_diagnostic_only",
+    "future_training": "must derive and freeze fresh 3D statistics from authorized training data; never reuse legacy normalizer"
+  },
+  "resource_measurement": {
+    "run_id": "dt1_coexist_shared_0906_v2",
+    "policy": "dt1_shared_coexistence_16g_v1",
+    "admission_actual_free_mib": 17513,
+    "sampled_owned_peak_mib": 5618,
+    "sampled_total_peak_mib": 12267,
+    "minimum_actual_free_mib": 11850,
+    "single_chunk_inference_ms": 886.0407380852848,
+    "training_memory_requirement_verified": false,
+    "real_time_requirement_verified": false
+  },
+  "source_sha256": {
+    "src/dual_target/contracts.py": "773cc7cdad5e08b9172e604e6d628369731c27be2e5c2caad602e158fd58964d",
+    "src/dual_target/runner.py": "022d27d7fc65d830a277f8acf1da768a0d97ccf7b6675d2a16d05b32d27f7fad",
+    "src/dual_target/scene.py": "376b7d3ef29394b1ada1a0a141029cce181e507ea3d462e6062d04048450949d",
+    "src/dual_target/layouts.py": "7a2ab4470853c5ea6c034a01c70716b1465f49bafc3b85be2c0a37e8c1174fc4",
+    "src/dual_target/scoring.py": "05835aa7dc827d61a3a790a7fb0cd3f211220513aa1a1c3eee53b3446a0c4e33",
+    "src/dual_target/low_level.py": "a991aceeef649f14db99bb6c848ecfdca58405a619e4d2f15339dca78558e928",
+    "src/dual_target/expert.py": "fc2825d7e6f5326707274228d8ed4d510b91fd492c1bcf2f14088d4aa359379d",
+    "src/dual_target/reset_audit.py": "0cfa88847bfb99b9c08593febb0a7e3ad03dc8a242d72a313aa1530e40ffe676",
+    "src/dual_target/gpu_wait.py": "cd82d3dceb4ed9d4a9234e10ec7104fce6b9f4a7c671e73237f73258842c2f14",
+    "src/dual_target/coexistence_probe.py": "95dc0b6f7c9a8557480728e14d15da454569f19878f318a369c8cb7eecff0dd5",
+    "src/dual_target/coexistence_watch.py": "0a13dd8a79eea13fd62cc2501da4fde95889317abf318a5aaaebaaa1734f5707"
+  },
+  "upstream_source_sha256": {
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/go2_matterport_base_cfg.py": "a9bfa20ede39d6c837e64420353e608572260a336e60b6cf9ff8864fbb4366b7",
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/go2_matterport_vision_cfg.py": "e85041c0ac5e726ac4c2758efa2834f61bfac8324b55cae6a2bf4f7692e55965"
+  },
+  "evidence_sha256": {
+    "matrix_plan": "26134e80ae178ec2798fad030ab19dce97bbc9f600d43b3e615efb025115b523",
+    "root_matrix_review": "608a6092a2471f412a9ea64681547012f2ce5bd4533cf2df1ee72d0350ea6e92",
+    "visual_review": "9caaca3e5b14307c07432e376c153b505b93f57c86d60ca86dae865d21a7877f",
+    "motion_calibration": "cf613a5213a1ce4039dd605aa76610ef1fdf630b74ee0ba22e5f8cce17eb9841",
+    "contact_approval": "73bcfeced12d91b23315002ad720733be3b32ec9d0ac630aa9ddfa4fb1a95278",
+    "root_coexistence_review": "2212ab4d4b6c5cab878ede150a72339ec0a61641f10baf36f7a241cf16209c7c"
+  },
+  "limitations": [
+    "Some approach frames show only a narrow target strip at image edge; not guaranteed centered or fully visible",
+    "16 expert successes and base-model coexistence do not establish learned visual-language navigation",
+    "No training, closed-loop learned control, DT2 dataset collection or DT2 execution authorized by this lock",
+    "Static robot clearance estimate is not a universal dynamic collision-free guarantee",
+    "GPU numbers are sampled observations, not a hard upper bound on future training or inference"
+  ]
+}

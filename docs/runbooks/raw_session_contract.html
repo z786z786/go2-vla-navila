@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unified Raw Session Contract</title>
+
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --panel: #fffdf8;
+      --text: #1f2328;
+      --muted: #5f6b76;
+      --line: #d9d0c3;
+      --accent: #0f5c4d;
+      --accent-soft: #e4f0ec;
+      --accent-soft-2: #eef5f2;
+      --code: #f2ede4;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Noto Serif CJK SC", "Source Han Serif SC", "PingFang SC",
+        "Microsoft YaHei", serif;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(15, 92, 77, 0.06), rgba(15, 92, 77, 0.00) 18%),
+        var(--bg);
+    }
+    .shell {
+      width: min(1380px, calc(100vw - 32px));
+      margin: 24px auto 48px;
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 20px;
+      padding: 18px 16px;
+      background: rgba(255, 253, 248, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+    }
+    .toc-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .toc-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .toc-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .toc-actions button {
+      border: 1px solid var(--line);
+      background: #f7f2ea;
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .toc a {
+      display: block;
+      padding: 6px 0;
+      color: var(--accent);
+      text-decoration: none;
+      line-height: 1.35;
+      border-bottom: 1px solid transparent;
+    }
+    .toc a:hover { border-bottom-color: var(--accent); }
+    .toc-level-2 { font-size: 14px; font-weight: 700; margin-top: 6px; }
+    .toc-level-3 { font-size: 13px; padding-left: 10px; color: var(--muted); }
+    .toc-level-4 { font-size: 12px; padding-left: 22px; color: #6f7b86; }
+    .toc a.is-active {
+      color: #0a4036;
+      border-bottom-color: #0a4036;
+    }
+    .article {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 32px 40px 44px;
+      box-shadow: 0 10px 30px rgba(36, 38, 40, 0.06);
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .crumbs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .crumbs a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .doc-hub {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 12px 0 20px;
+    }
+    .doc-hub a {
+      display: block;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--accent-soft-2);
+      text-decoration: none;
+      min-height: 68px;
+    }
+    .doc-hub strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #173f37;
+    }
+    .recent-box {
+      margin: 8px 0 20px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(255, 253, 248, 0.75);
+    }
+    .recent-box h2 {
+      border-top: 0;
+      padding-top: 0;
+      margin-top: 0;
+      font-size: 18px;
+    }
+    .recent-box ul {
+      margin-bottom: 0;
+    }
+    h1, h2, h3, h4 {
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+      line-height: 1.25;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: clamp(28px, 3vw, 42px);
+      color: var(--accent);
+    }
+    h2 {
+      padding-top: 10px;
+      font-size: 28px;
+      border-top: 1px solid var(--line);
+    }
+    h3 {
+      font-size: 21px;
+      color: #173f37;
+    }
+    h4 {
+      font-size: 17px;
+      color: #28453f;
+    }
+    h2, h3 { position: relative; scroll-margin-top: 18px; }
+    .heading-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .fold-toggle {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      background: #f7f2ea;
+      color: var(--accent);
+      border-radius: 999px;
+      width: 28px;
+      height: 28px;
+      line-height: 26px;
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+    }
+    .section-content.is-collapsed { display: none; }
+    p, li {
+      font-size: 16px;
+      line-height: 1.85;
+    }
+    p { margin: 0 0 1em; }
+    ul, ol {
+      margin: 0 0 1.2em 1.3em;
+      padding: 0;
+    }
+    li + li { margin-top: 0.2em; }
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+    code {
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92em;
+      background: var(--code);
+      padding: 0.14em 0.38em;
+      border-radius: 4px;
+    }
+    pre {
+      overflow-x: auto;
+      background: #1b211f;
+      color: #e8ece9;
+      padding: 16px 18px;
+      border-radius: 10px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+    blockquote {
+      margin: 1.2em 0;
+      padding: 0.8em 1em;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      color: #23433d;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2em 0;
+      font-size: 15px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f2ece2; }
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 14px 0 24px;
+      padding: 0;
+      list-style: none;
+    }
+    .note-grid li { margin: 0; }
+    .note-grid a {
+      display: block;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--accent-soft-2);
+      text-decoration: none;
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 74px;
+    }
+    .note-grid a:hover {
+      border-color: var(--accent);
+      background: #e4f0ec;
+    }
+    @media (max-width: 980px) {
+      .shell {
+        grid-template-columns: 1fr;
+        width: min(100vw - 20px, 980px);
+      }
+      .toc { position: static; }
+      .article { padding: 24px 18px 32px; }
+      h2 { font-size: 24px; }
+      h3 { font-size: 19px; }
+      p, li { font-size: 15px; }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="shell">
+    <nav class="toc"><div class="toc-head"><div class="toc-title">目录</div><div class="toc-actions"><button type="button" data-action="expand-all">展开</button><button type="button" data-action="collapse-all">收起</button></div></div><a class="toc-level-1" href="#unified-raw-session-contract">Unified Raw Session Contract</a><a class="toc-level-2" href="#directory-layout">Directory layout</a><a class="toc-level-2" href="#index-json-contract">`index.json` contract</a><a class="toc-level-2" href="#episode-payload-contract">Episode payload contract</a><a class="toc-level-3" href="#d435i-capture">`d435i_capture`</a><a class="toc-level-2" href="#frame-contract">Frame contract</a><a class="toc-level-3" href="#state">`state`</a><a class="toc-level-3" href="#raw-action">`raw_action`</a><a class="toc-level-3" href="#control-action">`control_action`</a><a class="toc-level-3" href="#previous-action">`previous_action`</a><a class="toc-level-3" href="#meta">`meta`</a><a class="toc-level-2" href="#depth-rules">Depth rules</a><a class="toc-level-2" href="#sim-alignment-requirements">Sim alignment requirements</a></nav>
+    <main class="article">
+      <div class="topbar">
+        <div class="crumbs"><a href="../llada_vla_go2_project_notes.html">主索引</a></div>
+      </div>
+      <section class="doc-hub"><a href="../llada_vla_go2_project_notes.html"><strong>主索引</strong><span>全局主线、总结与导航</span></a><a href="../project_notes/architecture_and_losses.html"><strong>架构与损失</strong><span>主架构、关键模块、loss / target 设计</span></a><a href="../project_notes/experiment_timeline.html"><strong>实验时间线</strong><span>逐轮实验目标、结果与结论</span></a><a href="../project_notes/data_and_validation.html"><strong>数据与验证</strong><span>数据合同、previous_action、validation</span></a><a href="../project_notes/turnpilot_targeted_v2_experiment_log.html"><strong>TurnPilot / Targeted V2</strong><span>近期专项实验记录</span></a></section><section class="recent-box"><h2 id="recent-updates">最近更新</h2><ul><li><a href="../project_notes/turnpilot_targeted_v2_experiment_log.html">project_notes/turnpilot_targeted_v2_experiment_log.md</a> <code>2026-04-26 23:11</code></li><li><a href="../project_notes/architecture_and_losses.html">project_notes/architecture_and_losses.md</a> <code>2026-04-26 21:50</code></li><li><a href="../llada_vla_go2_project_notes.html">llada_vla_go2_project_notes.md</a> <code>2026-04-26 21:46</code></li><li><a href="../project_notes/data_and_validation.html">project_notes/data_and_validation.md</a> <code>2026-04-26 21:29</code></li><li><a href="../project_notes/experiment_timeline.html">project_notes/experiment_timeline.md</a> <code>2026-04-26 21:29</code></li></ul></section><h1 id="unified-raw-session-contract">Unified Raw Session Contract</h1>
+<p>This document defines the raw-session tree that both:</p>
+<ul>
+<li><code>collectors/real_go2/native/go2_collector</code></li>
+<li>future <code>collectors/sim_go2/*</code></li>
+</ul>
+<p>should write before any downstream conversion.</p>
+<p>The goal is simple: <strong>sim raw sessions must look like real raw sessions first</strong>.</p>
+<h2 id="directory-layout">Directory layout</h2>
+<p>Required layout:</p>
+<pre><code class="language-text">&lt;session_root&gt;/
+  index.json
+  episodes/
+    ep_000001.json
+  images/
+    ep_000001/
+      20260422_120001_001.jpg
+</code></pre>
+<p>Optional extensions:</p>
+<pre><code class="language-text">&lt;session_root&gt;/
+  images_depth/
+    ep_000001/
+      frame_000001.png
+  d435i/
+    d435i_rgbd.bag
+    d435i_capture.json
+</code></pre>
+<p>Rules:</p>
+<ul>
+<li><code>index.json</code> is the session manifest</li>
+<li>each <code>episodes/ep_xxxxxx.json</code> is a complete trajectory payload</li>
+<li>RGB frame paths are stored relative to <code>session_root</code></li>
+<li>depth may be stored either as per-frame <code>depth_image</code> assets or as a session-level D435i sidecar bag</li>
+</ul>
+<h2><code>index.json</code> contract</h2>
+<p>Required top-level fields:</p>
+<ul>
+<li><code>schema_version</code></li>
+<li><code>session_id</code></li>
+<li><code>source_type</code></li>
+<li><code>episodes</code></li>
+</ul>
+<p>Each episode summary entry must include:</p>
+<ul>
+<li><code>episode_id</code></li>
+<li><code>instruction</code></li>
+<li><code>capture_mode</code></li>
+<li><code>task_family</code></li>
+<li><code>target_type</code></li>
+<li><code>target_label</code></li>
+<li><code>target_description</code></li>
+<li><code>collector_notes</code></li>
+<li><code>instruction_source</code></li>
+<li><code>segment_status</code></li>
+<li><code>success</code></li>
+<li><code>termination_reason</code></li>
+<li><code>scene_id</code></li>
+<li><code>operator_id</code></li>
+<li><code>source_type</code></li>
+<li><code>num_frames</code></li>
+<li><code>start_timestamp</code></li>
+<li><code>end_timestamp</code></li>
+</ul>
+<p>Optional episode-summary extensions:</p>
+<ul>
+<li><code>active_target_id</code></li>
+<li><code>contrast_group_id</code></li>
+<li><code>contrast_variant</code></li>
+</ul>
+<h2 id="episode-payload-contract">Episode payload contract</h2>
+<p>Required episode-level fields:</p>
+<ul>
+<li><code>schema_version</code></li>
+<li><code>session_id</code></li>
+<li><code>episode_id</code></li>
+<li><code>instruction</code></li>
+<li><code>capture_mode</code></li>
+<li><code>task_family</code></li>
+<li><code>target_type</code></li>
+<li><code>target_label</code></li>
+<li><code>target_description</code></li>
+<li><code>collector_notes</code></li>
+<li><code>instruction_source</code></li>
+<li><code>segment_status</code></li>
+<li><code>success</code></li>
+<li><code>termination_reason</code></li>
+<li><code>scene_id</code></li>
+<li><code>operator_id</code></li>
+<li><code>source_type</code></li>
+<li><code>frames</code></li>
+</ul>
+<p>Allowed <code>source_type</code> values for now:</p>
+<ul>
+<li><code>real_go2</code></li>
+<li><code>isaac_sim</code></li>
+</ul>
+<p>Optional episode-level extensions:</p>
+<ul>
+<li><code>d435i_capture</code></li>
+<li>sim-specific layout / visibility fields</li>
+<li><code>active_target_id</code></li>
+<li><code>contrast_group_id</code></li>
+<li><code>contrast_variant</code></li>
+<li><code>scene_targets</code></li>
+</ul>
+<h3><code>d435i_capture</code></h3>
+<p>For real sessions with D435i enabled, store a session-sidecar reference like:</p>
+<pre><code class="language-json">{
+  &quot;capture_metadata_path&quot;: &quot;d435i/d435i_capture.json&quot;,
+  &quot;bag_path&quot;: &quot;d435i/d435i_rgbd.bag&quot;,
+  &quot;depth_topic_semantics&quot;: &quot;raw_unaligned_depth&quot;
+}
+</code></pre>
+<p>This is a session-level extension. It is <strong>not</strong> a replacement for per-frame <code>depth_image</code>.</p>
+<p>Allowed <code>depth_topic_semantics</code> values for real D435i capture:</p>
+<ul>
+<li><code>raw_unaligned_depth</code></li>
+<li><code>aligned_depth_to_color</code></li>
+</ul>
+<h2 id="frame-contract">Frame contract</h2>
+<p>Each frame must include:</p>
+<ul>
+<li><code>timestamp</code></li>
+<li><code>image</code></li>
+<li><code>instruction</code></li>
+<li><code>state</code></li>
+<li><code>raw_action</code></li>
+<li><code>control_action</code></li>
+<li><code>previous_action</code></li>
+<li><code>meta</code></li>
+</ul>
+<h3><code>state</code></h3>
+<p>Required keys:</p>
+<ul>
+<li><code>vx</code></li>
+<li><code>vy</code></li>
+<li><code>vz</code></li>
+<li><code>wz</code></li>
+<li><code>yaw</code></li>
+<li><code>roll</code></li>
+<li><code>pitch</code></li>
+<li><code>x</code></li>
+<li><code>y</code></li>
+<li><code>z</code></li>
+<li><code>body_height</code></li>
+<li><code>error_code</code></li>
+<li><code>mode</code></li>
+<li><code>gait_type</code></li>
+</ul>
+<h3><code>raw_action</code></h3>
+<p>Required keys:</p>
+<ul>
+<li><code>vx</code></li>
+<li><code>vy</code></li>
+<li><code>wz</code></li>
+<li><code>camera_pitch</code></li>
+<li><code>keys</code></li>
+</ul>
+<h3><code>control_action</code></h3>
+<p>Required keys:</p>
+<ul>
+<li><code>vx</code></li>
+<li><code>vy</code></li>
+<li><code>wz</code></li>
+</ul>
+<h3><code>previous_action</code></h3>
+<p>Required keys:</p>
+<ul>
+<li><code>vx</code></li>
+<li><code>vy</code></li>
+<li><code>wz</code></li>
+</ul>
+<p>Semantics:</p>
+<ul>
+<li>it must refer to executed command at <code>t-1</code></li>
+<li>it must not be copied from current-step command at <code>t</code></li>
+</ul>
+<h3><code>meta</code></h3>
+<p>Required keys:</p>
+<ul>
+<li><code>schema_version</code></li>
+<li><code>session_id</code></li>
+<li><code>episode_id</code></li>
+<li><code>source_type</code></li>
+<li><code>camera_interface_source</code></li>
+<li><code>capture_mode</code></li>
+<li><code>task_family</code></li>
+<li><code>target_type</code></li>
+<li><code>target_label</code></li>
+<li><code>target_description</code></li>
+<li><code>instruction_source</code></li>
+<li><code>segment_status</code></li>
+<li><code>success</code></li>
+<li><code>termination_reason</code></li>
+<li><code>scene_id</code></li>
+<li><code>operator_id</code></li>
+<li><code>state_timestamp</code></li>
+<li><code>action_timestamp</code></li>
+<li><code>raw_action_timestamp</code></li>
+<li><code>control_action_timestamp</code></li>
+<li><code>image_timestamp</code></li>
+</ul>
+<p>Optional frame-level extensions:</p>
+<ul>
+<li><code>depth_image</code></li>
+<li><code>meta.depth_interface_source</code></li>
+<li><code>meta.depth_format</code></li>
+<li><code>meta.depth_scale</code></li>
+<li><code>meta.depth_min</code></li>
+<li><code>meta.depth_max</code></li>
+<li>sim-specific labels such as layout / visibility / turn buckets</li>
+<li><code>meta.active_target_id</code></li>
+<li><code>meta.contrast_group_id</code></li>
+<li><code>meta.contrast_variant</code></li>
+</ul>
+<h2 id="depth-rules">Depth rules</h2>
+<p>Two depth modes are allowed by contract:</p>
+<ol>
+<li>Per-frame depth asset
+<ul>
+<li>frame carries <code>depth_image</code></li>
+<li>image file lives under <code>images_depth/</code></li>
+</ul>
+</li>
+<li>Session-sidecar depth capture
+<ul>
+<li>episode carries <code>d435i_capture</code></li>
+<li>session carries <code>d435i/d435i_capture.json</code> + rosbag</li>
+</ul>
+</li>
+</ol>
+<p>Sim collectors should prefer mode 1.
+Real D435i collection currently uses mode 2.</p>
+<h2 id="sim-alignment-requirements">Sim alignment requirements</h2>
+<p>Any future sim raw collector must:</p>
+<ul>
+<li>reuse <code>schema_version = go2_local_dataset_v1</code></li>
+<li>write <code>session_id</code> at both session and episode scope</li>
+<li>write <code>source_type = isaac_sim</code></li>
+<li>write <code>target_label</code> explicitly, not just <code>target_type</code></li>
+<li>keep <code>state/raw_action/control_action/previous_action/meta</code> field names identical to real collector</li>
+<li>use optional extensions only under clearly named keys, without changing required keys</li>
+</ul>
+
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const article = document.querySelector(".article");
+      if (!article) return;
+
+      function decorateHeading(heading) {
+        const row = document.createElement("div");
+        row.className = "heading-row";
+        const toggle = document.createElement("button");
+        toggle.className = "fold-toggle";
+        toggle.type = "button";
+        toggle.textContent = "−";
+        toggle.setAttribute("aria-label", "折叠章节");
+        const title = document.createElement("span");
+        while (heading.firstChild) title.appendChild(heading.firstChild);
+        row.appendChild(toggle);
+        row.appendChild(title);
+        heading.appendChild(row);
+        return toggle;
+      }
+
+      function wrapSection(heading) {
+        const level = Number(heading.tagName.slice(1));
+        const content = document.createElement("div");
+        content.className = "section-content";
+        let cursor = heading.nextSibling;
+        while (cursor) {
+          const next = cursor.nextSibling;
+          if (
+            cursor.nodeType === 1 &&
+            /^H[1-6]$/.test(cursor.tagName) &&
+            Number(cursor.tagName.slice(1)) <= level
+          ) {
+            break;
+          }
+          content.appendChild(cursor);
+          cursor = next;
+        }
+        heading.parentNode.insertBefore(content, heading.nextSibling);
+        const toggle = decorateHeading(heading);
+        toggle.addEventListener("click", () => {
+          const collapsed = content.classList.toggle("is-collapsed");
+          toggle.textContent = collapsed ? "+" : "−";
+        });
+      }
+
+      article.querySelectorAll("h2, h3").forEach(wrapSection);
+
+      function expandAncestors(node) {
+        let current = node;
+        while (current) {
+          if (current.classList && current.classList.contains("section-content")) {
+            current.classList.remove("is-collapsed");
+            const heading = current.previousElementSibling;
+            const toggle = heading && heading.querySelector(".fold-toggle");
+            if (toggle) toggle.textContent = "−";
+          }
+          current = current.parentElement;
+        }
+      }
+
+      document.querySelectorAll(".toc-actions button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const collapse = button.dataset.action === "collapse-all";
+          article.querySelectorAll(".section-content").forEach((content) => {
+            content.classList.toggle("is-collapsed", collapse);
+            const heading = content.previousElementSibling;
+            const toggle = heading && heading.querySelector(".fold-toggle");
+            if (toggle) toggle.textContent = collapse ? "+" : "−";
+          });
+        });
+      });
+
+      const tocLinks = Array.from(document.querySelectorAll(".toc a"));
+      const headings = tocLinks
+        .map((link) => document.getElementById(link.getAttribute("href").slice(1)))
+        .filter(Boolean);
+
+      function updateActiveToc() {
+        let activeId = "";
+        for (const heading of headings) {
+          const rect = heading.getBoundingClientRect();
+          if (rect.top <= 120) activeId = heading.id;
+        }
+        tocLinks.forEach((link) => {
+          link.classList.toggle("is-active", link.getAttribute("href") === "#" + activeId);
+        });
+      }
+
+      tocLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          const target = document.getElementById(link.getAttribute("href").slice(1));
+          if (target) expandAncestors(target);
+        });
+      });
+
+      const noteHeading = Array.from(article.querySelectorAll("h2")).find(
+        (item) => item.id === "子笔记入口"
+      );
+      if (noteHeading) {
+        const sectionContent = noteHeading.nextElementSibling;
+        if (sectionContent) {
+          const list = sectionContent.querySelector("ul");
+          if (list) list.classList.add("note-grid");
+        }
+      }
+
+      if (location.hash) {
+        const target = document.getElementById(location.hash.slice(1));
+        if (target) expandAncestors(target);
+      }
+
+      updateActiveToc();
+      document.addEventListener("scroll", updateActiveToc, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>

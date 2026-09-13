@@ -1,0 +1,56 @@
+cmake_minimum_required(VERSION 3.10)
+project(go2_collector_native LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(BUILD_EXAMPLES OFF CACHE BOOL "Build Unitree SDK examples" FORCE)
+set(UNITREE_SDK_DIR "" CACHE PATH "Path to unitree_sdk2")
+if(NOT UNITREE_SDK_DIR)
+  set(_UNITREE_SDK_CANDIDATES
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../unitree_sdk2"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../unitree_sdk2"
+    "$ENV{UNITREE_SDK2_DIR}"
+    "$ENV{UNITREE_SDK_DIR}"
+  )
+  foreach(_sdk_candidate IN LISTS _UNITREE_SDK_CANDIDATES)
+    if(_sdk_candidate AND EXISTS "${_sdk_candidate}")
+      set(UNITREE_SDK_DIR "${_sdk_candidate}")
+      break()
+    endif()
+  endforeach()
+endif()
+
+if(NOT UNITREE_SDK_DIR OR NOT EXISTS "${UNITREE_SDK_DIR}")
+  message(FATAL_ERROR
+    "Unable to locate unitree_sdk2. Set UNITREE_SDK_DIR or UNITREE_SDK2_DIR, "
+    "or place unitree_sdk2 next to the collector repo."
+  )
+endif()
+
+add_subdirectory("${UNITREE_SDK_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/unitree_sdk2_build" EXCLUDE_FROM_ALL)
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/web_ui_server.cpp")
+  add_executable(go2_collector
+    go2_collector.cpp
+    web_ui_server.cpp
+    collector_input_utils.cpp
+    collector_input_backend.cpp
+    collector_input_backend_wireless.cpp
+    collector_input_backend_evdev.cpp
+  )
+  target_link_libraries(go2_collector PRIVATE unitree_sdk2)
+endif()
+
+add_executable(go2_bridge go2_bridge.cpp)
+target_link_libraries(go2_bridge PRIVATE unitree_sdk2)
+
+add_executable(go2_mode_probe go2_mode_probe.cpp)
+target_link_libraries(go2_mode_probe PRIVATE unitree_sdk2)
+
+add_executable(go2_speed_level_probe go2_speed_level_probe.cpp)
+target_link_libraries(go2_speed_level_probe PRIVATE unitree_sdk2)
+
+add_executable(go2_video_probe go2_video_probe.cpp)
+target_link_libraries(go2_video_probe PRIVATE unitree_sdk2)

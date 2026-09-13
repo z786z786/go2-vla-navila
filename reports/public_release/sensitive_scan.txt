@@ -1,0 +1,369 @@
+./.git/hooks/fsmonitor-watchman.sample:11:# The hook is passed a version (currently 2) and last update token
+./.git/hooks/fsmonitor-watchman.sample:12:# formatted as a string and outputs to stdout a new update token and
+./.git/hooks/fsmonitor-watchman.sample:13:# all files that have been modified since the update token. Paths must
+./.git/hooks/fsmonitor-watchman.sample:19:my ($version, $last_update_token) = @ARGV;
+./.git/hooks/fsmonitor-watchman.sample:22:# print STDERR "$0 $version $last_update_token\n";
+./.git/hooks/fsmonitor-watchman.sample:83:	# changed since $last_update_token but not from the .git folder.
+./.git/hooks/fsmonitor-watchman.sample:89:	if (substr($last_update_token, 0, 1) eq "c") {
+./.git/hooks/fsmonitor-watchman.sample:90:		$last_update_token = "\"$last_update_token\"";
+./.git/hooks/fsmonitor-watchman.sample:94:			"since": $last_update_token,
+./.git/hooks/fsmonitor-watchman.sample:150:		$last_update_token = $o->{clock};
+./reports/SESSION_HANDOFF.md:33:- Action tokens are 25.3% of text tokens; loss is masked to action tokens only.
+./reports/SESSION_HANDOFF.md:38:  Duration restored (5 Hz fixed rate withdrawn). `tokenizer_max_length=160`, longest padding.
+./reports/SESSION_HANDOFF.md:52:`ssh -o "ProxyCommand=nc -X connect -x 127.0.0.1:17890 %h %p" -p 37141 root@connect.nmb2.seetacloud.com`.
+./reports/p4/t6_throughput.json:7:  "tokenizer_max_length": 160,
+./reports/p4/t6_throughput.json:10:  "tokens_per_frame": 64,
+./reports/p4/t6_throughput.json:24:  "objective": "next-token CE on action_text tokens only"
+./reports/p4/t6_throughput.json:59:   "prompt_token_lengths": {
+./reports/p4/t6_throughput.json:67:   "action_token_ratio": 0.2524,
+./reports/p4/t6_throughput.json:330:   "prompt_token_lengths": {
+./reports/p4/t6_throughput.json:338:   "action_token_ratio": 0.2506,
+./reports/p4/t6_throughput.json:601:   "prompt_token_lengths": {
+./reports/p4/t6_throughput.json:609:   "action_token_ratio": 0.2537,
+./reports/p4/t6_throughput.json:872:   "prompt_token_lengths": {
+./reports/p4/t6_throughput.json:880:   "action_token_ratio": 0.2528,
+./reports/p4/t6_throughput.json:1143:   "prompt_token_lengths": {
+./reports/p4/t6_throughput.json:1151:   "action_token_ratio": 0.2541,
+./reports/p4/t6_throughput.json:1414:   "prompt_token_lengths": {
+./reports/p4/t6_throughput.json:1422:   "action_token_ratio": 0.2528,
+./reports/p4/t6_throughput.json:1685:   "prompt_token_lengths": {
+./reports/p4/t6_throughput.json:1693:   "action_token_ratio": 0.2528,
+./reports/p4/t6_throughput.json:1949:  "formula": "64 tokens x 960 hidden x 2 bytes (bf16)",
+./reports/p4/T6V2_PLAN.md:4:GPU code is **MISSING/UNTESTED** in this CPU sandbox. Action-only mask is built in `scripts/p4_train_throughput.py` lines 32-34 (instruction prefix disabled; action positions remain), and the report records action participation as `action_tokens_ratio` (GPU execution required for measured value). Batch/OOM scan, online/cache paths, workers 0/2, and nvidia-smi sampling are implemented in lines 22-43. Exact critical lines: tokenizer 32; vision→connector 36,38; backward/optimizer/zero_grad 39. AdamW is lr 2e-5, betas .9/.999, weight decay .01; CE is action-only next-token CE. **MISSING**: GPU throughput, loss descent, measured ratio, memory/OOM boundary, cache wall time, and clock/power results.
+./reports/p4/t6_combo.json:7:  "tokenizer_max_length": 160,
+./reports/p4/t6_combo.json:10:  "tokens_per_frame": 64,
+./reports/p4/t6_combo.json:24:  "objective": "next-token CE on action_text tokens only"
+./reports/p4/t6_combo.json:59:   "prompt_token_lengths": {
+./reports/p4/t6_combo.json:67:   "action_token_ratio": 0.2541,
+./reports/p4/t6_combo.json:330:   "prompt_token_lengths": {
+./reports/p4/t6_combo.json:338:   "action_token_ratio": 0.2541,
+./reports/p4/t6_combo.json:601:   "prompt_token_lengths": {
+./reports/p4/t6_combo.json:609:   "action_token_ratio": 0.2528,
+./reports/p4/t6_combo.json:872:   "prompt_token_lengths": {
+./reports/p4/t6_combo.json:880:   "action_token_ratio": 0.2541,
+./reports/p4/t6_combo.json:1135:  "formula": "64 tokens x 960 hidden x 2 bytes (bf16)",
+./reports/p4/DISPATCH_P4_T6.md:61:| 每帧图像 token | **64**（vision `position_embedding [1024,768]` = 32×32 patch；`connector` 输入 12288 = 768×16 → 16 patch 合 1 token） |
+./reports/p4/DISPATCH_P4_T6.md:82:| `tokenizer_max_length` | **160** | v3.1 #11（**这一项才解除截断**） |
+./reports/p4/DISPATCH_P4_T6.md:84:| history | **8 帧** → 512 image token | §3.1 |
+./reports/p4/DISPATCH_P4_T6.md:85:| 监督目标 | 对 `action_text` 的 next-token 交叉熵（目标串约 10–12 token） | v3.1 #5 |
+./reports/p4/DISPATCH_P4_T6.md:114:- 缓存一帧的特征体积（64 token × 960 dim × 2 字节 ≈ 123 KB，**须实测确认**）
+./reports/p4/DISPATCH_P4_T6.md:150:1. 主代理读代码断言：`tokenizer_max_length == 160`、`pad_language_to == "longest"`、LoRA 目标模块与 r 值、视觉编码器确为冻结、`lm_head` 在可训练参数中。
+./reports/p4/DISPATCH_P4_T6v2.md:18:| 2 | `text_embeds = torch.randn(...)` 冒充文本嵌入；全脚本**无任何 tokenizer 调用** | **必须**用真实 tokenizer 对 `instruction_raw` 编码。**禁止任何合成/随机张量替代真实输入** |
+./reports/p4/DISPATCH_P4_T6v2.md:19:| 3 | 序列长度硬编码 `512+160`，`pad_language_to="longest"` 等于未测 | 序列长度必须由**真实 batch** 决定。须报告实测的文本 token 长度分布 |
+./reports/p4/DISPATCH_P4_T6v2.md:20:| 4 | 视觉侧取 `pooler_output`，非真正喂入 connector 的**每帧 64 token 序列** | 必须走真实的视觉→connector 路径 |
+./reports/p4/DISPATCH_P4_T6v2.md:67:| `tokenizer_max_length` | **160** |
+./reports/p4/DISPATCH_P4_T6v2.md:69:| history | **8 帧**，每帧 **64** image token |
+./reports/p4/DISPATCH_P4_T6v2.md:71:| 目标 | 对 `action_text` 的 next-token 交叉熵 |
+./reports/p4/DISPATCH_P4_T6v2.md:112:   **有真实 tokenizer 调用**、**无随机张量替代真实输入**、序列长度来自真实 batch、视觉走 connector 路径。
+./reports/FOUNDATION_ARCHIVE.md:52:`data/short_vln_v1.json` is 4.8 MB, below the 10 MB file limit, and is included in the baseline after removing the blanket `data/` ignore. SHA-256: `88255ffb8e175372048c4948531d7ad059a9d8aa9217b7be95e2f60f520b34b6`. `third_party/` contains only symlinks `IsaacLab` and `NaVILA-Bench` targeting `/mnt`; it remains ignored. `.gitignore` uses `*.token`, `*credentials*.json`, and `*.key`; the broad `*token*` trap was removed.
+./reports/dual_target_v1/ZOH_5K_NEXT_VALIDATION.md:15:重新验证数据绑定及 checkpoint 预处理与 train normalizer 构造处理完全一致；测试相同训练起点、seed 20260906 的固定噪声，交换 red/blue task tokens。
+./reports/dual_target_v1/ZOH_5K_DIAGNOSIS_AND_TRAINING.md:18:- 使用 checkpoint 保存的预处理与用 train normalizer 新构造的预处理，实际 tensor 完全一致。红/蓝 token 确实不同。RGB 512 单前视、RGB 解码/0–1、实测机体速度三维 state；非旧动作或 GT；预处理含 newline/tokenizer/mean-std，部署使用同一 checkpoint 后处理还原物理单位。
+./reports/p5/EXAMPLE_IO.md:3:生成命令：`python scripts/p5_render_example.py`。模板 token 数（不含指令）：**622**，其中图像占位 512。
+./reports/p5/EXAMPLE_IO.md:9:**模型看到的完整输入**（每个 `<image>x64` 会被该帧的 64 个视觉 token 替换）：
+./reports/p5/EXAMPLE_IO.md:12:<|im_start|>User: Imagine you are a robot programmed for navigation tasks. You have been given a video of historical observations <fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:13:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:14:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:15:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:16:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:17:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:18:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:19:, and current observation <fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:24:- prompt 总 token：**673**（指令 51 token，截断=False）
+./reports/p5/EXAMPLE_IO.md:26:- 目标 token ids（12 个）：`[378, 1867, 2353, 314, 1485, 3703, 216, 39, 37, 5973, 30, 49279]`
+./reports/p5/EXAMPLE_IO.md:41:**模型看到的完整输入**（每个 `<image>x64` 会被该帧的 64 个视觉 token 替换）：
+./reports/p5/EXAMPLE_IO.md:44:<|im_start|>User: Imagine you are a robot programmed for navigation tasks. You have been given a video of historical observations <fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:45:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:46:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:47:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:48:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:49:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:50:<fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:51:, and current observation <fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./reports/p5/EXAMPLE_IO.md:56:- prompt 总 token：**656**（指令 34 token，截断=False）
+./reports/p5/EXAMPLE_IO.md:58:- 目标 token ids（12 个）：`[378, 1867, 2353, 314, 1607, 2049, 216, 33, 37, 3815, 30, 49279]`
+./reports/p5/P5_REVIEW.md:11:|A 监督对象|成立|`scripts/p5_phase1_train.py:151-165` 将序列分成 prompt 与 target，并只将 `sup[st:len(s)]` 置真；`132-135` 用 `sup[:,1:]` 配 `last_hidden_state[:,:-1]`，labels 为 `ids[:,1:]`，因此覆盖首个答案 token 至含 EOU，不覆盖 prompt/pad。对应单测 `tests/smolvla/test_phase1_prompt.py:93-106` 明确比较 target。|
+./reports/p5/P5_REVIEW.md:13:|C 训练/评测一致性|成立（共享构造）；历史规则逐位逻辑成立|训练 collate `scripts/p5_phase1_train.py:153-155` 与 greedy `240` 都调用同一 `Phase1PromptBuilder`；builder `139-152` 统一 strip、160-token 截断、EOU。`navila_history_layout` `phase1_prompt.py:83-88` 是前补黑帧、7 个 floor 索引加末帧；数据集 `datasets/navila_r2r.py:75-90` 直接调用它。外部 NaVILA 源码逐位复核未在本机运行，故“与外部实现”的独立复现为 MISSING；共享实现本身无分叉。|
+./reports/p5/P5_REVIEW.md:18:|H 数据|成立|`load_splits` `189-197` 从 split 文件取 video 集，互斥断言并断言记录数 318331/35563；`datasets/navila_r2r.py:36-45` 按 video 排除，保留 JSONL 每行（含过采样）。`40-42` 设置 `TOKENIZERS_PARALLELISM=false`，数据集 `57-73` fork 后按 pid 重开句柄。测试文件覆盖重复、过滤、pickle。实际权威索引 SHA 与远端文件未在本机重新 hash，标该独立核验 MISSING。|
+./reports/p5/P5_REVIEW.md:31:2. **1 epoch 的量级合理，但不能由现有结果证明足够。** 318,331/16 约 19,895 个 optimizer steps；1 epoch 已让 holdout answer loss 从 2.25 降至 0.176，但 exact match 28.9% 仅略高于 majority 28.5%、低于 shuffled 29.4%，说明拟合 token loss 尚未转成指令条件的决策收益。继续增加 epoch 可能过拟合 scene/action prior；建议把 1 epoch 作为上限候选，以固定 holdout exact/greedy 指标决定是否延长。
+./reports/p5/P5_REVIEW.md:32:3. **保留 `<image>\n.` 是合理的兼容选择。** builder `61` 保留换行和句点，`phase1_prompt.py:20-24` 记录其来源；由于训练和评测都共享同一 token 序列，怪异本身不会产生 train/eval drift。代价是可读性和迁移性较差，若改写必须同时重训/重新验证，不能在评测侧单独清理。
+./reports/p5/DISPATCH_P5_REVIEW.md:18:| `src/smolvla/phase1_prompt.py` | **训练与评测共用**的输入契约：prompt 格式、答案 token、8 帧历史规则 |
+./reports/p5/DISPATCH_P5_REVIEW.md:25:1. **prompt 格式**：吞吐探针直接拼 `[512 个视觉嵌入][指令]\n[动作]`，无图像分隔符、无 chat 模板、无结束 token。
+./reports/p5/DISPATCH_P5_REVIEW.md:39:A. **监督对象**：loss 是否恰好覆盖答案 token（含 `<end_of_utterance>`）、不含 prompt 与 padding；
+./reports/p5/DISPATCH_P5_REVIEW.md:41:B. **视觉特征对齐**：`masked_scatter` 的填充顺序是否与 `<image>` 占位的顺序（batch→帧→token）一致；
+./reports/p5/DISPATCH_P5_REVIEW.md:44:C. **训练/评测一致性**：训练 prompt 与将来评测时构造的 prompt 是否可能出现任何一个 token 的差异（空白、引号、
+./reports/p5/DISPATCH_P5_REVIEW.md:56:   tokenizer 的 fork 安全。
+./reports/p5/native_forward_check.json:22:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:42:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:62:   "answer_tokens": 13,
+./reports/p5/native_forward_check.json:82:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:102:   "answer_tokens": 13,
+./reports/p5/native_forward_check.json:122:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:142:   "answer_tokens": 13,
+./reports/p5/native_forward_check.json:162:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:182:   "answer_tokens": 13,
+./reports/p5/native_forward_check.json:202:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:222:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:242:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:262:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:282:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:302:   "answer_tokens": 12,
+./reports/p5/native_forward_check.json:322:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:23:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:43:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:63:   "answer_tokens": 13,
+./reports/p5/native_forward_check_fp32.json:83:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:103:   "answer_tokens": 13,
+./reports/p5/native_forward_check_fp32.json:123:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:143:   "answer_tokens": 13,
+./reports/p5/native_forward_check_fp32.json:163:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:183:   "answer_tokens": 13,
+./reports/p5/native_forward_check_fp32.json:203:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:223:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:243:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:263:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:283:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:303:   "answer_tokens": 12,
+./reports/p5/native_forward_check_fp32.json:323:   "answer_tokens": 12,
+./reports/p0/git_baseline.json:24:    "gitignore_checks": "outputs, third_party, *.token and *.key patterns checked conceptually; git check-ignore unavailable because repository init failed",
+./reports/p0/SOURCE_MANIFEST.md:12:Secret scan hits (path, line, pattern):
+./reports/p0/SOURCE_MANIFEST.md:21:- (reports/p0/DISPATCH_P0.md, 156, password=)
+./reports/p0/SOURCE_MANIFEST.md:22:- (reports/p0/DISPATCH_P0.md, 156, token=)
+./reports/p0/source_manifest.json:4:  "generator_command": "single batched Python inventory/hash/secret-scan pass",
+./reports/p0/source_manifest.json:6870:    "secret_scan_hits": [
+./reports/p0/source_manifest.json:6914:        "pattern": "password="
+./reports/p0/source_manifest.json:6919:        "pattern": "token="
+./reports/p0/DISPATCH_P0.md:153:1. `.gitignore` 必须排除：`outputs`（符号链接）、`__pycache__/`、`*.pyc`、`.DS_Store` 与 macOS 资源叉文件（仓库内大量 `._*` 文件，逐条确认是否为资源叉；是则排除并在报告中列出数量）、`*.npz`、`*.mp4`、`*.pt`/`*.pth`/`*.safetensors`、`*.log`、`*.jsonl.gz`、`data/`（若其下为大数据；先核实体积再决定，结论写进报告）、`third_party/` 下的体积大项、任何 `*.env` / `*token*` / `*credential*` / `*.key`。
+./reports/p0/DISPATCH_P0.md:156:4. 凭据扫描：对拟入 Git 的全部文本文件 grep 常见密钥模式（`sk-`、`ghp_`、`AKIA`、`BEGIN PRIVATE KEY`、`password=`、`token=`），命中项列出文件与行号（**不要把密钥原文写进报告**，只写位置与匹配模式）。
+./reports/p0/DISPATCH_P0.md:365:**隐患一（latent trap，非当前缺陷）**：`.gitignore` 含 `*token*`。当前树内匹配 `*token*` / `*credential*` / `*.key` 的文件数为 **0**，
+./reports/p0/DISPATCH_P0.md:366:故无过度排除。但将来任何 `tokenizer.py` / `token_utils.py` 会被**静默忽略**。
+./reports/p0/DISPATCH_P0.md:367:建议 P0-T6 收紧为 `*.token`、`*credentials*.json`、`*.key`，或对 `*token*` 加 `!**/tokenizer*.py` 例外。
+./reports/p0/DISPATCH_P0.md:390:| P0-T5 | **PASS** | 凭据结论须更正为零；`*token*` 与 `data/` 两项须在 P0-T6 定论 |
+./reports/p0/DISPATCH_P0.md:529:   (b) `*token*` 是 latent trap（当前零命中，但将来会静默忽略 `tokenizer.py` 一类文件）。
+./reports/p0/DISPATCH_P0.md:530:       收紧为 `*.token` / `*credentials*.json` / `*.key`，或加 `!**/tokenizer*.py` 例外。**改动 `.gitignore` 后重算其 SHA-256**。
+./reports/p0/DISPATCH_P0.md:572:  `*token*` latent trap 已收紧为 `*.token` / `*credentials*.json` / `*.key`；`third_party/` 两个 `/mnt` 符号链接已记入文档。
+./reports/episode_statistics.md:18:- Instruction: `instruction_text, instruction_tokens`
+./reports/MILESTONES.md:137:Results: 5 episodes and 2,446 frames converted at 50 Hz: train 2/847, seen-val 2/1,244, unseen-test 1/355. All LeRobotDataset loads, DataLoader batches, image/state/action shape/dtype/range checks, timestamp and episode-boundary checks, NaN/Inf checks, SmolVLA tokenizer/normalizer preprocessing, padding masks, and artifact checks passed (18/18). Action min/max is `[0.0, 0.0, -0.5]` / `[0.388357, 0.0, 0.5]`; mean is `[0.220189, 0.0, -0.044908]`. Train/seen-val share their two seen houses by design, while unseen-test `2azQ1b91cZZ` has zero overlap with both.  
+./reports/MILESTONES.md:139:Known Issues: Hugging Face tokenizer access required the existing temporary reverse proxy; PyPI installation was faster via direct remote access. Hub access was unauthenticated but completed successfully. The first failed conversion left only a 3 KiB metadata file and was preserved at `/mnt/wxh/go2_short_vln/data/lerobot/short_vln_v1_failed_31d_20260831T1302` for auditability.  
+./reports/MILESTONES.md:145:- [x] SmolVLA preprocessing succeeds with language tokens and finite normalized tensors
+./scripts/m62_run_d3_closed_loop.sh:71:export TOKENIZERS_PARALLELISM=false
+./scripts/m62_run_d1_codec.sh:23:export TOKENIZERS_PARALLELISM=false
+./scripts/audit_zoh_after_5k.py:16:    from lerobot.utils.constants import OBS_LANGUAGE_TOKENS
+./scripts/audit_zoh_after_5k.py:55:        assert not torch.equal(normal[OBS_LANGUAGE_TOKENS],swapped[OBS_LANGUAGE_TOKENS])
+./scripts/zoh_compare_policy_rpc_no_state.py:38:            TOKENIZERS_PARALLELISM="false",
+./scripts/m7_run_server.sh:21:export TOKENIZERS_PARALLELISM=false
+./scripts/zoh_full_10k_resume_launch.py:42:            'TOKENIZERS_PARALLELISM':'false','OMP_NUM_THREADS':'8','MKL_NUM_THREADS':'8','PYTHONUNBUFFERED':'1',
+./scripts/p4_train_throughput.py:7:Here every timed step is a real one - real frames, real tokenizer, real
+./scripts/p4_train_throughput.py:13:  vision tower frozen; tokenizer_max_length=160 with longest padding;
+./scripts/p4_train_throughput.py:14:  8 history frames at 64 tokens each; bf16; AdamW; cross-entropy on the
+./scripts/p4_train_throughput.py:15:  action_text tokens only.
+./scripts/p4_train_throughput.py:54:MAX_LEN, HISTORY, TOKENS_PER_FRAME = 160, 8, 64
+./scripts/p4_train_throughput.py:125:    """Tokenize prompt+target and mark which label positions are action tokens.
+./scripts/p4_train_throughput.py:127:    The instruction and the action are tokenized separately so the split point is
+./scripts/p4_train_throughput.py:128:    exact. Round 2 concatenated them and took cross-entropy over every text token,
+./scripts/p4_train_throughput.py:134:        p = tok(instr + "\n", add_special_tokens=True)["input_ids"]
+./scripts/p4_train_throughput.py:135:        a = tok(act, add_special_tokens=False)["input_ids"]
+./scripts/p4_train_throughput.py:138:        # 5 of 10,815 distinct instructions tokenize to >= MAX_LEN and 7 leave no
+./scripts/p4_train_throughput.py:148:    pad = tok.pad_token_id or 0
+./scripts/p4_train_throughput.py:156:    assert bool(sup[:, 1:].any()), "no supervised action tokens in this batch"
+./scripts/p4_train_throughput.py:184:    # logits at text position i predict token i+1; supervise only action positions
+./scripts/p4_train_throughput.py:215:    times, e2e_times, losses, sup_tokens, all_tokens = [], [], [], 0, 0
+./scripts/p4_train_throughput.py:251:            sup_tokens += n_sup; all_tokens += n_tok
+./scripts/p4_train_throughput.py:269:        "prompt_token_lengths": {"min": plens[0], "p50": plens[m // 2],
+./scripts/p4_train_throughput.py:273:        # Self-proof that the instruction tokens really are masked out.
+./scripts/p4_train_throughput.py:274:        "action_token_ratio": round(sup_tokens / max(1, all_tokens), 4),
+./scripts/p4_train_throughput.py:305:    tok = processor.tokenizer
+./scripts/p4_train_throughput.py:324:        "config": {"tokenizer_max_length": MAX_LEN, "pad_language_to": "longest",
+./scripts/p4_train_throughput.py:325:                   "history_frames": HISTORY, "tokens_per_frame": TOKENS_PER_FRAME,
+./scripts/p4_train_throughput.py:330:                   "objective": "next-token CE on action_text tokens only"},
+./scripts/p4_train_throughput.py:401:    per_frame = TOKENS_PER_FRAME * hidden * 2
+./scripts/p4_train_throughput.py:404:        "formula": f"{TOKENS_PER_FRAME} tokens x {hidden} hidden x 2 bytes (bf16)",
+./scripts/p4_train_throughput.py:441:                      "action_token_ratio": base["action_token_ratio"],
+./scripts/m61_run_stage.sh:24:export TOKENIZERS_PARALLELISM=false
+./scripts/m62_run_d5_closed_loop.sh:66:export TOKENIZERS_PARALLELISM=false
+./scripts/m62_run_d5.sh:57:export TOKENIZERS_PARALLELISM=false
+./scripts/m62_resume_d5_post_training.sh:24:export TOKENIZERS_PARALLELISM=false
+./scripts/m62_run_d4_alignment.sh:25:export TOKENIZERS_PARALLELISM=false
+./scripts/p5_phase1_train.py:12:frozen; 8 history frames x 64 tokens; instruction capped at 160 tokens; loss on
+./scripts/p5_phase1_train.py:13:the answer tokens only; NaVILA oversampling kept.
+./scripts/p5_phase1_train.py:17:   with no image delimiters, no chat template and no end-of-answer token, so
+./scripts/p5_phase1_train.py:40:# Tokenization happens inside DataLoader workers; a fast tokenizer that already
+./scripts/p5_phase1_train.py:42:os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+./scripts/p5_phase1_train.py:112:def forward_answer_logits(model, batch, device, image_token_id):
+./scripts/p5_phase1_train.py:113:    """Logits at the positions that predict answer tokens, plus their labels.
+./scripts/p5_phase1_train.py:128:    img = ids == image_token_id
+./scripts/p5_phase1_train.py:204:def teacher_forced_eval(model, loader, device, image_token_id, max_batches=None):
+./scripts/p5_phase1_train.py:217:            logits, labels, rows = forward_answer_logits(model, batch, device, image_token_id)
+./scripts/p5_phase1_train.py:232:def greedy_check(model, dataset, indices, builder, device, max_new_tokens=24):
+./scripts/p5_phase1_train.py:248:            emb = emb.masked_scatter((ids == builder.image_token_id).unsqueeze(-1), vis.to(emb.dtype))
+./scripts/p5_phase1_train.py:250:            for _ in range(max_new_tokens):
+./scripts/p5_phase1_train.py:263:            logits, labels, _ = forward_answer_logits(model, batch, device, builder.image_token_id)
+./scripts/p5_phase1_train.py:446:    tok = processor.tokenizer
+./scripts/p5_phase1_train.py:448:    pad_id = tok.pad_token_id if tok.pad_token_id is not None else 0
+./scripts/p5_phase1_train.py:466:                   "prompt_template_tokens": builder.template_tokens, "params": param_info,
+./scripts/p5_phase1_train.py:503:        res = {"subset": teacher_forced_eval(model, eval_loader(False), device, builder.image_token_id),
+./scripts/p5_phase1_train.py:505:                                                                  builder.image_token_id),
+./scripts/p5_phase1_train.py:511:            res["full_holdout"] = teacher_forced_eval(model, loader, device, builder.image_token_id)
+./scripts/p5_phase1_train.py:566:                logits, labels, _ = forward_answer_logits(model, batch, device, builder.image_token_id)
+./scripts/p5_render_example.py:5:NavilaR2RDataset (history frames), Phase1PromptBuilder (token ids), and the
+./scripts/p5_render_example.py:50:    from transformers import AutoTokenizer
+./scripts/p5_render_example.py:55:    tok = AutoTokenizer.from_pretrained(MODEL, local_files_only=True)
+./scripts/p5_render_example.py:72:          f"生成命令：`python scripts/p5_render_example.py`。模板 token 数（不含指令）：**{b.template_tokens}**，"
+./scripts/p5_render_example.py:86:               "**模型看到的完整输入**（每个 `<image>x64` 会被该帧的 64 个视觉 token 替换）：", "",
+./scripts/p5_render_example.py:88:               f"- prompt 总 token：**{len(p.ids)}**（指令 {p.instruction_tokens} token，截断={p.instruction_truncated}）",
+./scripts/p5_render_example.py:90:               f"- 目标 token ids（{len(t)} 个）：`{t}`",
+./scripts/zoh_10k_preflight.py:42:        if any(token in module.lower() for module in imports for token in forbidden):
+./scripts/zoh_full_train_launch.py:50:                   TRANSFORMERS_OFFLINE='1', TOKENIZERS_PARALLELISM='false',OMP_NUM_THREADS='8',
+./scripts/zoh_full_10k_queue_preflight.py:27:    if any(token in name.lower() for name in imports for token in ('zoh_eval','isaac','compare_runtime')):
+./scripts/navila_dual_target_visibility.py:193:        env_cfg.instruction_tokens = [0] * 200
+./scripts/zoh_compare_policy_rpc.py:24:            TRANSFORMERS_OFFLINE='1',OMP_NUM_THREADS='4',TOKENIZERS_PARALLELISM='false')
+./scripts/audit_zoh_before_5k.py:16:    from lerobot.utils.constants import OBS_LANGUAGE_TOKENS
+./scripts/audit_zoh_before_5k.py:55:        assert not torch.equal(normal[OBS_LANGUAGE_TOKENS],swapped[OBS_LANGUAGE_TOKENS])
+./scripts/m7_run_offline_train_eval.sh:31:export TOKENIZERS_PARALLELISM=false
+./scripts/p4_throughput_probe.py:148:    # Text sequence is frozen at 512 image tokens + 160 language tokens.
+./scripts/p4_throughput_probe.py:221:        "config": {"tokenizer_max_length": 160, "pad_language_to": "longest", "history_frames": 8,
+./scripts/p4_throughput_probe.py:222:                   "tokens_per_frame": 64, "precision": "bf16", "lora_target_modules": ["q_proj", "v_proj"],
+./scripts/p4_throughput_probe.py:224:                   "lm_head_trainable": True, "tie_word_embeddings": False, "objective": "action_text next-token cross-entropy"},
+./scripts/zoh_train_10k_launch.py:52:            TRANSFORMERS_OFFLINE='1',TOKENIZERS_PARALLELISM='false',OMP_NUM_THREADS='8',
+./scripts/zoh_b10k_train_preflight.py:21:        if any(token in module.lower() for module in imports for token in ('zoh_eval_queue','validation')):
+./scripts/navila_velocity_rpc.py:38:            TOKENIZERS_PARALLELISM="false",
+./scripts/p5_verify_native_forward.py:61:    b = Phase1PromptBuilder(processor.tokenizer)
+./scripts/p5_verify_native_forward.py:69:        batch = T.collate_fn(b, pad_id=processor.tokenizer.pad_token_id)([item])
+./scripts/p5_verify_native_forward.py:71:            man_logits, labels, _ = T.forward_answer_logits(model, batch, "cuda", b.image_token_id)
+./scripts/p5_verify_native_forward.py:96:                     "answer_tokens": int(labels.numel()),
+./scripts/m6_run_stage.sh:23:export TOKENIZERS_PARALLELISM=false
+./.gitignore:15:*.token
+./config/dual_target_v1/assets/dt1_flat_ground.usda:22:        uniform token subdivisionScheme = "none"
+./config/dual_target_v1/assets/dt1_flat_ground.usda:37:            token outputs:surface.connect = </Ground/Looks/ground_material/PreviewSurface.outputs:surface>
+./config/dual_target_v1/assets/dt1_flat_ground.usda:40:                uniform token info:id = "UsdPreviewSurface"
+./config/dual_target_v1/assets/dt1_flat_ground.usda:43:                token outputs:surface
+./src/dual_target/zoh_policy_rpc.py:24:            TRANSFORMERS_OFFLINE='1',OMP_NUM_THREADS='4',TOKENIZERS_PARALLELISM='false')
+./src/dual_target/zoh_train_launch.py:48:                   TRANSFORMERS_OFFLINE='1', TOKENIZERS_PARALLELISM='false',OMP_NUM_THREADS='8',
+./src/dual_target/tiny_train_core.py:63:    from lerobot.utils.constants import OBS_LANGUAGE_TOKENS, OBS_LANGUAGE_ATTENTION_MASK
+./src/dual_target/tiny_train_core.py:68:        images, image_masks, batch[OBS_LANGUAGE_TOKENS], batch[OBS_LANGUAGE_ATTENTION_MASK],
+./src/dual_target/tiny_train_launch.py:47:                   TRANSFORMERS_OFFLINE='1', TOKENIZERS_PARALLELISM='false',OMP_NUM_THREADS='8',
+./src/dual_target/zoh_train_resume5k_launch.py:51:                   TRANSFORMERS_OFFLINE='1', TOKENIZERS_PARALLELISM='false',OMP_NUM_THREADS='8',
+./src/dual_target/tiny_policy_rpc.py:23:            TRANSFORMERS_OFFLINE='1',OMP_NUM_THREADS='4',TOKENIZERS_PARALLELISM='false')
+./src/dual_target/zoh_train_scheduler5k_launch.py:50:                   TRANSFORMERS_OFFLINE='1', TOKENIZERS_PARALLELISM='false',OMP_NUM_THREADS='8',
+./src/dual_target/scene.py:75:    if any(token not in contents for token in required):
+./src/collector/collect_expert.py:152:        "instruction_tokens": [0] * 200,
+./data/short_vln_v1.json:65220:        "original_instruction_text_not_for_training": "Exit room towards through doorway with wooden secretary and table next to it. Continue straight and wait in front of ropes. ",
+./CODEX_VLN_PLATFORM_MILESTONES.md:33:| 11 | 上下文长度 | `tokenizer_max_length` 48 → **160**（**这一项才是解除截断的关键**），`pad_language_to` → **`longest`**（动态 padding，纯省算力，与截断无关） |
+./CODEX_VLN_PLATFORM_MILESTONES.md:52:| 7 | **§3.1「instruction 逐字，不改写不截断」+ §3.5「超限显式拒绝」** | 与 `smolvla_base/config.json` 的 `tokenizer_max_length: 48` 直接冲突，实测 **118/1077 = 11.0%** 的评测指令会被静默截断。**已由 v3.1 #11 裁决改 160；裁决在文档，配置尚未落地**（见 v3.3 的落地位置） | 契约与实现冲突，且 11% 恰好是指令最长、最难的那批 |
+./CODEX_VLN_PLATFORM_MILESTONES.md:65:- **§3.1 instruction**：`tokenizer_max_length: 160`、`pad_language_to: longest`。**落地位置是 phase 1 的训练/推理
+./CODEX_VLN_PLATFORM_MILESTONES.md:72:  | `TokenizerProcessorStep(padding=config.pad_language_to, padding_side="right", max_length=config.tokenizer_max_length)`，**未传 `truncation`** | `policies/smolvla/processor_smolvla.py:72-78` |
+./CODEX_VLN_PLATFORM_MILESTONES.md:73:  | `truncation: bool = True` 是该 step 的**默认值** | `processor/tokenizer_processor.py:83` |
+./CODEX_VLN_PLATFORM_MILESTONES.md:74:  | lerobot 自己的默认是 `pad_language_to: str = "longest"`；`tokenizer_max_length: int = 48` | `policies/smolvla/configuration_smolvla.py:93, 60` |
+./CODEX_VLN_PLATFORM_MILESTONES.md:77:  因此 **`tokenizer_max_length: 160` 是解除 11% 截断的唯一必要改动**；`pad_language_to: longest` 只影响每个 batch
+./CODEX_VLN_PLATFORM_MILESTONES.md:79:  把它覆盖成了 `max_length`。代价评估不变：每帧图像仅 64 token，8 帧 history = 512 token，文本是小头。
+./CODEX_VLN_PLATFORM_MILESTONES.md:126:2. **指令长度**（SmolVLM2 BPE，eval 1077 条，纯文本未计 chat 模板与图像 token）：
+./CODEX_VLN_PLATFORM_MILESTONES.md:128:   `max_length=48` 装下 89.0%（截断 118 条，中位丢 7 token、最多丢 89）；`=64` 装 97.8%；**`=160` 装 100%**。
+./CODEX_VLN_PLATFORM_MILESTONES.md:135:4. **图像 token 数**：`vision_model.embeddings.position_embedding [1024, 768]` = 32×32 patch（512/16），
+./CODEX_VLN_PLATFORM_MILESTONES.md:136:   `connector.modality_projection.proj [960, 12288]`，12288 = 768 × 16 → 每 16 个 patch 合成 1 token → **每帧 64 token**。
+./CODEX_VLN_PLATFORM_MILESTONES.md:149:7. **lerobot 的 tokenizer 截断机制**（逐行核实，见 v3.3 §3.1 表格）：`truncation` 默认 `True` 且未被 SmolVLA
+./CODEX_VLN_PLATFORM_MILESTONES.md:151:   只有抬高 `tokenizer_max_length` 才能。`longest` 本就是 lerobot 默认值，无需回退方案。
+./CODEX_VLN_PLATFORM_MILESTONES.md:159:| 3 | **phase 2 的 expert 条件化方式** | D1（纯隐式读 VLM 特征）vs D1′（显式看到已生成的宏动作 token）未定，等 phase 1 结果 |
+./CODEX_VLN_PLATFORM_MILESTONES.md:651:| 2 | `text_embeds = torch.randn(batch, 512+160, 960)` | 同上 :146 | 文本塔喂**随机张量**而非真实 tokenize 的指令；全脚本**无任何 tokenizer 调用** |
+./CODEX_VLN_PLATFORM_MILESTONES.md:653:| 4 | `get_image_features(...).pooler_output` | 同上 :161 | 取 pooled 输出，非真正喂入 connector 的**每帧 64 token 序列**，视觉路径亦非真实 |
+./CODEX_VLN_PLATFORM_MILESTONES.md:806:| 真实 tokenizer，无合成张量 | ✅ `AutoProcessor` 真实调用（35–37 行） |
+./CODEX_VLN_PLATFORM_MILESTONES.md:815:第 37 行把指令与动作拼成 `f'{r}\n{a}'`，第 47 行对**全部** text token 算 CE：
+./CODEX_VLN_PLATFORM_MILESTONES.md:822:主代理用真实 tokenizer 在 2000 条记录上实测：
+./CODEX_VLN_PLATFORM_MILESTONES.md:824:| | token 数 |
+./CODEX_VLN_PLATFORM_MILESTONES.md:829:**=> action token 仅占 loss 项的 24.7%，其余 75.3% 是在预测指令本身。**
+./CODEX_VLN_PLATFORM_MILESTONES.md:835:契约 v3.1 #5 明确：目标是「对 **`action_text`** 的 next-token 交叉熵」。必须把指令 token 从 loss 中屏蔽。
+./CODEX_VLN_PLATFORM_MILESTONES.md:869:| 4 | **自证比例在文档中被满足、在代码中不存在** | 第 25 行声明 `ratios=[]` 后从未填充，第 38 行 report 字典无相关键；而 `T6V2_PLAN.md` 声称「report records action participation as `action_tokens_ratio`」 |
+./CODEX_VLN_PLATFORM_MILESTONES.md:909:（文档声称报告含 `action_tokens_ratio` 而代码中没有），本次守住了底线。修正边界后重派成功。
+./CODEX_VLN_PLATFORM_MILESTONES.md:915:| 2 | **截断可能把 action 完全挤空**，空 mask 上算 CE 会崩 | **成立且非理论**。主代理原只量过评测集（max 137 token），**训练集实测 max 203**；**5 条指令 ≥160 会完全挤空 action**，7 条会被部分截断 | 改为**截 prompt、永不截 action**；加空 mask 断言。以 361 token 极端 prompt 验证监督位仍完整解码出 action；64 条正常样本回归 64/64，占比 25.9% |
+./CODEX_VLN_PLATFORM_MILESTONES.md:917:| 6 | 未报告文本 token 长度分布；时钟仅前后快照 | 成立（派发单 §3 确有该要求） | 加 `prompt_token_lengths` 分位；计时期间周期性采样 |
+./CODEX_VLN_PLATFORM_MILESTONES.md:920:| 4/5/7 | 视觉路径、缓存与文本匹配、epoch 推算 | 均**通过** | 审查员为核实第 4 条去读了 `modeling_smolvlm.py`，确认 connector 确实把每帧降到 64 token |
+./CODEX_VLN_PLATFORM_MILESTONES.md:1004:| **`action_token_ratio`** | **0.251–0.254，均值 0.253**，全程稳定；与 CPU 侧预估吻合 |
+./CODEX_VLN_PLATFORM_MILESTONES.md:1066:`action_token_ratio` 仍稳定于 0.253–0.254。epoch 推算经主代理独立重算一致（6.58 h）。
+./CODEX_VLN_PLATFORM_MILESTONES.md:1117:| 1 | 探针输入为 `[512 视觉嵌入][指令]\n[动作]`，无图像分隔符、无 chat 模板、无结束 token | 贪心解码无法自行终止 | `src/smolvla/phase1_prompt.py`：SmolVLM2 chat 模板 + 每帧单图块 + NaVILA 原生问句（`vlm_server.py:126-131`），答案以 `<end_of_utterance>` 结尾。冒烟：8/8 由 eos 终止、0 parse error；未训练 answer loss 2.25（探针 7.65） |
+./tests/dual_target/test_zoh_10k.py:56:        assert not any(token in module.lower() for module in imports for token in forbidden)
+./src/navila_full/easy_visible.py:52:def _tokens(text: str) -> list[str]:
+./src/navila_full/easy_visible.py:58:    tokens = _tokens(text)
+./src/navila_full/easy_visible.py:59:    if not tokens or any(token in SEQUENTIAL_TERMS for token in tokens):
+./src/navila_full/easy_visible.py:67:    if "and" in tokens:
+./src/navila_full/easy_visible.py:68:        positions = [index for index, token in enumerate(tokens) if token == "and"]
+./src/navila_full/easy_visible.py:69:        if any(tokens[index + 1:index + 2] not in (["stop"], ["wait"]) for index in positions):
+./tests/dual_target/test_zoh_dataset.py:77:        for token in ('ScoreStatus.FAILED_COLLISION','ScoreStatus.FAILED_FALLEN',
+./tests/dual_target/test_zoh_dataset.py:79:            self.assertIn(token,source)
+./src/episodes/inspect_episode.py:135:        "instruction_token_count_including_padding": len(
+./src/episodes/inspect_episode.py:136:            episode["instruction"].get("instruction_tokens", [])
+./src/dataset/check_dataset.py:353:    checks["smolvla_language_tokens_present"] = any("language" in key for key in processed)
+./tests/evaluation/test_episodes.py:40:        expected = {'instruction_text': "Turn left; don't stop", 'instruction_tokens': [1, 2]}
+./src/inference/isaac_client.py:116:            "instruction_tokens": [0] * 200,
+./src/inference/isaac_client.py:344:    env_cfg.instruction_tokens = episode["instruction"]["instruction_tokens"]
+./tests/smolvla/test_phase1_prompt.py:3:The tokenizer tests need transformers and the SmolVLM2 snapshot; they skip where
+./tests/smolvla/test_phase1_prompt.py:15:from src.smolvla.phase1_prompt import (EXPECTED_IDS, HISTORY_FRAMES, MAX_INSTRUCTION_TOKENS,
+./tests/smolvla/test_phase1_prompt.py:16:                                       TOKENS_PER_FRAME, Phase1PromptBuilder)
+./tests/smolvla/test_phase1_prompt.py:21:HAVE_TOKENIZER = importlib.util.find_spec("transformers") is not None and MODEL.is_dir()
+./tests/smolvla/test_phase1_prompt.py:39:@unittest.skipUnless(HAVE_TOKENIZER, "transformers or SmolVLM2 snapshot unavailable")
+./tests/smolvla/test_phase1_prompt.py:43:        from transformers import AutoTokenizer
+./tests/smolvla/test_phase1_prompt.py:44:        cls.tok = AutoTokenizer.from_pretrained(MODEL, local_files_only=True)
+./tests/smolvla/test_phase1_prompt.py:49:        self.assertEqual(ids.count(EXPECTED_IDS["<image>"]), HISTORY_FRAMES * TOKENS_PER_FRAME)
+./tests/smolvla/test_phase1_prompt.py:51:        self.assertEqual(ids.count(EXPECTED_IDS["<fake_token_around_image>"]), 2 * HISTORY_FRAMES)
+./tests/smolvla/test_phase1_prompt.py:52:        # every image run is exactly one 64-token block
+./tests/smolvla/test_phase1_prompt.py:59:        self.assertEqual(runs, [TOKENS_PER_FRAME] * HISTORY_FRAMES)
+./tests/smolvla/test_phase1_prompt.py:64:        self.assertEqual(ids[0], self.tok.convert_tokens_to_ids("<|im_start|>"))
+./tests/smolvla/test_phase1_prompt.py:90:        self.assertEqual(len(p.ids), self.b.template_tokens + MAX_INSTRUCTION_TOKENS)
+./tests/smolvla/test_phase1_prompt.py:95:        fn = mod.collate_fn(self.b, pad_id=self.tok.pad_token_id)
+./tests/smolvla/test_phase1_prompt.py:107:        shuffled = mod.collate_fn(self.b, pad_id=self.tok.pad_token_id, shuffle_instructions=True)(items)
+./src/smolvla/m6_training.py:735:    os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+./src/smolvla/full_episode_training.py:251:    os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+./src/smolvla/phase1_prompt.py:4:prompt that differs between training and inference by even one token (a space
+./src/smolvla/phase1_prompt.py:17:  IMG = <fake_token_around_image><global-img><image>x64<fake_token_around_image>
+./src/smolvla/phase1_prompt.py:27:  512x512 frame to 2048 and cut 16 crops (1088 tokens/frame). Video mode uses one
+./src/smolvla/phase1_prompt.py:28:  64-token block per frame, which is what the throughput probe measured.
+./src/smolvla/phase1_prompt.py:29:- The target ends with <end_of_utterance> (the generation eos_token_id, 49279) so
+./src/smolvla/phase1_prompt.py:30:  greedy decoding terminates on its own instead of running to max_new_tokens.
+./src/smolvla/phase1_prompt.py:34:- The instruction alone is capped at tokenizer_max_length=160 (v3.1 #11). The
+./src/smolvla/phase1_prompt.py:36:  tokens (5 of 10,815 distinct instructions exceed 160); evaluation max is 137.
+./src/smolvla/phase1_prompt.py:43:TOKENS_PER_FRAME = 64
+./src/smolvla/phase1_prompt.py:44:MAX_INSTRUCTION_TOKENS = 160
+./src/smolvla/phase1_prompt.py:46:IMAGE_TOKEN = "<image>"
+./src/smolvla/phase1_prompt.py:47:FAKE_AROUND_IMAGE = "<fake_token_around_image>"
+./src/smolvla/phase1_prompt.py:52:# Frozen token ids of SmolVLM2-500M-Video-Instruct (snapshot 7b375e1b), checked at
+./src/smolvla/phase1_prompt.py:53:# builder construction so a different tokenizer cannot slip in unnoticed.
+./src/smolvla/phase1_prompt.py:54:EXPECTED_IDS = {IMAGE_TOKEN: 49190, FAKE_AROUND_IMAGE: 49189, GLOBAL_IMAGE: 49152,
+./src/smolvla/phase1_prompt.py:109:    instruction_tokens: int          # before truncation
+./src/smolvla/phase1_prompt.py:114:    """Builds token ids directly; the template pieces are tokenized once.
+./src/smolvla/phase1_prompt.py:116:    Pieces are tokenized separately, so BPE merges never cross a piece boundary
+./src/smolvla/phase1_prompt.py:118:    tokens). That differs from tokenizing the rendered string in one pass, and it
+./src/smolvla/phase1_prompt.py:122:    def __init__(self, tokenizer, history_frames: int = HISTORY_FRAMES,
+./src/smolvla/phase1_prompt.py:123:                 max_instruction_tokens: int = MAX_INSTRUCTION_TOKENS) -> None:
+./src/smolvla/phase1_prompt.py:126:        self.tok = tokenizer
+./src/smolvla/phase1_prompt.py:127:        self.max_instruction_tokens = max_instruction_tokens
+./src/smolvla/phase1_prompt.py:128:        ids = {t: tokenizer.convert_tokens_to_ids(t) for t in EXPECTED_IDS}
+./src/smolvla/phase1_prompt.py:130:            raise ValueError(f"tokenizer special ids {ids} != frozen {EXPECTED_IDS}")
+./src/smolvla/phase1_prompt.py:131:        self.image_token_id = ids[IMAGE_TOKEN]
+./src/smolvla/phase1_prompt.py:134:        enc = lambda s: tokenizer(s, add_special_tokens=False)["input_ids"]
+./src/smolvla/phase1_prompt.py:136:                       + [self.image_token_id] * TOKENS_PER_FRAME
+./src/smolvla/phase1_prompt.py:145:        n_img = sum(1 for t in self._prefix if t == self.image_token_id)
+./src/smolvla/phase1_prompt.py:146:        if n_img != history_frames * TOKENS_PER_FRAME:
+./src/smolvla/phase1_prompt.py:147:            raise AssertionError(f"{n_img} image tokens, expected "
+./src/smolvla/phase1_prompt.py:148:                                 f"{history_frames * TOKENS_PER_FRAME}")
+./src/smolvla/phase1_prompt.py:151:    def template_tokens(self) -> int:
+./src/smolvla/phase1_prompt.py:155:        instr = self.tok(instruction.strip(), add_special_tokens=False)["input_ids"]
+./src/smolvla/phase1_prompt.py:157:        return EncodedPrompt(ids=self._prefix + instr[:self.max_instruction_tokens] + self._suffix,
+./src/smolvla/phase1_prompt.py:158:                             instruction_tokens=n,
+./src/smolvla/phase1_prompt.py:159:                             instruction_truncated=n > self.max_instruction_tokens)
+./src/smolvla/phase1_prompt.py:162:        """Assistant answer tokens, supervised in full, eos included.
+./src/smolvla/phase1_prompt.py:167:        return self.tok(" " + action_text.strip(), add_special_tokens=False)["input_ids"] + [self.eou_id]
+./src/smolvla/phase1_prompt.py:173:        return self.tok.decode(ids, skip_special_tokens=True).strip()
+./src/smolvla/phase1_prompt.py:179:        text = self.tok.decode(ids, skip_special_tokens=False)
+./src/smolvla/phase1_prompt.py:181:            text = text.replace(IMAGE_TOKEN * TOKENS_PER_FRAME, f"<image>x{TOKENS_PER_FRAME}")
+/home/wxh/llada-vla-go2/deploy/go2/controller_loop.py:13:from robotics.data.prompt_builder import RoboticsPromptBuilder, resolve_mask_token_text, tokenize_prompt_segments
+/home/wxh/llada-vla-go2/deploy/go2/controller_loop.py:22:        tokenizer,
+/home/wxh/llada-vla-go2/deploy/go2/controller_loop.py:31:        self.tokenizer = tokenizer
+/home/wxh/llada-vla-go2/deploy/go2/controller_loop.py:40:            mask_token_text=resolve_mask_token_text(tokenizer, fallback_token_id=model.velocity_config.mask_token_id),
+/home/wxh/llada-vla-go2/deploy/go2/controller_loop.py:68:        tokenized = tokenize_prompt_segments(prompt_result, self.tokenizer)
+/home/wxh/llada-vla-go2/deploy/go2/controller_loop.py:69:        input_ids = tokenized.input_ids.unsqueeze(0)
+/home/wxh/llada-vla-go2/deploy/go2/controller_loop.py:70:        action_positions = tokenized.action_positions.unsqueeze(0)
+/home/wxh/llada-vla-go2/deploy/go2/run_mock_controller.py:23:    tokenizer, backbone, image_processor, _ = load_pretrained_model(
+/home/wxh/llada-vla-go2/deploy/go2/run_mock_controller.py:31:    tokenizer.pad_token = tokenizer.pad_token or tokenizer.eos_token or tokenizer.unk_token
+/home/wxh/llada-vla-go2/deploy/go2/run_mock_controller.py:32:    velocity_cfg = VelocityControlConfig(mask_token_id=tokenizer.mask_token_id or 126336)
+/home/wxh/llada-vla-go2/deploy/go2/run_mock_controller.py:39:    return tokenizer, image_processor, model
+/home/wxh/llada-vla-go2/deploy/go2/run_mock_controller.py:50:    tokenizer, image_processor, model = load_model(args.model_path, args.device)
+/home/wxh/llada-vla-go2/deploy/go2/run_mock_controller.py:55:        tokenizer=tokenizer,
+/home/wxh/llada-vla-go2/tools/data_pipeline_common.py:1231:        base["export_view"] = "tokenizer_ready_vla"
+/home/wxh/llada-vla-go2/tools/data_pipeline_common.py:1234:        base["tokenizer_ready"] = {

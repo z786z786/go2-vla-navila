@@ -1,0 +1,8 @@
+{
+  "format": "dt2-reviewed-source-extension-v1",
+  "dt1_runner_sha256": "022d27d7fc65d830a277f8acf1da768a0d97ccf7b6675d2a16d05b32d27f7fad",
+  "dt2_runner_sha256": "d506b4b2364f98b553ed79ded979f03567bbaacbefe5931fd29dedf0157745aa",
+  "change": "run_live_expert accepts optional scene_task; existing DT1 default and all control/recording/scoring logic unchanged",
+  "task_contract_modified": false,
+  "other_locked_source_changes_allowed": false
+}

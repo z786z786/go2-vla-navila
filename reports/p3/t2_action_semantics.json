@@ -1,0 +1,164 @@
+{
+  "task_id": "P3-T2",
+  "generated_at": "2026-09-12T20:35:39.321640+08:00",
+  "generator_command": "local NaVILA-Bench audit; python -m unittest tests/p3/test_navila_action_map.py",
+  "inputs": [
+    "reports/p3/DISPATCH_P3.md",
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py",
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/scripts/vlm_server.py",
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/scripts/navila_eval.py",
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/wrappers.py",
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/vlnce/mdp/actions/navigation_actions.py",
+    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/src/"
+  ],
+  "findings": {
+    "network": {
+      "status": "UNAVAILABLE",
+      "probe": "curl -I --connect-timeout 3 --max-time 5 https://github.com",
+      "exit_code": 7,
+      "stderr": "curl: (7) Couldn't connect to server"
+    },
+    "action_enumeration": {
+      "forward": [
+        {
+          "value_cm": 25,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:79-80"
+        },
+        {
+          "value_cm": 50,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:77-78"
+        },
+        {
+          "value_cm": 75,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:75-76"
+        }
+      ],
+      "turn_left": [
+        {
+          "value_deg": 15,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:63-64"
+        },
+        {
+          "value_deg": 30,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:61-62"
+        },
+        {
+          "value_deg": 45,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:59-60"
+        }
+      ],
+      "turn_right": [
+        {
+          "value_deg": 15,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:71-72"
+        },
+        {
+          "value_deg": 30,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:69-70"
+        },
+        {
+          "value_deg": 45,
+          "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:67-68"
+        }
+      ],
+      "stop": {
+        "source": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:82-83"
+      },
+      "other_actions": "No other explicit macro-action branch found in this parser; unmatched text falls through to forward at lines 84-85."
+    },
+    "execution_path": {
+      "prompt": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/scripts/vlm_server.py:122-134 (asks left/right degree, forward distance, stop)",
+      "parse_and_velocity": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py:57-85",
+      "eval_call": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/scripts/navila_eval.py:327-336 obtains velocity,duration then repeatedly env.step(command)",
+      "duration_to_steps": "navila_eval.py:330-333 divides duration by sim.dt*decimation; eval_utils returns velocity command and seconds, not teleport pose.",
+      "low_level": "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/wrappers.py:201-245 updates command, calls low-level policy, env.step; Go2 config sets decimation=4 and sim.dt=.005 at go2_matterport_base_cfg.py:364-372."
+    },
+    "mapping_assumption": {
+      "status": "CONFIRMED_PRECONDITION",
+      "statement": "Execution ASSUMPTION, not supervision. Raw commands use vx=0.5 m/s for forward, wz=+/-0.5 rad/s for turns, vy=0, then shared platform limits/ZOH apply. This is not inferred supervision."
+    },
+    "tick_arithmetic": [
+      {
+        "action": "forward_25cm",
+        "ideal_s": 0.5,
+        "ticks": 2,
+        "low_level_steps": 20,
+        "ideal_distance_m": 0.25,
+        "executed_m": 0.2,
+        "truncation_residual_m": 0.04999999999999999
+      },
+      {
+        "action": "forward_50cm",
+        "ideal_s": 1.0,
+        "ticks": 5,
+        "low_level_steps": 50,
+        "ideal_distance_m": 0.5,
+        "executed_m": 0.5,
+        "truncation_residual_m": 0.0
+      },
+      {
+        "action": "forward_75cm",
+        "ideal_s": 1.5,
+        "ticks": 7,
+        "low_level_steps": 70,
+        "ideal_distance_m": 0.75,
+        "executed_m": 0.7000000000000001,
+        "truncation_residual_m": 0.04999999999999993
+      },
+      {
+        "action": "turn_15deg_left_or_right",
+        "ideal_s": 0.5235987755982988,
+        "ticks": 2,
+        "low_level_steps": 20,
+        "ideal_angle_deg": 15,
+        "executed_angle_deg": 11.459155902616466,
+        "truncation_residual_deg": 3.540844097383534
+      },
+      {
+        "action": "turn_30deg_left_or_right",
+        "ideal_s": 1.0471975511965976,
+        "ticks": 5,
+        "low_level_steps": 50,
+        "ideal_angle_deg": 30,
+        "executed_angle_deg": 28.64788975654116,
+        "truncation_residual_deg": 1.3521102434588386
+      },
+      {
+        "action": "turn_45deg_left_or_right",
+        "ideal_s": 1.5707963267948966,
+        "ticks": 7,
+        "low_level_steps": 70,
+        "ideal_angle_deg": 45,
+        "executed_angle_deg": 40.10704565915763,
+        "truncation_residual_deg": 4.892954340842373
+      },
+      {
+        "action": "stop",
+        "ticks": 1,
+        "low_level_steps": 10,
+        "command": "zero velocity + stop intent",
+        "residual": "0"
+      }
+    ],
+    "searched_paths": [
+      "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/eval_utils.py",
+      "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/scripts/vlm_server.py",
+      "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/scripts/navila_eval.py",
+      "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/utils/wrappers.py",
+      "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/vlnce/mdp/actions/navigation_actions.py",
+      "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/src/"
+    ]
+  },
+  "missing": [
+    {
+      "status": "MISSING",
+      "item": "paper-only claims",
+      "reason": "network unavailable; no network supplementation"
+    },
+    {
+      "status": "MISSING",
+      "item": "official training-label serialization",
+      "reason": "not present in searched local tree; parser is execution code"
+    }
+  ]
+}

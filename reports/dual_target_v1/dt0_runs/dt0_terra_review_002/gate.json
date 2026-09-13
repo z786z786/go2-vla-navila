@@ -1,0 +1,98 @@
+{
+  "format": "go2-dual-target-dt0-gate-v1",
+  "stage": "DT0",
+  "run_id": "dt0_terra_review_002",
+  "status": "READY_FOR_REVIEW",
+  "approval_authority": "parent_agent_only",
+  "created_at_utc": "2026-09-05T10:30:16.680988+00:00",
+  "state_transition": [
+    "NOT_STARTED",
+    "RUNNING",
+    "READY_FOR_REVIEW"
+  ],
+  "checks": {
+    "contract_allows_only_current_rgb_state_task": true,
+    "four_combinations_generated": true,
+    "candidate_is_pending_sim_validation": true,
+    "action_chunk_50x3_cpu_validated": true,
+    "gpu_wait_dry_run_has_no_allocation": true
+  },
+  "gpu_wait_dry_run": {
+    "format": "go2-dual-target-gpu-wait-dry-run-v1",
+    "allocation_attempted": false,
+    "resource_probe_executed": false,
+    "required_free_mib": 20480,
+    "required_consecutive_samples": 3,
+    "sample_interval_s": 30,
+    "sample_decisions": [
+      {
+        "sample_index": 0,
+        "free_mib": 22528,
+        "compute_process_count": 0,
+        "eligible": true,
+        "consecutive_eligible_samples": 1
+      },
+      {
+        "sample_index": 1,
+        "free_mib": 21504,
+        "compute_process_count": 0,
+        "eligible": true,
+        "consecutive_eligible_samples": 2
+      },
+      {
+        "sample_index": 2,
+        "free_mib": 20480,
+        "compute_process_count": 0,
+        "eligible": true,
+        "consecutive_eligible_samples": 3
+      }
+    ],
+    "result": "ready_for_gpu_acquisition"
+  },
+  "input_contract": {
+    "schema_version": "go2-dual-target-task-contract-v1-draft",
+    "status": "pending_sim_validation",
+    "action_chunk_size": 50,
+    "execute_action_steps": 10,
+    "high_level_rate_hz": 50,
+    "max_vx_mps": 0.5,
+    "max_abs_wz_radps": 0.5,
+    "parking_radius_m": 0.3,
+    "stop_raw_vx_mps": 0.03,
+    "stop_raw_wz_radps": 0.05,
+    "required_stop_duration_s": 1.0
+  },
+  "input_hashes": {
+    "task_contract_draft_sha256": "f25c7482e3b44006207b2711cd66062f6fde790140e555610ac0c5005e7c28e0",
+    "layout_policy_draft_sha256": "db0b3344c22d87b5cafb002a36d47ac48127277a63ed6fe963e67e86543495de",
+    "data_sha256": null,
+    "model_sha256": null,
+    "not_applicable_reason": "DT0 consumes no dataset or model and never constructs a CUDA policy."
+  },
+  "source_sha256": {
+    "src/dual_target/contracts.py": "773cc7cdad5e08b9172e604e6d628369731c27be2e5c2caad602e158fd58964d",
+    "src/dual_target/layouts.py": "ccb629b615997fedcc06677e40507258653eb34577d583d752e55d7914c035ba",
+    "src/dual_target/scoring.py": "05835aa7dc827d61a3a790a7fb0cd3f211220513aa1a1c3eee53b3446a0c4e33",
+    "src/dual_target/stage.py": "9bd0f3f9286d9720b19e961171da355806087faea71c0084b92560b3d1f18f42",
+    "scripts/dual_target_run_stage.sh": "60dcae8c4a1c4c567031795b055a5d3eeef1cb96f37bb5ce6aebe5f22f3a5794",
+    "config/dual_target_v1/dt0_contract.json": "f25c7482e3b44006207b2711cd66062f6fde790140e555610ac0c5005e7c28e0",
+    "config/dual_target_v1/layout_policy.json": "db0b3344c22d87b5cafb002a36d47ac48127277a63ed6fe963e67e86543495de"
+  },
+  "output_paths": {
+    "run_dir": "/Users/z786/Workspace/vln/reports/dual_target_v1/dt0_runs/dt0_terra_review_002",
+    "gate": "/Users/z786/Workspace/vln/reports/dual_target_v1/dt0_runs/dt0_terra_review_002/gate.json",
+    "status": "/Users/z786/Workspace/vln/reports/dual_target_v1/dt0_runs/dt0_terra_review_002/stage_status.json"
+  },
+  "actual_argv": [
+    "scripts/dual_target_run_stage.sh",
+    "DT0",
+    "--run-id",
+    "dt0_terra_review_002",
+    "--gpu-wait-dry-run",
+    "--gpu-wait-snapshots",
+    "tests/dual_target/gpu_wait_ready_snapshots.json"
+  ],
+  "exit_code": 0,
+  "failure_reason": null,
+  "next_step": "await parent-agent review; do not start DT1"
+}

@@ -1,0 +1,17 @@
+{
+  "stage": "ZOH_V2_DATASET",
+  "status": "APPROVED",
+  "report": "reports/dual_target_v1/ZOH_V2_DATASET_FINAL_REVIEW.md",
+  "report_sha256": "c4acd419c9ecbd05f57d2615800a70352085cb222989fb2ff007ae582e84c6a6",
+  "remote_dataset_root": "/mnt/wxh/go2_short_vln/outputs/dual_target_v2/zoh_dataset_0906_v2",
+  "independent_review_root": "/mnt/wxh/go2_short_vln/outputs/dual_target_v2/zoh_dataset_root_review_0906_v2",
+  "numerical_review_sha256": "dd2a651f4f58003ce80ae8591a0f0ce1213dbac492212437ff9ba1a11405087a",
+  "image_hashes_sha256": "e6ddf76665cd51370f50cc48b8bf23f61b7711e4b8827f6f811be9d9442158e0",
+  "visual_panels_reviewed": 160,
+  "formal_dataset_approved": true,
+  "split_manifest_sha256": "56595552063ed28177d2e9eb0344e5433ff5b4945337b5398f6a2e0474806a6e",
+  "dataset_manifest_sha256": "1da80d175c52ddbdf83d6784f168a2dc1282b2187114a27a890e6c6e0e14285e",
+  "smolvla_navigation_approved": false,
+  "training_started": false,
+  "performance_optimization_approved": false
+}

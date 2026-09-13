@@ -1,0 +1,14 @@
+{
+  "format": "go2-dual-target-layout-policy-v1-draft",
+  "candidate_status": "pending_sim_validation",
+  "geometry_group": {
+    "required_target_slots": ["A", "B"],
+    "required_color_configurations": ["A_red_B_blue", "A_blue_B_red"],
+    "required_instructions": ["red", "blue"],
+    "minimum_effective_travel_m": 0.8,
+    "parking_regions_must_not_overlap": true,
+    "start_must_be_outside_every_parking_region": true,
+    "parking_edge_requires_positive_box_clearance": true
+  },
+  "split_rule": "All derived variants sharing lineage_root_id stay in one split; each geometry group has all four combinations exactly once."
+}

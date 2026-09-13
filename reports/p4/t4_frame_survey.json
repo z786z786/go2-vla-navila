@@ -1,0 +1,36 @@
+{
+  "color_mode_distribution": {
+    "RGB": 601125
+  },
+  "damage_check": {
+    "coverage_fraction": 1.0,
+    "method": "PIL.Image.open followed by Image.verify for every JPG; no pixel array retained"
+  },
+  "damaged_or_unreadable": [],
+  "episode_directory_count": 10819,
+  "file_size_bytes_quantiles": {
+    "max": 89159.0,
+    "min": 4723.0,
+    "p25": 24817.0,
+    "p50": 30836.0,
+    "p75": 38162.0,
+    "p90": 45800.0
+  },
+  "frame_count": 601125,
+  "generated_at": "2026-09-13T03:46:10.958381+00:00",
+  "generator_command": "/mnt/wxh/go2_short_vln/envs/conda/smolvla/bin/python /home/wxh/go2_short_vln/scripts/p4_frame_survey_and_gap.py",
+  "inputs": {
+    "navila_train": {
+      "file_count": 601125,
+      "path": "/mnt/wxh/go2_short_vln/data/navila_dataset/R2R/train",
+      "sha256_listing": "8e747eab3102bc273b424ccda891959b4717967d522ce9499cfd251287e1b16f",
+      "total_bytes": 19236004882
+    }
+  },
+  "missing": [],
+  "resolution_distribution": {
+    "512x512": 601125
+  },
+  "resolution_exceptions": [],
+  "task_id": "P4-T4"
+}
