@@ -28,9 +28,9 @@ from src.inference.state import (
 )
 
 
-DEFAULT_SHORT_DATASET = Path("/home/wxh/go2_short_vln/data/short_vln_v1.json")
-DEFAULT_ASSET_ROOT = Path("/mnt/wxh/go2_short_vln/assets/isaac_sim_4_1")
-DEFAULT_NAVILA_ROOT = Path("/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench")
+DEFAULT_SHORT_DATASET = Path("<external-workspace>")
+DEFAULT_ASSET_ROOT = Path("<external-data-root>")
+DEFAULT_NAVILA_ROOT = Path("<external-data-root>")
 DEFAULT_SOCKET = "/tmp/go2_smolvla_m7.sock"
 EXECUTE_STEPS = 10
 MAX_STEPS = 1500

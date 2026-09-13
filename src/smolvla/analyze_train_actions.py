@@ -18,12 +18,12 @@ import numpy as np
 from src.smolvla.evaluate_train_actions import ACTION_NAMES, action_metrics, baseline_metrics
 
 
-DEFAULT_DATASET_ROOT = Path("/mnt/wxh/go2_short_vln/data/lerobot/short_vln_v1")
+DEFAULT_DATASET_ROOT = Path("<external-data-root>")
 DEFAULT_CHECKPOINT = Path(
-    "/mnt/wxh/go2_short_vln/outputs/m6_1/smoke_20260901T104846+0800/checkpoints/step_002000"
+    "<external-data-root>+0800/checkpoints/step_002000"
 )
 DEFAULT_SOURCE_EVIDENCE = Path(
-    "/mnt/wxh/go2_short_vln/outputs/m7/offline_train_action_eval_20260901T120600+0800"
+    "<external-data-root>+0800"
 )
 FROZEN_MODEL_SHA256 = "facc4a73b500e52468a3c57fa985656ca085ed482211e9b97bb13328b58748e7"
 FROZEN_CODEC_SHA256 = "143c8fce264be7906bd1aea11d3e502a4d67f40e7d8a691fac678f752657af27"

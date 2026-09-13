@@ -1,9 +1,0 @@
-{
-  "stage": "DT0",
-  "run_id": "dt0_terra_review_002",
-  "status": "READY_FOR_REVIEW",
-  "actor": "terra",
-  "pid": 57709,
-  "approval_authority": "parent_agent_only",
-  "gate": "/Users/z786/Workspace/vln/reports/dual_target_v1/dt0_runs/dt0_terra_review_002/gate.json"
-}

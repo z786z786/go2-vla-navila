@@ -1,8 +1,0 @@
-{
-  "task_id":"P3-T1C",
-  "generated_at":"2026-09-12T21:10:00+08:00",
-  "generator_command":"curl range probe and resumable download; Python parsing pending",
-  "inputs":{"url":"https://huggingface.co/datasets/a8cheng/NaVILA-Dataset/resolve/main/R2R/annotations.json","expected_bytes":317267756,"evaluation_scenes":["2azQ1b91cZZ","8194nk5LbLH","EU6Fwq7SyZv","QUCTc6BB5sX","TbHJrupSAjP","X7HyMhZNoso","Z6MFQCViBuw","oLBMNvg9in8","pLe4wQe7qrG","x8F5xyUWy9e","zsNo4HB9uLZ"]},
-  "findings":{"network":{"huggingface":"intermittent SSL unexpected eof","github":"200"},"probe":{"status":"PARTIAL","bytes":2097152,"top_level_structure":"UNVERIFIED; head is truncated JSON","fields":"UNVERIFIED"},"download":{"status":"MISSING","bytes":4308992,"sha256":null},"leakage":{"status":"UNVERIFIABLE","reason":"Full annotations file could not be completed; no scene intersection can be computed safely"}},
-  "missing":["Complete R2R annotations download","SHA-256","record count","scene identifiers/intersection","instruction and action fields","verbatim example records"]
-}

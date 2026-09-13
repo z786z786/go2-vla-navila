@@ -3,8 +3,8 @@ import json
 from pathlib import Path
 from .tiny_train_core import file_sha
 
-BASELINE=Path('/mnt/wxh/go2_short_vln/outputs/dual_target_v2/zoh_train_5000_0906_v2')
-INITIAL=Path('/mnt/wxh/go2_short_vln/outputs/dual_target_v2/zoh_train_1000_0906_v1')
+BASELINE=Path('<external-data-root>')
+INITIAL=Path('<external-data-root>')
 TOTAL=5000
 
 

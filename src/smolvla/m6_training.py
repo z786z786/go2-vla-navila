@@ -54,7 +54,7 @@ STATE_KEY = "observation.state"
 ACTION_KEY = "action"
 DEFAULT_MODEL_ID = "lerobot/smolvla_base"
 DEFAULT_MODEL_REVISION = "c83c3163b8ca9b7e67c509fffd9121e66cb96205"
-DEFAULT_DATASET_ROOT = Path("/mnt/wxh/go2_short_vln/data/lerobot/short_vln_v1")
+DEFAULT_DATASET_ROOT = Path("<external-data-root>")
 DEFAULT_SEED = 20260831
 
 

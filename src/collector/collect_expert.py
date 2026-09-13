@@ -43,10 +43,10 @@ from src.collector.d5_collection import OFFICIAL_LARGE_ORIENTATION_RAD, official
 
 
 DEFAULT_OFFICIAL_SOURCE = Path(
-    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/scripts/demo_planner.py"
+    "<external-data-root>"
 )
-DEFAULT_SHORT_DATASET = Path("/home/wxh/go2_short_vln/data/short_vln_v1.json")
-DEFAULT_ASSET_ROOT = Path("/mnt/wxh/go2_short_vln/assets/isaac_sim_4_1")
+DEFAULT_SHORT_DATASET = Path("<external-workspace>")
+DEFAULT_ASSET_ROOT = Path("<external-data-root>")
 
 
 def parse_collector_args() -> tuple[argparse.Namespace, list[str]]:

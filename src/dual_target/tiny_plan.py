@@ -8,8 +8,8 @@ from .layouts import GeometryGroup, TargetSlot, Vec2, build_four_tasks
 from .scene import DualTargetSceneSpec, dt1_development_groups
 from .reset_audit import derive_pair_seed
 
-SOURCE_ROOT = Path('/home/wxh/go2_short_vln')
-DATA_ROOT = Path('/mnt/wxh/go2_short_vln')
+SOURCE_ROOT = Path('<external-workspace>')
+DATA_ROOT = Path('<external-data-root>')
 DT1_MATRIX = 'dt1_m_0906_v2'
 LOCK_HASH = 'ae040c5b66c7405197874d9d24408f03736606704c5d3cd278ad5827af5e0e14'
 

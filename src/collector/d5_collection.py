@@ -813,7 +813,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--m4-log-root",
         type=Path,
-        default=Path("/mnt/wxh/go2_short_vln/outputs/m4/logs"),
+        default=Path("<external-data-root>"),
         help="immutable per-episode M4 runner logs, used only for zero-frame recovery",
     )
     parser.add_argument("--seed", type=int, default=20260831)

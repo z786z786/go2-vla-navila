@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "go2-smolvla-navila"
+version = "0.1.0"
+description = "Go2 vision-language navigation and velocity-control research framework"
+requires-python = ">=3.10"
+[tool.setuptools.packages.find]
+include = ["go2_nav*", "actions*", "collectors*", "deploy*", "evaluation*", "src*", "robotics*", "llava*"]

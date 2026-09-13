@@ -26,7 +26,7 @@ from .smolvla_probe_contract import (
 )
 
 
-DEFAULT_BASE_MODEL = Path("/mnt/wxh/go2_short_vln/models/smolvla_base_c83c316")
+DEFAULT_BASE_MODEL = Path("<external-data-root>")
 DEFAULT_BASE_CONFIG_SHA256 = "650584b56c104720f7a3c91d1ec6bec9e8de8ac11e60c92ba2fa82d93eda147d"
 DEFAULT_BASE_MODEL_SHA256 = "7cd549ac2351fb069c0ddb3c34ad2d09cfc92b56a15dccdfc2e41467aaca01eb"
 

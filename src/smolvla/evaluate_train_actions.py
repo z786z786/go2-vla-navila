@@ -31,9 +31,9 @@ IMAGE_KEY = "observation.images.front"
 STATE_KEY = "observation.state"
 ACTION_KEY = "action"
 ACTION_NAMES = ("vx", "vy", "wz")
-DEFAULT_DATASET_ROOT = Path("/mnt/wxh/go2_short_vln/data/lerobot/short_vln_v1")
+DEFAULT_DATASET_ROOT = Path("<external-data-root>")
 DEFAULT_CHECKPOINT = Path(
-    "/mnt/wxh/go2_short_vln/outputs/m6_1/smoke_20260901T104846+0800/checkpoints/step_002000"
+    "<external-data-root>+0800/checkpoints/step_002000"
 )
 DEFAULT_SEEDS = (20260831, 20260832, 20260833)
 FPS = 50

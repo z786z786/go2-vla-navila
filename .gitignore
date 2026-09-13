@@ -1,25 +1,2 @@
-outputs
-__pycache__/
-*.pyc
-.DS_Store
-._*
-*.npz
-*.mp4
-*.pt
-*.pth
-*.safetensors
-*.log
-*.jsonl.gz
-third_party/
-*.env
-*.token
-*credentials*.json
-*.key
-
-# oh-my-codex runtime state and logs (added 2026-09-13, P4-T5).
-# Every tracked file under .omx/ was session state that changes on each turn
-# (hud-state, tmux-hook-state, notify-hook-state, per-day turn logs, metrics),
-# so each commit either carried unrelated churn or left a permanently dirty
-# tree. Nothing under .omx/ was configuration. Negate a specific path with
-# `!.omx/<file>` if something there ever needs tracking.
-.omx/
+artifacts/
+*.ppm

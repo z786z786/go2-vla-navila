@@ -1,3 +1,7 @@
 # Third-party notices
 
-This project interfaces with SmolVLA, NaVILA, LLaDA-V, SigLIP2, R2R/VLNCE, Matterport3D, Isaac Sim, and Unitree Go2 SDK components. Each upstream component remains governed by its own license and citation requirements. Consult the upstream distribution before redistributing code, weights, or datasets.
+The tree includes or interfaces with upstream work from LLaDA-V, LLaVA, SmolVLA,
+NaVILA, SigLIP2, R2R/VLNCE, Matterport3D, Isaac Sim, and Unitree SDK. Imported
+files retain their upstream notices where supplied; each upstream project and
+dataset keeps its own license and citation requirements. Model weights and raw
+datasets are not included.

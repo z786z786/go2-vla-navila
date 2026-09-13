@@ -33,7 +33,7 @@ STATE_KEY = "observation.state"
 ACTION_KEY = "action"
 DEFAULT_SOCKET = Path("/tmp/go2_smolvla_m7.sock")
 DEFAULT_CHECKPOINT = Path(
-    "/mnt/wxh/go2_short_vln/outputs/m6_1/smoke_20260901T104846+0800/checkpoints/step_002000"
+    "<external-data-root>+0800/checkpoints/step_002000"
 )
 DEFAULT_SEED = 20260831
 

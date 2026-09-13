@@ -64,7 +64,7 @@ DECIMATION = 4
 ENV_STEP_S = PHYSICS_DT_S * DECIMATION
 GO2_WARMUP_STEPS = 100
 DEFAULT_CHECKPOINT = Path(
-    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/logs/rsl_rl/go2_vision/"
+    "<external-data-root>"
     "2024-09-25_23-22-02/model_26499.pt"
 )
 DEFAULT_CHECKPOINT_SHA256 = "1e21097122ab0bfccaf9d4df2df794d8c1c918a1ddca72c07e38b36768f2e76c"
@@ -1482,7 +1482,7 @@ def _live_parser() -> argparse.ArgumentParser:
     parser.add_argument("--motion-precheck", action="store_true",
                         help="bounded physical forward/turn/return-zero calibration; never a navigation episode")
     parser.add_argument("--cpu-self-check", action="store_true")
-    parser.add_argument("--output-dir", type=Path, default=Path("/mnt/wxh/go2_short_vln/outputs/dual_target_v1"))
+    parser.add_argument("--output-dir", type=Path, default=Path("<external-data-root>"))
     parser.add_argument("--run-id", default=f"dt1_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')}_{os.getpid()}")
     parser.add_argument("--group-id", default="dt1_dev_000", choices=[group.geometry_group_id for group in dt1_development_groups()])
     parser.add_argument("--color-configuration", default="A_red_B_blue", choices=["A_red_B_blue", "A_blue_B_red"])
@@ -1499,7 +1499,7 @@ def _live_parser() -> argparse.ArgumentParser:
     parser.add_argument("--low-level-device", default="cuda:0")
     parser.add_argument("--contact-threshold-n", type=float, default=1.0)
     parser.add_argument("--max-env-steps", type=int, default=1500)
-    parser.add_argument("--gpu-project-root", type=Path, default=Path("/mnt/wxh/go2_short_vln"),
+    parser.add_argument("--gpu-project-root", type=Path, default=Path("<external-data-root>"),
                         help="fixed project-owned GPU waiter lock/state root")
     parser.add_argument("--gpu-admission-state", type=Path,
                         help="optional explicit state path; must still match --gpu-project-root")

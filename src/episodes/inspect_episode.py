@@ -22,9 +22,9 @@ from typing import Any, Iterable, Sequence
 
 
 DEFAULT_DATASET_CANDIDATES = (
-    Path("/mnt/wxh/go2_short_vln/assets/vln_ce_isaac/vln_ce_isaac_v1.json.gz"),
+    Path("<external-data-root>"),
     Path(
-        "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/"
+        "<external-data-root>"
         "isaaclab_exts/omni.isaac.vlnce/assets/vln_ce_isaac_v1.json.gz"
     ),
     Path("third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/assets/vln_ce_isaac_v1.json.gz"),

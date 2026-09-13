@@ -115,8 +115,8 @@
     "src/dual_target/coexistence_watch.py": "0a13dd8a79eea13fd62cc2501da4fde95889317abf318a5aaaebaaa1734f5707"
   },
   "upstream_source_sha256": {
-    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/go2_matterport_base_cfg.py": "a9bfa20ede39d6c837e64420353e608572260a336e60b6cf9ff8864fbb4366b7",
-    "/mnt/wxh/go2_short_vln/third_party/NaVILA-Bench/isaaclab_exts/omni.isaac.vlnce/omni/isaac/vlnce/config/go2/go2_matterport_vision_cfg.py": "e85041c0ac5e726ac4c2758efa2834f61bfac8324b55cae6a2bf4f7692e55965"
+    "<external-data-root>": "a9bfa20ede39d6c837e64420353e608572260a336e60b6cf9ff8864fbb4366b7",
+    "<external-data-root>": "e85041c0ac5e726ac4c2758efa2834f61bfac8324b55cae6a2bf4f7692e55965"
   },
   "evidence_sha256": {
     "matrix_plan": "26134e80ae178ec2798fad030ab19dce97bbc9f600d43b3e615efb025115b523",

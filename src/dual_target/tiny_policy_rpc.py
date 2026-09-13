@@ -18,12 +18,12 @@ class PolicyClient:
                        'execute_steps':10,'policy_inputs':[IMAGE_KEY,STATE_KEY,'task']}
         self.output=Path(output)
         self.log=(self.output/'model.log').open('x')
-        env=dict(os.environ,PYTHONPATH='/home/wxh/go2_short_vln:/mnt/wxh/go2_short_vln/third_party/lerobot/src',
-            HF_HOME='/mnt/wxh/go2_short_vln/cache/huggingface',HF_HUB_OFFLINE='1',
+        env=dict(os.environ,PYTHONPATH='<external-workspace>:<external-data-root>',
+            HF_HOME='<external-data-root>',HF_HUB_OFFLINE='1',
             TRANSFORMERS_OFFLINE='1',OMP_NUM_THREADS='4',TOKENIZERS_PARALLELISM='false')
         env.pop('PYTHONHOME',None)
         self.child=subprocess.Popen([
-            '/mnt/wxh/go2_short_vln/envs/conda/smolvla/bin/python','-m','src.dual_target.tiny_policy_server',
+            '<external-data-root>','-m','src.dual_target.tiny_policy_server',
             '--checkpoint',str(checkpoint),'--seed',str(seed)],stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,stderr=self.log,env=env,bufsize=0)
         self.buffer=b''

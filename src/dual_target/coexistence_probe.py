@@ -60,7 +60,7 @@ def main():
     parser = r._live_parser()
     parser.add_argument('--shared-coexistence', action='store_true')
     parser.add_argument('--model-python', type=Path, default=Path(
-        '/mnt/wxh/go2_short_vln/envs/conda/smolvla/bin/python'))
+        '<external-data-root>'))
     AppLauncher.add_app_launcher_args(parser)
     args = parser.parse_args()
     if (not args.live or args.paired_reset or args.shared_smoke or args.contact_precheck
@@ -123,8 +123,8 @@ def main():
         input_path.write_text(json.dumps(request.as_dict(), indent=2, allow_nan=False))
         env = dict(os.environ)
         env.pop('PYTHONHOME', None)
-        env['PYTHONPATH'] = '/home/wxh/go2_short_vln:/mnt/wxh/go2_short_vln/third_party/lerobot/src'
-        env['HF_HOME'] = '/mnt/wxh/go2_short_vln/cache/huggingface'
+        env['PYTHONPATH'] = '<external-workspace>:<external-data-root>'
+        env['HF_HOME'] = '<external-data-root>'
         env['HF_HUB_OFFLINE'] = env['TRANSFORMERS_OFFLINE'] = '1'
         command = [str(args.model_python), '-m', 'src.dual_target.smolvla_probe_client',
                    '--input', str(input_path), '--output', str(output_path)]

@@ -1,31 +1,43 @@
 # Go2-SmolVLA-NaVILA
 
-A complete research framework for vision-language navigation and high-level velocity control on Unitree Go2.
+A unified vision-language navigation and high-level velocity-control framework for Unitree Go2. The repository brings simulation task generation, teleoperation collection, shared episode contracts, data review, SmolVLA action interfaces, R2R/NaVILA conversion, and LLaDA-V diffusion action decoding into one project.
 
-## Capabilities
+## Highlights
 
-- Isaac Sim task and scene interfaces with expert trajectory generation
-- Unitree Go2 teleoperation, state, velocity, and safety adapters
-- Unified simulation/real episode schema with cleaning and review pipeline
-- SmolVLA dual-box PoC for visual-language to velocity control
-- R2R-VLNCE and NaVILA-compatible navigation data interfaces
-- Action decoding, clipping, slew-rate limiting, terminal hysteresis
-- Historical vision, state injection, expert, and Flow Matching study hooks
-- SmolVLA and LLaDA-V model adapter contracts
+- Isaac Sim task, scene, expert trajectory, and episode-recording interfaces
+- Go2 state, velocity, safety, and teleoperation adapters
+- One versioned schema across simulation, real-robot capture, and mock runs
+- Deterministic two-box visual PoC (`python -m go2_nav.cli demo`)
+- R2R-VLNCE/NaVILA history-frame loading and split-aware data tooling
+- Action clipping, slew-rate limiting, terminal hysteresis, and stop modeling
+- Study configuration for historical vision, state injection, legacy/continuous experts, and Flow Matching denoising steps
+- SmolVLA and model/backend contracts
 
 ## Quickstart
 
 ```bash
-python -m tools.public_demo --backend mock --episodes 2
-python -m evaluation.public_report --input artifacts/mock_eval.json
+PYTHONPATH=. python -m go2_nav.cli demo --output artifacts/two_box
+PYTHONPATH=. python -m go2_nav.cli review --input artifacts/two_box/episodes.json --output artifacts/two_box/clean.json
+PYTHONPATH=. python -m go2_nav.cli study --output artifacts/study.json
 ```
 
-The mock backend deterministically exercises the complete data → model → action → evaluation path. Isaac Sim, Unitree, and checkpoint-backed model adapters use the same contracts.
+The demo runs entirely on CPU and writes generated PPM observations plus a versioned episode record. External Isaac Sim, Unitree, checkpoint, and dataset integrations are explicit adapters selected at runtime.
 
 ## Layout
 
-`collectors/` data collection · `deploy/` Go2 adapters · `tools/` shared pipeline utilities · `src/` navigation and model interfaces · `evaluation/` metrics and reports · `configs/` examples · `tests/` validation.
+`go2_nav/` portable contracts, mock runtime, quality review, and study CLI · `collectors/` simulation and robot collection · `deploy/` Go2 adapters · `src/`, `datasets/`, `evaluation/` navigation and evaluation code · `configs/`, `docs/`, `tests/` configuration, design notes, and checks.
 
-## License
+## Design matrix
 
-Project code: Apache-2.0. Upstream components and datasets retain their original licenses. See `THIRD_PARTY_NOTICES.md`.
+| Dimension | Configurable variants |
+|---|---|
+| Expert | legacy / continuous |
+| Action | clipping / slew-rate / explicit stop |
+| Context | current frame / historical frames |
+| State | vision-language only / state injection |
+| Diffusion | configurable Flow Matching denoising steps |
+| Backbone | SmolVLA / LLaDA-V |
+
+## Licensing
+
+Project additions are Apache-2.0. Files imported from upstream projects retain their upstream licensing and notices in `licenses/` and `THIRD_PARTY_NOTICES.md`. Cite SmolVLA, NaVILA, LLaDA-V, SigLIP2, R2R/VLNCE, Matterport3D, Isaac Sim, and Unitree SDK when using corresponding components.

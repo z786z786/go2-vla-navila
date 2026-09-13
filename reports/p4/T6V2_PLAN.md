@@ -1,4 +1,0 @@
-# P4-T6v2 plan
-CPU tests: `/mnt/wxh/go2_short_vln/envs/conda/smolvla/bin/python -m unittest discover -s tests/datasets -v`; actual `Ran 7 tests ... OK`.
-
-GPU code is **MISSING/UNTESTED** in this CPU sandbox. Action-only mask is built in `scripts/p4_train_throughput.py` lines 32-34 (instruction prefix disabled; action positions remain), and the report records action participation as `action_tokens_ratio` (GPU execution required for measured value). Batch/OOM scan, online/cache paths, workers 0/2, and nvidia-smi sampling are implemented in lines 22-43. Exact critical lines: tokenizer 32; vision→connector 36,38; backward/optimizer/zero_grad 39. AdamW is lr 2e-5, betas .9/.999, weight decay .01; CE is action-only next-token CE. **MISSING**: GPU throughput, loss descent, measured ratio, memory/OOM boundary, cache wall time, and clock/power results.
