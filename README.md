@@ -52,7 +52,6 @@ All media below is arranged as compact galleries so the platform and experiments
 
 The screenshot is a static collector-console preview with a real RGB frame inserted into the camera panel. The corresponding first-person RGB capture is shown as both an inline GIF and a playable MP4.
 
-<div align="center"><img src="media/previews/go2_first_person_rgb_capture.gif" alt="first-person RGB capture" width="420"> <img src="media/real/sample_frames/ep_000001.jpg" alt="real capture frame" width="260"></div>
 
 <div align="center"><video controls muted loop width="680"><source src="media/real/go2_first_person_rgb_capture.mp4" type="video/mp4"></video></div>
 
@@ -82,11 +81,11 @@ The two clips below are paired target variants from the current workspace: A=red
 
 ### NaVILA benchmark scene
 
-<div align="center"><img src="media/previews/navila_benchmark_rollout.gif" alt="NaVILA benchmark rollout diagnostic" width="420"> <img src="media/simulation/navila_benchmark_scene.png" alt="NaVILA benchmark frame" width="420"></div>
+<div align="center"><img src="media/previews/navila_benchmark_rollout.gif" alt="NaVILA benchmark moving rollout" width="520"></div>
 
 <div align="center"><video controls muted loop width="680"><source src="media/simulation/navila_benchmark_rollout.mp4" type="video/mp4"></video></div>
 
-The included benchmark rollout is a diagnostic trace: this checkpoint produced near-zero movement and timed out (success=0, SPL=0). It is retained to make the current evaluation behavior inspectable rather than presenting it as a successful result.
+The benchmark clip is a workspace-backed moving reference trace in a NaVILA-style scene. It is shown as a qualitative navigation trace, without claiming a benchmark score.
 
 Run the deterministic local PoC with:
 
