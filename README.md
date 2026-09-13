@@ -44,69 +44,49 @@ Project additions are Apache-2.0. Files imported from upstream projects retain t
 
 ## Visual demonstrations
 
-The gallery below uses captured assets from the Go2 collection platform and the current simulation workspace. Every item is labeled by source and role.
+All media below is arranged as compact galleries so the platform and experiments can be inspected without opening separate links.
 
 ### Real Go2 data collection platform
 
-The collector console is shown with a real RGB frame inserted into the camera image region. The page is an offline snapshot of the operator UI; its live controls are disabled in the static preview.
+<div align="center"><img src="media/screenshots/collector.png" alt="Go2 collection console with a real RGB frame" width="860"></div>
 
-![Go2 teleoperation console with a real RGB capture](media/screenshots/collector.png)
+The screenshot is a static collector-console preview with a real RGB frame inserted into the camera panel. The corresponding first-person RGB capture is shown as both an inline GIF and a playable MP4.
 
-The same repaired session is encoded as a short first-person RGB capture sequence. It is real sensor data collected by the Go2 platform, not an autonomous-success claim.
+<div align="center"><img src="media/previews/go2_first_person_rgb_capture.gif" alt="first-person RGB capture" width="420"> <img src="media/real/sample_frames/ep_000001.jpg" alt="real capture frame" width="260"></div>
 
-<img src="media/previews/go2_first_person_rgb_capture.gif" alt="First-person Go2 RGB collection preview" width="720">
-
-<video controls muted loop width="720"><source src="media/real/go2_first_person_rgb_capture.mp4" type="video/mp4"></video>
+<div align="center"><video controls muted loop width="680"><source src="media/real/go2_first_person_rgb_capture.mp4" type="video/mp4"></video></div>
 
 ### Data visualization and review
 
-The review page is available as a screenshot and an offline HTML view. Its frame slots are populated with repository-contained real capture thumbnails so the page can be inspected without the original data mount.
+<div align="center"><img src="media/screenshots/data-action-distribution.png" alt="action distribution" width="420"> <img src="media/screenshots/data-episode-length.png" alt="episode lengths" width="420"></div>
 
-![Simulation and data review interface](media/screenshots/simulation-review.png)
+<div align="center"><img src="media/screenshots/simulation-review.png" alt="data review interface" width="860"></div>
 
-![Action distribution from the collected dataset](media/screenshots/data-action-distribution.png)
-
-![Episode length distribution](media/screenshots/data-episode-length.png)
-
-[Open the offline review console](media/real/simulation_dataset_review.html)
+The offline review console is populated with real capture thumbnails for offline inspection.
 
 ### Current workspace simulation environment
 
-The following images come directly from the current Isaac Sim/Go2 workspace outputs.
-
-| Dual-box scene | NaVILA benchmark scene |
-|---|---|
-| ![Dual-box scene](media/simulation/dual_box_scene.png) | ![NaVILA benchmark scene](media/simulation/navila_benchmark_scene.png) |
+<div align="center"><img src="media/simulation/dual_box_scene.png" alt="dual-box simulation scene" width="420"> <img src="media/simulation/navila_benchmark_scene.png" alt="NaVILA benchmark scene" width="420"></div>
 
 ### Dual-box instruction-following experiment
 
-Two instruction variants are shown separately so the visual-language target switch is explicit: `A=red, B=blue → red` and `A=blue, B=red → blue`.
+The two clips below are paired target variants from the current workspace: A=red, B=blue to red and A=blue, B=red to blue.
 
-<img src="media/previews/dual_box_red_target.gif" alt="Dual-box red target rollout" width="520">
-<img src="media/previews/dual_box_blue_target.gif" alt="Dual-box blue target rollout" width="520">
+<div align="center"><img src="media/previews/dual_box_red_target.gif" alt="red target" width="360"> <img src="media/previews/dual_box_blue_target.gif" alt="blue target" width="360"></div>
+<div align="center"><video controls muted loop width="420"><source src="media/simulation/dual_box_red_target.mp4" type="video/mp4"></video> <video controls muted loop width="420"><source src="media/simulation/dual_box_blue_target.mp4" type="video/mp4"></video></div>
 
-<video controls muted loop width="720"><source src="media/simulation/dual_box_red_target.mp4" type="video/mp4"></video>
+### SmolVLA visual-language PoC
 
-<video controls muted loop width="720"><source src="media/simulation/dual_box_blue_target.mp4" type="video/mp4"></video>
-
-### SmolVLA visual-language PoC trace
-
-The workspace policy trace uses the same instruction → RGB observation → high-level velocity action interface exposed by `go2_nav/`.
-
-<img src="media/previews/dual_box_policy_rollout.gif" alt="Dual-box policy rollout preview" width="520">
-
-<video controls muted loop width="720"><source src="media/simulation/dual_box_policy_rollout.mp4" type="video/mp4"></video>
+<div align="center"><img src="media/previews/dual_box_policy_rollout.gif" alt="dual-box policy trace" width="420"></div>
+<div align="center"><video controls muted loop width="680"><source src="media/simulation/dual_box_policy_rollout.mp4" type="video/mp4"></video></div>
 
 ### NaVILA benchmark scene
 
-The benchmark rollout and scene frame are included as a separate navigation demonstration.
+<div align="center"><img src="media/previews/navila_benchmark_rollout.gif" alt="NaVILA benchmark rollout diagnostic" width="420"> <img src="media/simulation/navila_benchmark_scene.png" alt="NaVILA benchmark frame" width="420"></div>
 
-<img src="media/previews/navila_benchmark_rollout.gif" alt="NaVILA benchmark rollout preview" width="520">
+<div align="center"><video controls muted loop width="680"><source src="media/simulation/navila_benchmark_rollout.mp4" type="video/mp4"></video></div>
 
-<video controls muted loop width="720"><source src="media/simulation/navila_benchmark_rollout.mp4" type="video/mp4"></video>
+The included benchmark rollout is a diagnostic trace: this checkpoint produced near-zero movement and timed out (success=0, SPL=0). It is retained to make the current evaluation behavior inspectable rather than presenting it as a successful result.
 
-The SmolVLA PoC path can also be exercised locally with the deterministic two-box interface:
-
-```bash
+Run the deterministic local PoC with:
 PYTHONPATH=. python -m go2_nav.cli demo --episodes 2 --output artifacts/two_box
-```
