@@ -89,4 +89,7 @@ The two clips below are paired target variants from the current workspace: A=red
 The included benchmark rollout is a diagnostic trace: this checkpoint produced near-zero movement and timed out (success=0, SPL=0). It is retained to make the current evaluation behavior inspectable rather than presenting it as a successful result.
 
 Run the deterministic local PoC with:
+
+```bash
 PYTHONPATH=. python -m go2_nav.cli demo --episodes 2 --output artifacts/two_box
+```
