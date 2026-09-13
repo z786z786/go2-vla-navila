@@ -44,59 +44,69 @@ Project additions are Apache-2.0. Files imported from upstream projects retain t
 
 ## Visual demonstrations
 
-The repository includes source-backed demonstrations from the collection platform.
+The gallery below uses captured assets from the Go2 collection platform and the current simulation workspace. Every item is labeled by source and role.
 
-### Real Go2 collection platform
+### Real Go2 data collection platform
 
-[Open the Go2 teleoperation console](media/ui/go2_teleop_console.html)
+The collector console is shown with a real RGB frame inserted into the camera image region. The page is an offline snapshot of the operator UI; its live controls are disabled in the static preview.
 
-These sample frames are operator-collected real-session data. They show the sensor stream and collection platform, not a claimed successful autonomous navigation run.
+![Go2 teleoperation console with a real RGB capture](media/screenshots/collector.png)
 
-| Real session sample | Preview |
+The same repaired session is encoded as a short first-person RGB capture sequence. It is real sensor data collected by the Go2 platform, not an autonomous-success claim.
+
+<img src="media/previews/go2_first_person_rgb_capture.gif" alt="First-person Go2 RGB collection preview" width="720">
+
+<video controls muted loop width="720"><source src="media/real/go2_first_person_rgb_capture.mp4" type="video/mp4"></video>
+
+### Data visualization and review
+
+The review page is available as a screenshot and an offline HTML view. Its frame slots are populated with repository-contained real capture thumbnails so the page can be inspected without the original data mount.
+
+![Simulation and data review interface](media/screenshots/simulation-review.png)
+
+![Action distribution from the collected dataset](media/screenshots/data-action-distribution.png)
+
+![Episode length distribution](media/screenshots/data-episode-length.png)
+
+[Open the offline review console](media/real/simulation_dataset_review.html)
+
+### Current workspace simulation environment
+
+The following images come directly from the current Isaac Sim/Go2 workspace outputs.
+
+| Dual-box scene | NaVILA benchmark scene |
 |---|---|
-| Episode 1 | ![real episode 1](media/real/sample_frames/ep_000001.jpg) |
-| Episode 2 | ![real episode 2](media/real/sample_frames/ep_000002.jpg) |
-| Episode 3 | ![real episode 3](media/real/sample_frames/ep_000003.jpg) |
+| ![Dual-box scene](media/simulation/dual_box_scene.png) | ![NaVILA benchmark scene](media/simulation/navila_benchmark_scene.png) |
 
-### Simulation and dual-box PoC
+### Dual-box instruction-following experiment
 
-[Open the simulation dataset review](media/real/simulation_dataset_review.html)
+Two instruction variants are shown separately so the visual-language target switch is explicit: `A=red, B=blue → red` and `A=blue, B=red → blue`.
 
-These compact Isaac Sim clips are expert/collection traces: the dual-box-style expected-success rollout plus door and suitcase instruction examples. They are qualitative PoC assets, not measured model-success claims.
+<img src="media/previews/dual_box_red_target.gif" alt="Dual-box red target rollout" width="520">
+<img src="media/previews/dual_box_blue_target.gif" alt="Dual-box blue target rollout" width="520">
 
-- [Dual-box expert rollout](media/simulation/two_box_expert_rollout.mp4)
-- [Door instruction expert rollout](media/simulation/door_expert_rollout.mp4)
-- [Suitcase instruction expert rollout](media/simulation/suitcase_expert_rollout.mp4)
-- [Visual-language policy trace](media/simulation/visual_language_policy_trace.mp4)
+<video controls muted loop width="720"><source src="media/simulation/dual_box_red_target.mp4" type="video/mp4"></video>
 
-The SmolVLA PoC path uses the same instruction → visual observation → high-level velocity action interface:
+<video controls muted loop width="720"><source src="media/simulation/dual_box_blue_target.mp4" type="video/mp4"></video>
+
+### SmolVLA visual-language PoC trace
+
+The workspace policy trace uses the same instruction → RGB observation → high-level velocity action interface exposed by `go2_nav/`.
+
+<img src="media/previews/dual_box_policy_rollout.gif" alt="Dual-box policy rollout preview" width="520">
+
+<video controls muted loop width="720"><source src="media/simulation/dual_box_policy_rollout.mp4" type="video/mp4"></video>
+
+### NaVILA benchmark scene
+
+The benchmark rollout and scene frame are included as a separate navigation demonstration.
+
+<img src="media/previews/navila_benchmark_rollout.gif" alt="NaVILA benchmark rollout preview" width="520">
+
+<video controls muted loop width="720"><source src="media/simulation/navila_benchmark_rollout.mp4" type="video/mp4"></video>
+
+The SmolVLA PoC path can also be exercised locally with the deterministic two-box interface:
 
 ```bash
 PYTHONPATH=. python -m go2_nav.cli demo --episodes 2 --output artifacts/two_box
 ```
-
-## Inline visual gallery
-
-### Collection platform screenshot
-
-![Go2 teleoperation collection console](media/screenshots/collector.png)
-
-### Simulation review screenshot
-
-![Simulation dataset review and frame audit](media/screenshots/simulation-review.png)
-
-### Real collected frames used for offline replay
-
-![Real capture replay frame 1](media/real/sample_frames/ep_000001.jpg) ![Real capture replay frame 2](media/real/sample_frames/ep_000002.jpg) ![Real capture replay frame 3](media/real/sample_frames/ep_000003.jpg)
-
-### Direct video playback
-
-<video controls muted loop width="720"><source src="media/simulation/two_box_expert_rollout.mp4" type="video/mp4"></video>
-
-<video controls muted loop width="720"><source src="media/simulation/door_expert_rollout.mp4" type="video/mp4"></video>
-
-<video controls muted loop width="720"><source src="media/simulation/suitcase_expert_rollout.mp4" type="video/mp4"></video>
-
-Animated previews for Markdown renderers that do not support a repository-local `<video>` element:
-
-![Dual-box rollout preview](media/previews/two_box_expert_rollout.gif) ![Door rollout preview](media/previews/door_expert_rollout.gif) ![Suitcase rollout preview](media/previews/suitcase_expert_rollout.gif)
