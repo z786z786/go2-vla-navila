@@ -74,3 +74,29 @@ The SmolVLA PoC path uses the same instruction → visual observation → high-l
 ```bash
 PYTHONPATH=. python -m go2_nav.cli demo --episodes 2 --output artifacts/two_box
 ```
+
+## Inline visual gallery
+
+### Collection platform screenshot
+
+![Go2 teleoperation collection console](media/screenshots/collector.png)
+
+### Simulation review screenshot
+
+![Simulation dataset review and frame audit](media/screenshots/simulation-review.png)
+
+### Real collected frames used for offline replay
+
+![Real capture replay frame 1](media/real/sample_frames/ep_000001.jpg) ![Real capture replay frame 2](media/real/sample_frames/ep_000002.jpg) ![Real capture replay frame 3](media/real/sample_frames/ep_000003.jpg)
+
+### Direct video playback
+
+<video controls muted loop width="720"><source src="media/simulation/two_box_expert_rollout.mp4" type="video/mp4"></video>
+
+<video controls muted loop width="720"><source src="media/simulation/door_expert_rollout.mp4" type="video/mp4"></video>
+
+<video controls muted loop width="720"><source src="media/simulation/suitcase_expert_rollout.mp4" type="video/mp4"></video>
+
+Animated previews for Markdown renderers that do not support a repository-local `<video>` element:
+
+![Dual-box rollout preview](media/previews/two_box_expert_rollout.gif) ![Door rollout preview](media/previews/door_expert_rollout.gif) ![Suitcase rollout preview](media/previews/suitcase_expert_rollout.gif)
